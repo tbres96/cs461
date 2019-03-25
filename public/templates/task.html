@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task: {{ name }}</title>
+</head>
+
+<body>
+	{% if name is defined %}<h1>Task Name: {{ name }}</h1><br>{% endif %}
+	{% if description is defined %}<h3>Description: </h3><p>{{ description }}</p><br>{% endif %}
+	{% if owners is defined %}<h3>Owners:</h3><br>
+		<ul>
+			{% for person in owners.users %}
+				{% if person %}<li>{{ person }}</li>{% endif %}
+			{% endfor %}
+		</ul>
+	<br>{% endif %}
+	{% if commits is defined %}<h3>Commits:</h3><br>
+		<ol>
+			{% for c in commits.c %}
+			<li>{{ c }}</li>
+			<ul>
+				{% if c.user is defined %}<li>User: {{ c.user }}</li>{% endif %}
+				{% if c.action is defined %}<li>Action: {{ c.action }}</li>{% endif %}
+			</ul>
+			{% endfor %}
+		</ol>
+	<br>{% endif %}
+</body>
+</html>

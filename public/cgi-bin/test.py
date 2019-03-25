@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from flask import Flask, render_template, request
 import pyrebase
 
@@ -17,7 +19,7 @@ app = Flask(__name__)
 #    print(user.key()) # Morty
 #    print(user.val()) # {name": "Mortimer Smith"}
 
-@app.route("/")
+@app.route("/hello")
 def index():
     return render_template('hello.html')
 

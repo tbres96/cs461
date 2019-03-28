@@ -1,0 +1,58 @@
+onnect With Repository:
+-------------------------------
+1) git clone https://github.com/tbres96/cs461.git
+2) cd cs461/
+3) git pull (may say already up to date, that's okay! Always use git pull to get most updated version of code)
+4) make changes to files (add, delete, rename, movee, code, etc)
+5) type git stauts (will show you what files need to be added with "git add")
+6) type git add enterFileNamesHere (or type git add .    which adds the entire directory)
+7) type git status again (should be green! if not, add red highlighted files)
+8) type git commit, enter, make a new line below last hashtag and type your message about what you did then write quit (:wq)
+9) when you're ready for your team to get your changes, type git push
+NOTE: NEVER PUSH BROKEN CODE, PLEASE!
+
+
+
+
+
+
+
+
+
+
+Git Status: Show current branch and changes
+Git Log: Log
+Git Merge: Merge from specified branch to current brach
+Git Add: Add changes to be committed
+Git Commit: Package changes with a log message to be pushed
+GIt Push: Pushing changes to origin/master
+Git Pull: Pulling changes from origin/master
+Git Blame: Checking who did what to what files
+Git Branch: Show list of branches including one we are on
+Git Checkout: Switch to specified branch
+
+
+
+
+    (origin/master)
+    / |   |  |  | \
+  () ()   () () () ()
+ / \ /\   /\ /\ /\  /\
+
+
+Note: Make sure to pull from origin/master first
+      Make sure you're in the right branch
+      Do your work
+      Switch to master
+      Pull from origin/master to make sure we are up to date
+      Merge with work branch
+      push changes to origin/master
+
+
+      Update work branch:
+    -----------------------
+      Push all changes and make sure up to date
+      Pull from origin/master in master branch
+      Switch to work branch
+      Merge master to work
+

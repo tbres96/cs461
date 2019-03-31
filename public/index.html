@@ -3,38 +3,44 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Login Page</title>
-		<link rel="stylesheet" type="text/css" href="css/styles.css">
 	</head>
 
 	<body>
 
-		<h1 id="Login Title">Senior Seminar Project Login</h1>
-
-		<hr>
-
-		<p id="Filler Text">This is our inital website for the project. Soon to be added is a list of data from the firebase DB!</p>
-
 		<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+		<script>
+
+var config = {
+	apiKey: "AIzaSyA11FpqG-RKNpZ0loNU8HhunHUgk7EFCqY",
+	authDomain: "seniorsemgit.firebaseapp.com",
+	databaseURL: "https://seniorsemgit.firebaseio.com",
+	projectId: "seniorsemgit",
+	storageBucket: "seniorsemgit.appspot.com",
+	messagingSenderId: "348042953918"
+};
+firebase.initializeApp(config);
 
 
-		<div class="container">
-			<input id="txtEmail" type="email" placeholder="Email">
-			<input id="txtPassword" type="password" placeholder="Password">
 
-			<button id="btnLogin" class="btn btn-action">
-				Login
-			</button>
 
-			<button id="btnSignUp" class="btn btn-secondary">
-				Sign Up
-			</button>
 
-			<button id="btnLogout" class="btn btn-action hide">
-				Log Out
-			</button>
+
+		</script>
+
+		<div id="Introduction">
+			<h1 id="Login Title">Senior Seminar Project Login</h1>
+			<hr>
+			<p id="Filler Text">This is our inital website for the project.</p>
 		</div>
+
+		<input id="txtUsername" type="text" placeholder="Username">
+		<input id="txtEmail" type="text" placeholder="Email">
+		<input id="txtName" type="text" placeholder="Name">
+		<button onclick="saveUser()" id="btnLogin">
+			Login
+		</button>
 
 		<script src="web.js"></script>
 

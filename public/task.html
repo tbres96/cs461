@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task Info</title>
+	<script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
+	<script type="text/javascript">
+		var config = {
+			apiKey: "AIzaSyA11FpqG-RKNpZ0loNU8HhunHUgk7EFCqY",
+			authDomain: "seniorsemgit.firebaseapp.com",
+			databaseURL: "https://seniorsemgit.firebaseio.com",
+			projectId: "seniorsemgit",
+			storageBucket: "seniorsemgit.appspot.com",
+			messagingSenderId: "348042953918"
+		};
+		firebase.initializeApp(config);
+		//firebase.database.goOnline();
+		var db = firebase.database();
+		var BOARDS = 'Boards';
+		var USERS = 'Users';
+		var TASKS = "Tasks";
+		var NAME = "Name";
+		var DESCRIPTION = "Description";
+		var COMMITS = "Commits";
+		var OWNERS = "Owners";
+
+		function getUserInfo(userID){
+			var ownersMsg = " User: " + userID;
+			var userRef = db.ref().child(USERS).child(userID);
+			userRef.once('value').then(function(uSnapshot){
+				ownersMsg += "Heyyyyy";
+				if(uSnapshot.exists()){
+					ownersMsg += "Hi erryone.";
+					ownersMsg += "<li>" + uSnapshot.child(NAME).val() + ", " + uSnapshot.child("Email").val() + "</li>";
+				}else{
+					ownersMsg += "this snapshot doesn't exist";
+				}
+			});
+			return ownersMsg;
+		}
+		
+		function getTaskInfo(board, section, task){
+            var boardRef = db.ref().child(BOARDS).child(board).child(TASKS).child(section).child(task);
+			boardRef.once('value').then(function(snapshot){
+                if(snapshot.exists()){
+					//task name
+					document.getElementById("name").innerHTML = "<h1>" + snapshot.child(NAME).val() + "</h1>";
+					document.getElementById("name").style.display = "inline";
+					
+					//description
+					document.getElementById("description").innerHTML = "<p><strong>Description: </strong>" + snapshot.child(DESCRIPTION).val() + "</p>";
+					document.getElementById("description").style.display = "inline";
+					
+					//owners
+					var ownersMsg = "<p><strong>Owners: </strong>";
+					if(snapshot.child(OWNERS).hasChildren()){
+						ownersMsg += "<ul>";
+						snapshot.child(OWNERS).forEach(function(childSnapshot){
+							if(childSnapshot.val()){
+								//found an owner, getting user info
+								var userID = childSnapshot.key;
+								ownersMsg += getUserInfo(userID);
+							}else{
+								ownersMsg += "<li>" + childSnapshot.key + " is not an owner.</li>";
+							}
+						});
+						ownersMsg += "</ul>";
+					}else{
+						ownersMsg += "None";
+					}
+					ownersMsg += "</p>";
+					document.getElementById("owners").innerHTML = ownersMsg;
+					document.getElementById("owners").style.display = "inline";
+				}else{
+					document.getElementById("name").innerHTML = "snapshot doesn't exist";
+				}
+			});
+		}
+
+        function fillTaskPage(){
+            //document.getElementById("test").innerHTML = "Hello World!";
+            getTaskInfo("Board1", "Todo", "Task1");
+        }
+	</script>
+</head>
+
+<body onload="fillTaskPage()">
+	<div id="name" style="display:none"></div><br>
+	<div id="description" style="display:none"></div><br>
+	<div id="owners" style="display:none"></div><br>
+	<!--
+	<h3>Owners:</h3><br>
+		<ul>
+			{% for person in owners.users %}
+			<li>{{ person }}</li>
+			{% endfor %}
+		</ul>
+	<br>
+	-->
+	<div id="test"></div>
+	<h3>Commits:</h3><br>
+		<ol>
+			{% for c in commits.c %}
+			<li>{{ c }}</li>
+			<ul>
+				<li>User: {{ c.user }}</li>
+				<li>Action: {{ c.action }}</li>
+			</ul>
+			{% endfor %}
+		</ol>
+	<br>
+</body>
+</html>

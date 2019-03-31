@@ -19,7 +19,7 @@ app = Flask(__name__)
 #    print(user.key()) # Morty
 #    print(user.val()) # {name": "Mortimer Smith"}
 
-@app.route("/hello")
+@app.route("/")
 def index():
     return render_template('hello.html')
 

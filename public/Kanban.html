@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home - Kanban</title>
+  	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+                <script>
+
+	var config = {
+        	apiKey: "AIzaSyA11FpqG-RKNpZ0loNU8HhunHUgk7EFCqY",
+        	authDomain: "seniorsemgit.firebaseapp.com",
+        	databaseURL: "https://seniorsemgit.firebaseio.com",
+        	projectId: "seniorsemgit",
+        	storageBucket: "seniorsemgit.appspot.com",
+        	messagingSenderId: "348042953918"
+	};
+ 	firebase.initializeApp(config);
+	</script>
+
+
+  <style type="text/css">
+	#header{
+ 		margin-left: 160px; 
+		top: 0;
+		text-align: center; 
+		background: #ddd;
+
+	}
+	#wrapper{
+		width: 84%;
+		margin: 0 auto;
+		margin-left: 160px;
+	}
+	#sidebar{
+  		height: 100%; 
+  		position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+		top: 0;
+  		left: 0;
+  		background-color: #111; 
+  		overflow-x: hidden; <--! Disable horizontal scroll */ -->
+		float: left;
+		width: 11%;
+		background-color: purple;
+		padding: 10px;		
+	}
+	#sidebar a{
+		padding: 6px 8px 6px 16px;
+  		text-decoration: none;
+ 		color: #818181;
+  		display: block;
+	}
+	#sidebar a:hover{
+  		color: #f1f1f1;
+	}
+	#col-todo{
+		margin: 15px;
+		float: right;
+		width: 28%;
+		padding: 10px;
+	}
+	#col-inprogress{
+		margin: 15px;
+		float: right;	
+		width: 28%;
+		padding: 10px;
+	}
+	a{
+		padding: 6px 8px 6px 16px;
+  		text-decoration: none;
+ 		color: black;
+  		display: block;
+	}
+	a:hover{
+		color: green;
+	}
+	#col-done{
+		margin: 15px;
+		float: right;	
+		width: 28%;
+		padding: 10px;
+	}
+	.vl{
+		float: right;
+		border-right: 6px solid grey;
+		height: 600px;
+	}
+	.hr1{
+		border: 3px solid ;
+        	width: 100%;
+	}
+  </style>
+</head>
+
+<body>    
+<div id="header"><h1>Viewing Kanban - "Kanban1"</h1></div>
+<div id="sidebar">
+	<p style="color:white;">Hello "user3"</p>
+	<a href="https://seniorsemgit.firebaseapp.com/">Sign out</a>
+	<br>
+	<hr class="hr1">
+	<a href="">Kanban1</a>
+	<hr class="hr1">
+	<a href="">Kanban2</a>
+</div>
+<div id="wrapper">
+	<div id="col-done">
+		<p style="font-size:25px;text-align:center;"><u> Finished Tasks </u></p>
+		<ul>
+		<li><a href="">Task -1</a></li>
+		</ul>
+		</div>
+	<div class="vl"></div>
+	<div id="col-inprogress">
+		<p style="font-size:25px;text-align:center;"><u> Tasks In-Progress </u></p>
+		<ul>
+		<li><a href="">Task 0</a></li>
+		</ul>
+		</div>
+	<div class="vl"></div>
+	<div id="col-todo">
+		<p style="font-size:25px;text-align:center;"><u> Tasks To Do </u></p>
+		<ul>
+		<li><a href="">Task 1</a></li>
+		<li><a href="">Task 2</a></li>
+		</ul>
+		</div>
+</body>
+
+</html>

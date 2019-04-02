@@ -19,7 +19,7 @@ boards = db.child("Boards").get()
 
 print("Welcome to Super Seven KanBan! Enter 'quit' to exit.")
 
-inputString = input("> ")
+inputString = raw_input("> ")
 
 while(1):
 
@@ -35,7 +35,7 @@ while(1):
         for board in boards.each():
             print(board.key(), ": ", board.val())
 
-    inputString = input("> ")
+    inputString = raw_input("> ")
 
 
 

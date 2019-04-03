@@ -1,4 +1,5 @@
 import pyrebase
+from consoleClasses import *
 
 config = {
   "apiKey": "AIzaSyA11FpqG-RKNpZ0loNU8HhunHUgk7EFCqY ",
@@ -19,9 +20,13 @@ boards = db.child("Boards").get()
 
 print("Welcome to Super Seven KanBan! Enter 'quit' to exit.")
 
-inputString = raw_input("> ")
+inputString = input("> ")
 
 while(1):
+
+    
+    newUser = User()
+
 
     if (inputString == "quit"):
         print("Goodbye!")
@@ -29,13 +34,18 @@ while(1):
 
     if (inputString == "users"):
         for user in users.each():
-            print(user.key(),": ", user.val())
+            for key, value in user.val().items():
+                newUser.change_attribute(key, value)
+                
+            print(newUser.email, newUser.name, newUser.username)
+            #print("NATIVE OUTPUT: ", user.key(),": ", user.val())
+
 
     if (inputString == "boards"):
         for board in boards.each():
             print(board.key(), ": ", board.val())
 
-    inputString = raw_input("> ")
+    inputString = input("> ")
 
 
 

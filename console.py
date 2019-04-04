@@ -1,4 +1,4 @@
-import pyrebase, json
+import pyrebase
 from consoleClasses import *
 
 config = {
@@ -22,9 +22,42 @@ column1 = db.child("Boards").child("Board1").child("Tasks").get()
 
 print("Welcome to Super Seven KanBan! Enter 'quit' to exit.")
 
-for column in column1.each():
-    for key, value in column.val().items():
-        print("KEY: ", key, "VALUE: ", value)
+newBoard = Board()
+
+for boardval in boards.each():
+    for key, val in boardval.val().items():
+        if (key == "Repository"):
+            newBoard.repository = val
+        if (key == "Name"):
+            newBoard.name = val
+        #Here we need to break down the Users dict
+        if (key == "Users"):
+            #print("TIME TO PARSE USERS WOOOO")
+            newBoard.userList.append(val)
+        if (key == "Tasks"):
+            #print("TIME TO PARSE COLUMNS WOOOO")
+            parseColumns(newBoard, key, val)
+        #print("KEY: ", key," VALUE: ", val)
+
+print(propKeys(newBoard), propVals(newBoard))
+
+
+#General statements I was using for debugging
+#[print(val) for val in dir(newBoard) if not val.startswith('__')]
+#print(newBoard.__dict__)
+
+
+#This Block is promising but want to generate on the fly
+#Meaning I want to be able to generate an entire Board's
+#Info without explicitly naming database objects.
+#So I would have to use the "keys" or "Values" and
+#my knowledge of the DB infrastructure to navigate.
+##for column in column1.each():
+##    for key, value in column.val().items():
+##        print("TASK NAME: ", key, " V ", value)
+##        for nextKey, nextVal in value.items():
+##            print("NEXTKEY: ", nextKey, "NEXTVALUE: ", nextVal)
+        
 inputString = input("> ")
 
 while(1):

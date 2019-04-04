@@ -21,6 +21,8 @@ class User:
 class Task:
     commitList = ["commitlistitem", "commitlistitem"]
     description = "default task description"
+    duedate = "default due date"
+    latestaction = "default latest action"
     name = "default task name"
     ownerList = ["ownerlistitem", "ownerlistitem"]
 

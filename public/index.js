@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------
 function redirect() {
-     window.location.assign("https://seniorsemgit.firebaseapp.com/kanban.html")
+     window.location.replace("https://seniorsemgit.firebaseapp.com/kanban.html")
 }
 
 function saveUser() {
@@ -11,4 +11,5 @@ function saveUser() {
 	var usersRef = dbRef.child(document.getElementById('txtUsername').value).set({
 		Username: document.getElementById('txtUsername').value
 })
+//redirect()
 };

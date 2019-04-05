@@ -11,5 +11,5 @@ function saveUser() {
 	var usersRef = dbRef.child(document.getElementById('txtUsername').value).set({
 		Username: document.getElementById('txtUsername').value
 })
-//redirect()
+setTimeout(redirect, 1000)
 };

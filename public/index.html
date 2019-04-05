@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>Login Page</title>
+
+<link rel="stylesheet" type="text/css" href="css/global.css">
+<link rel="stylesheet" type="text/css" href="css/index.css">
+
 <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
@@ -32,21 +36,18 @@ firebase.initializeApp(config);
 <body>
 
 <div id="Introduction">
-<h1 id="Login Title">Senior Seminar Project Login</h1>
+<h1 id="LoginTitle">Senior Seminar Project Login</h1>
 <hr>
-<p id="Filler Text">This is our inital website for the project.</p>
+<p id="FillerText">This is our inital website for the project.</p>
 </div>
 
 <div id="Warning">
-<h2 id="Warning Title">WARNING:</h2>
-<p id="Warning Text">YOU MUST USE YOUR LAB USERNAME OR THIS WILL NOT WORK PROPERLY!</p>
+<h2 id="WarningTitle">WARNING:</h2>
+<p id="WarningText">YOU MUST USE YOUR LAB USERNAME OR THIS WILL NOT WORK PROPERLY!</p>
 
 <input id="txtUsername" type="text" placeholder="Steven's Lab Username">
 
-<!--<input id="txtEmail" type="text" placeholder="Email">
-<input id="txtName" type="text" placeholder="Name"> -->
-
-<button onclick="saveUser();redirect()"; id="btnLogin">
+<button onclick="saveUser()" id="btnLogin">
 <b>Login</b>
 </button>
 </body>

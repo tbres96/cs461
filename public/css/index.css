@@ -1,0 +1,11 @@
+@import url('/css/global.css');
+#LoginTitle {
+
+}
+
+#WarningTitle {
+	color: red;
+	text-transform: uppercase;
+	letter-spacing: 6px;
+}
+

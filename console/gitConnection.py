@@ -1,4 +1,12 @@
 from pyrebase import pyrebase
+import getpass
+from datetime import datetime
+from threading import Timer
+import schedule
+import time
+import os
+import subprocess
+
 config = {
   "apiKey": "AIzaSyA11FpqG-RKNpZ0loNU8HhunHUgk7EFCqY ",
   "authDomain": "seniorsemgit.firebaseapp.com",
@@ -6,14 +14,17 @@ config = {
   "storageBucket": "seniorsemgit.appspot.com"
 }
 firebase = pyrebase.initialize_app(config)
-userId = "sosaes"
 
+# Database constants
 boards = "Boards"
 repository = "Repository"
 repPath = "RepositoryPath"
 userRep = "User"
+users = "Users"
 
+# Variables
 db = firebase.database()
+userId = getpass.getuser()
 
 # Check if the board id exists
 def isBoardIdValid(id):
@@ -30,30 +41,23 @@ def isBoardIdValid(id):
         return False
     return False
 
-# Check if path is valid
-def isPathValid(path):
-    if(path == ''):
-        print("Empty")
-        return False
-    return True
-
-# Update database with repository path
-def updateDatabase(boardId, path):
-    db.child(boards).child(boardId).child(repository).child(userRep).set(userId)
-    db.child(boards).child(boardId).child(repository).child(repPath).set(path)
-    return
+# Create text file with database board id
+def createDatabaseIdFile(boardId):
+    f = open("databaseBoardId.txt", "w")
+    f.write(boardId)
+    f.close()
 
 # Main function
+print("Welcome " + userId)
 print("Select an option:")
 print("1. Register a kanban board")
-print("2. Change path to kanban board git repository")
+print("2. Update commit history in database")
 inputString = input("> ")
 if(inputString == "1"):
     print("Please enter the board ID:")
     boardId = input("> ")
     if(isBoardIdValid(boardId)):
-        print("Please enter the path to your git repository")
-        path = input("> ")
-        if(isPathValid(path)):
-            updateDatabase(boardId, path)
+        createDatabaseIdFile(boardId)
+elif(inputString == "2"):
+    updateGitLog()
 

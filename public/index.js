@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------
 function redirect() {
-     window.location.replace("https://seniorsemgit.firebaseapp.com/kanban.html")
+	window.location.replace("https://seniorsemgit.firebaseapp.com/kanban.html")
 }
 
 function saveUser() {
@@ -9,8 +9,9 @@ function saveUser() {
 	//Username: document.getElementById('txtUsername').value,
 	sessionStorage.setItem('User', document.getElementById('txtUsername').value); //Bring user name into Kanban page
 	var dbRef = firebase.database().ref("Users/");
-	var usersRef = dbRef.child(document.getElementById('txtUsername').value).set({
+	var usersRef = dbRef.child.set({document.getElementById('txtUsername').value
 		//Username: document.getElementById('txtUsername').value
-})
-setTimeout(redirect, 1000)
+		//WAS INSIDE dbRef.child(document.getElementById('txtUsername').value)
+	})
+	setTimeout(redirect, 1000)
 };

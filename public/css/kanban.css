@@ -1,0 +1,68 @@
+	#header{
+ 		margin-left: 160px; 
+		top: 0;
+		text-align: center; 
+	}
+	#wrapper{
+		width: 84%;
+		margin: 0 auto;
+		margin-left: 160px;
+	}
+	#sidebar{
+  		height: 100%; 
+  		position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+		top: 0;
+  		left: 0;
+  		background-color: #111; 
+  		overflow-x: hidden; /*! Disable horizontal scroll */
+		float: left;
+		width: 11%;
+		background-color: purple;
+		padding: 10px;		
+	}
+	#sidebar a{
+		padding: 6px 8px 6px 16px;
+  		text-decoration: none;
+ 		color: #818181;
+  		display: block;
+	}
+	#sidebar a:hover{
+  		color: #f1f1f1;
+	}
+	#col{
+		margin: 15px;
+		float: right;
+		width: 28%;
+		padding: 10px;
+	}
+	/*#col-inprogress{
+		margin: 15px;
+		float: right;	
+		width: 28%;
+		padding: 10px;
+	}*/
+	a{
+		padding: 6px 8px 6px 16px;
+  		text-decoration: none;
+ 		color: black;
+  		display: block;
+	}
+	a:hover{
+		color: green;
+	}
+	/*#col-done{
+		margin: 15px;
+		float: right;	
+		width: 28%;
+		padding: 10px;
+	}*/
+	.vl{
+		float: right;
+		border-right: 6px solid grey;
+		height: 600px;
+	}
+	.hr1{
+		border: 3px solid;
+        	width: 100%;
+	}
+

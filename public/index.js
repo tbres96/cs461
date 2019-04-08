@@ -4,9 +4,7 @@ function redirect() {
 }
 
 function redirect(extension){
-	//window.location.replace("https://seniorsemgit.firebaseapp.com/" + extension);
-	window.location.replace("file:///C:/Users/Susan_Chatfield/Documents/Computer science/CMSC 461/public/" + extension);
-
+	window.location.replace("https://seniorsemgit.firebaseapp.com/" + extension);
 }
 
 function saveUser() {

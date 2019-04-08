@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Task Info</title>
+	<link rel="stylesheet" type="text/css" href="css/global.css">
 	<script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
 	<script type="text/javascript">
 		var config = {
@@ -139,12 +140,16 @@
 		}
 
         function fillTaskPage(){
-            getTaskInfo("Board1", "Todo", "Task1");
+			var board = sessionStorage.getItem('board');
+			var column = sessionStorage.getItem('column');
+			var task = sessionStorage.getItem('task');
+            getTaskInfo(board,column,task);
         }
 	</script>
 </head>
 
 <body onload="fillTaskPage()">
+	<div><a href = "kanban.html">Home</a></div>
 	<div id="name" style="display:none"></div>
 	<div id="dueDate" style="display:none; background-color:transparent"></div>
 	<div id="lastAction" style="display:none"></div><br>

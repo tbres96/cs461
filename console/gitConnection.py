@@ -47,6 +47,11 @@ def createDatabaseIdFile(boardId):
     f.write(boardId)
     f.close()
 
+#Update git log
+def updateGitLog():
+    f = open("databaseBoardId.txt")
+    boardId = f.read()
+
 # Main function
 print("Welcome " + userId)
 print("Select an option:")

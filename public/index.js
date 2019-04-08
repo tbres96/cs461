@@ -1,8 +1,9 @@
 //-------------------------------------------------------------------------------------
+/*
 function redirect() {
 	window.location.replace("https://seniorsemgit.firebaseapp.com/kanban.html")
 }
-
+*/
 function redirect(extension){
 	window.location.replace("https://seniorsemgit.firebaseapp.com/" + extension);
 }
@@ -16,7 +17,7 @@ function saveUser() {
 		var usersRef = dbRef.child(document.getElementById('txtUsername').value).set({
 			Email: document.getElementById('txtEmail').value
 		})
-		setTimeout(redirect, 1000)
+	setTimeout(function(){redirect("kanban.html");}, 1000)
 	}
 
 function setTask(board, column, task){

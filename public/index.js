@@ -3,6 +3,12 @@ function redirect() {
 	window.location.replace("https://seniorsemgit.firebaseapp.com/kanban.html")
 }
 
+function redirect(extension){
+	//window.location.replace("https://seniorsemgit.firebaseapp.com/" + extension);
+	window.location.replace("file:///C:/Users/Susan_Chatfield/Documents/Computer science/CMSC 461/public/" + extension);
+
+}
+
 function saveUser() {
 	//firebase.database().ref("Users/").push({
 	//Get Elements
@@ -14,3 +20,10 @@ function saveUser() {
 		})
 		setTimeout(redirect, 1000)
 	}
+
+function setTask(board, column, task){
+	sessionStorage.setItem('board',board);
+	sessionStorage.setItem('column',column);
+	sessionStorage.setItem('task',task);
+	redirect("task.html");
+}

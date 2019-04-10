@@ -15,7 +15,8 @@ class User:
     #email = "default user email"
     name = "default user name"
     #username = "default user username"
-    boardList = []
+    boardStringList = []
+    boardObjectList = []
 
     #def __init__(self
 
@@ -59,6 +60,11 @@ class Board:
   #  def __iter__(self):
   #      for attr, value
 
+def printBoardColumns(colObj):
+    print("COLNAME: ", colObj.columnTitle)
+    for task in colObj.taskList:
+        print("TASKNAME: ", task.name, " TASKLIST SIZE: ", len(colObj.taskList))
+
 def parseCommits(task, key, value):
     #print("Parsing commits :)")
     for commitKey, commitValue in value.items():
@@ -81,10 +87,12 @@ def parseOwners(task, key, value):
             #print("OWNERKEY: ", ownerKey, " OWNERVAL: ", ownerValue)
         
 def parseTasks(column, key, value):
-    #print("THIS COLUMN NAME: ", column.columnTitle,"KEY: ", key, " VALUE: ", value)
+    print("THIS COLUMN NAME: ", key," TASKSIZE: ", len(column.taskList))
     for taskKey, taskValue in value.items():
+        
         newTask = Task()
         newTask.name = taskKey
+        #print("THIS COLUMN NAME: ", column.columnTitle, " KEY: ", taskKey)#, " VAL: ", taskValue)
         for taskHeader, taskInfo in taskValue.items():
             if (taskHeader == "DueDate"):
                 newTask.dueDate = taskInfo
@@ -98,21 +106,29 @@ def parseTasks(column, key, value):
                 parseCommits(newTask, taskHeader, taskInfo)
             if (taskHeader == "Owners"):
                 parseOwners(newTask, taskHeader, taskInfo)
+
             
-            column.taskList.append(newTask)
-        print("PARSETASK VALS: ", propKeys(newTask), propVals(newTask))
+
+        #printBoardColumns(column)
+        print("BEFORE APPEND NEWTASK NAME: ", newTask.name, " COLTITLE: ", column.columnTitle)
+        column.taskList.append(newTask)
+        #print("PARSETASK VALS: ", propKeys(newTask), propVals(newTask))
 
             #print("PARSETASKS KEYY: ", taskHeader, " PARSETASKS VAL: ", taskInfo)
 
 
 def parseColumns(board, key, value):
-    #print("KEY: ", key," VALUE: " value)
+    #print("KEY: ", key," VALUE: ", value)
+    #There is a bug here where the columns are the same, and both get pushed to the board
+    #So they both have the same tasks. no good.
     for columnKey, columnValue in value.items():
         newColumn = KanColumn()
         newColumn.columnTitle = columnKey
+        print("BEFORE PARSETASKS NEWCOL NAME: ", newColumn.columnTitle, " TASKLISTSIZE: ", len(newColumn.taskList))
         parseTasks(newColumn, columnKey, columnValue)
+        print("BEFORE COLUMN APPEND NEWCOL NAME: ", newColumn.columnTitle, " TASKLISTSIZE: ", len(newColumn.taskList))
         board.columnList.append(newColumn)
-        print("PARSECOLUMNS VALS: ", propKeys(newColumn), propVals(newColumn))
+        #print("PARSECOLUMNS VALS: ", propKeys(newColumn), propVals(newColumn))
         #[print(t) for t in dir(newColumn) if not t.startswith('__')]
         #print("PARSECOLUMNS KEYY: ", keyy, " PARSETASKS VAL: ", val)
 
@@ -133,3 +149,79 @@ def getAllBoards(dbObj):
                 #print("TIME TO PARSE COLUMNS WOOOO")
                 parseColumns(newBoard, key, val)
             #print("KEY: ", key," VALUE: ", val)
+
+def getAllUsers(dbObj):
+        for user in dbObj.each():
+            newUser = User()
+            print("USER: ", user.key())
+            newUser.name = user.key()
+            for key, value in user.val().items():
+                #newUser.change_attribute(key, value)
+                if (value == 1):
+                    newUser.boardStringList.append(key)
+                print("key: ", key," Value: ", value)
+
+                
+def getCertainUser(dbObj, userToFind):
+    newUser = User()
+    for user in dbObj.each():
+        if (user.key() == userToFind):
+            print("FOUND USER ",  user.key())
+            newUser.name = user.key()
+            for key, value in user.val().items():
+                if (value == 1):
+                    newUser.boardStringList.append(key)
+                    #print("key: ", key," Value: ", value)
+            return newUser
+    
+    if (newUser.name == "default user name"):
+        print("Could not find user.")
+        return false
+
+def getCertainBoard(dbObj, boardToFind):
+    boardFound = False
+    returnBoard = Board()
+    for boardval in dbObj.each():
+        newBoard = Board()
+        #print("BOARDVAL:" , boardval.val())
+        for key, val in boardval.val().items():
+            
+            if (key == "Repository"):
+                newBoard.repository = val
+            if (key == "Name"):
+                if (val != boardToFind):
+                    continue
+                else:
+                    #print("WE FOUND THE BOARD BAYBEEEEEE")
+                    boardFound = True
+                    newBoard.name = val
+            #Here we need to break down the Users dict
+            if (key == "Users"):
+                #print("TIME TO PARSE USERS WOOOO")
+                newBoard.userList.append(val)
+            if (key == "Tasks"):
+                #print("TIME TO PARSE COLUMNS WOOOO")
+                parseColumns(newBoard, key, val)
+            #print("KEY: ", key," VALUE: ", val)
+
+    if (boardFound):
+        returnBoard = newBoard
+        return returnBoard
+    else:
+        return False
+
+
+
+#def printBoardUsers(
+
+    
+    
+def printBoard(boardObj):
+    print('\n', '\n', '\n', "BOARD NAME: ", boardObj.name)
+
+    for col in boardObj.columnList:
+        print("IN COL FOR. CURRENT NAME: ", col.columnTitle, " COLUMNLIST SIZE: ", len(boardObj.columnList), " TASKSIZE: ", len(col.taskList))
+        printBoardColumns(col)
+
+##    for user in boardObj.userList:
+##        print("USER: ", user)

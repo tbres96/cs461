@@ -1,4 +1,5 @@
 import pyrebase
+import getpass
 from consoleClasses import *
 
 config = {
@@ -16,11 +17,27 @@ db = firebase.database()
 print("Fetching users and boards...")
 
 users = db.child("Users").get()
-#board = db.child("Boards").get()
+board = db.child("Boards").get()
 board1 = db.child("Boards").child("Board1").get()
 column1 = db.child("Boards").child("Board1").child("Tasks").get()
 
-print("Welcome to Super Seven KanBan! Enter 'quit' to exit.")
+#currentUserString = getpass.getuser()
+currentUserString = "Andrew Smith"
+currentUser = getCertainUser(users, currentUserString)
+
+
+print("Welcome %s to Super Seven KanBan! Enter 'quit' to exit." % currentUser.name)
+introBoardString = "You are currently a member of: "
+
+for s in currentUser.boardStringList:
+    introBoardString += s + ", "
+    boardToAdd = getCertainBoard(board, s)
+    if (boardToAdd):
+        currentUser.boardObjectList.append(boardToAdd)
+        printBoard(boardToAdd)
+
+introBoardString = introBoardString[0:-2]
+print(introBoardString)
         
 inputString = input("> ")
 
@@ -32,21 +49,25 @@ while(1):
         break
 
     if (inputString == "users"):
-        for user in users.each():
-            newUser = User()
-            print("USER: ", user.key())
-            newUser.name = user.key()
-            for key, value in user.val().items():
-                #newUser.change_attribute(key, value)
-                if (value == 1):
-                    newUser.boardList.append(key)
-                print("key: ", key," Value: ", value)
+        #users = db.child("Users").get()
+        getAllUsers(users)
+        
+##        for user in users.each():
+##            newUser = User()
+##            print("USER: ", user.key())
+##            newUser.name = user.key()
+##            for key, value in user.val().items():
+##                #newUser.change_attribute(key, value)
+##                if (value == 1):
+##                    newUser.boardList.append(key)
+##                print("key: ", key," Value: ", value)
                 
             #print("NATIVE OUTPUT: ", user.key(),": ", user.val())
 
+    
+
 
     if (inputString == "boards"):
-        board = db.child("Boards").get()
         getAllBoards(board)
 
     inputString = input("> ")

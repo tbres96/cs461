@@ -40,6 +40,10 @@ class KanColumn:
     columnTitle = "default column title"
     taskList = []
 
+    def __init__(self):
+        columnTitle = "default column title"
+        taskList = []
+
     #def printColumn(column):
      #   print(column.columnTitle
         
@@ -87,7 +91,7 @@ def parseOwners(task, key, value):
             #print("OWNERKEY: ", ownerKey, " OWNERVAL: ", ownerValue)
         
 def parseTasks(column, key, value):
-    print("THIS COLUMN NAME: ", key," TASKSIZE: ", len(column.taskList))
+    #print("THIS COLUMN NAME: ", key," TASKSIZE: ", len(column.taskList))
     for taskKey, taskValue in value.items():
         
         newTask = Task()
@@ -110,7 +114,7 @@ def parseTasks(column, key, value):
             
 
         #printBoardColumns(column)
-        print("BEFORE APPEND NEWTASK NAME: ", newTask.name, " COLTITLE: ", column.columnTitle)
+        #print("BEFORE APPEND NEWTASK NAME: ", newTask.name, " COLTITLE: ", column.columnTitle)
         column.taskList.append(newTask)
         #print("PARSETASK VALS: ", propKeys(newTask), propVals(newTask))
 
@@ -124,9 +128,10 @@ def parseColumns(board, key, value):
     for columnKey, columnValue in value.items():
         newColumn = KanColumn()
         newColumn.columnTitle = columnKey
-        print("BEFORE PARSETASKS NEWCOL NAME: ", newColumn.columnTitle, " TASKLISTSIZE: ", len(newColumn.taskList))
+        newColumn.taskList = []
+        #print("BEFORE PARSETASKS NEWCOL NAME: ", newColumn.columnTitle, " TASKLISTSIZE: ", len(newColumn.taskList))
         parseTasks(newColumn, columnKey, columnValue)
-        print("BEFORE COLUMN APPEND NEWCOL NAME: ", newColumn.columnTitle, " TASKLISTSIZE: ", len(newColumn.taskList))
+        #print("BEFORE COLUMN APPEND NEWCOL NAME: ", newColumn.columnTitle, " TASKLISTSIZE: ", len(newColumn.taskList))
         board.columnList.append(newColumn)
         #print("PARSECOLUMNS VALS: ", propKeys(newColumn), propVals(newColumn))
         #[print(t) for t in dir(newColumn) if not t.startswith('__')]
@@ -149,6 +154,7 @@ def getAllBoards(dbObj):
                 #print("TIME TO PARSE COLUMNS WOOOO")
                 parseColumns(newBoard, key, val)
             #print("KEY: ", key," VALUE: ", val)
+    print("Boards gotten :)")
 
 def getAllUsers(dbObj):
         for user in dbObj.each():
@@ -156,6 +162,7 @@ def getAllUsers(dbObj):
             print("USER: ", user.key())
             newUser.name = user.key()
             for key, value in user.val().items():
+            #for key, value in user.val().:
                 #newUser.change_attribute(key, value)
                 if (value == 1):
                     newUser.boardStringList.append(key)
@@ -176,7 +183,7 @@ def getCertainUser(dbObj, userToFind):
     
     if (newUser.name == "default user name"):
         print("Could not find user.")
-        return false
+        return False
 
 def getCertainBoard(dbObj, boardToFind):
     boardFound = False

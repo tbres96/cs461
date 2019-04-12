@@ -6,68 +6,71 @@ def propVals(cls):
 
 
 class Commit:
-    title = "default commit title"
-    action = "default commit action"
-    date = "default date"
-    user = "default commit user"
-
-class User:
-    #email = "default user email"
-    name = "default user name"
-    #username = "default user username"
-    boardStringList = []
-    boardObjectList = []
-
-    #def __init__(self
-
-##    def change_attribute(self, attr, val):
-##        if (attr == "email"):
-##            self.email = val
-##        if (attr == "name"):
-##            self.name = val
-##        if (attr == "Username"):
-##            self.username = val
-
-class Task:
-    commitList = []
-    description = "default task description"
-    dueDate = "default due date"
-    latestAction = "default latest action"
-    name = "default task name"
-    ownerList = []
-
-class KanColumn:
-    columnTitle = "default column title"
-    taskList = []
 
     def __init__(self):
-        columnTitle = "default column title"
-        taskList = []
+        self.title = "default commit title"
+        self.action = "default commit action"
+        self.date = "default date"
+        self.user = "default commit user"
+
+class User:
+
+    def __init__(self):
+        #email = "default user email"
+        self.name = "default user name"
+        #username = "default user username"
+        self.boardStringList = []
+        self.boardObjectList = []
+
+
+class Task:
+
+    def __init__(self):
+        self.commitList = []
+        self.description = "default task description"
+        self.dueDate = "default due date"
+        self.latestAction = "default latest action"
+        self.name = "default task name"
+        self.ownerList = []
+
+class KanColumn:
+##    columnTitle = "default column title"
+##    taskList = []
+
+    def __init__(self):
+        self.columnTitle = "default column title"
+        self.taskList = []
 
     #def printColumn(column):
      #   print(column.columnTitle
         
 
 class Board:
-    name = "default board name"
-    repository = "default repository"
-    columnList = []
-    userList = []
+##    name = "default board name"
+##    repository = "default repository"
+##    columnList = []
+##    userList = []
 
     def __init__(self):      
-        name = "default board name"
-        repository = "default repository"
-        columnList = ["columnlistitem"]
-        userList = ["userlistitem"]
+        self.name = "default board name"
+        self.repository = "default repository"
+        self.columnList = []
+        self.userList = []
         
 
   #  def __iter__(self):
   #      for attr, value
 
+def printBoardTasks(taskObj):
+    #for taskKey, taskValue in taskObj:
+    print('\t', "Task Name: ", taskObj.name, '\n', '\t\t', "Description: ", taskObj.description, '\n', '\t\t', "Due Date: ", taskObj.dueDate)
+    print('\t\t', "Latest Action: ", taskObj.latestAction)
+
 def printBoardColumns(colObj):
     print("COLNAME: ", colObj.columnTitle)
     for task in colObj.taskList:
-        print("TASKNAME: ", task.name, " TASKLIST SIZE: ", len(colObj.taskList))
+        #print("TASKNAME: ", task.name, " TASKLIST SIZE: ", len(colObj.taskList))
+        printBoardTasks(task)
 
 def parseCommits(task, key, value):
     #print("Parsing commits :)")
@@ -125,6 +128,7 @@ def parseColumns(board, key, value):
     #print("KEY: ", key," VALUE: ", value)
     #There is a bug here where the columns are the same, and both get pushed to the board
     #So they both have the same tasks. no good.
+    print("IN COLUMNS THIS BOARDS NAME: ", board.name)
     for columnKey, columnValue in value.items():
         newColumn = KanColumn()
         newColumn.columnTitle = columnKey
@@ -132,6 +136,7 @@ def parseColumns(board, key, value):
         #print("BEFORE PARSETASKS NEWCOL NAME: ", newColumn.columnTitle, " TASKLISTSIZE: ", len(newColumn.taskList))
         parseTasks(newColumn, columnKey, columnValue)
         #print("BEFORE COLUMN APPEND NEWCOL NAME: ", newColumn.columnTitle, " TASKLISTSIZE: ", len(newColumn.taskList))
+        print("BEFORE APPEND BOARD NAME: ", board.name, " BOARD COLSIZE: ", len(board.columnList))
         board.columnList.append(newColumn)
         #print("PARSECOLUMNS VALS: ", propKeys(newColumn), propVals(newColumn))
         #[print(t) for t in dir(newColumn) if not t.startswith('__')]
@@ -139,13 +144,16 @@ def parseColumns(board, key, value):
 
 def getAllBoards(dbObj):
     #board = db.child("Boards").get()
-    newBoard = Board()
+    #newBoard = Board()
     for boardval in dbObj.each():
+        newBoard = Board()
+        print("THIS BOARD'S NAME: ", newBoard.name)
         for key, val in boardval.val().items():
             if (key == "Repository"):
                 newBoard.repository = val
             if (key == "Name"):
                 newBoard.name = val
+                newBoard.name += "DEBUG"
             #Here we need to break down the Users dict
             if (key == "Users"):
                 #print("TIME TO PARSE USERS WOOOO")
@@ -159,6 +167,7 @@ def getAllBoards(dbObj):
 def getAllUsers(dbObj):
         for user in dbObj.each():
             newUser = User()
+            newUser.boardStringList = []
             print("USER: ", user.key())
             newUser.name = user.key()
             for key, value in user.val().items():
@@ -227,7 +236,7 @@ def printBoard(boardObj):
     print('\n', '\n', '\n', "BOARD NAME: ", boardObj.name)
 
     for col in boardObj.columnList:
-        print("IN COL FOR. CURRENT NAME: ", col.columnTitle, " COLUMNLIST SIZE: ", len(boardObj.columnList), " TASKSIZE: ", len(col.taskList))
+        #print("IN COL FOR. CURRENT NAME: ", col.columnTitle, " COLUMNLIST SIZE: ", len(boardObj.columnList), " TASKSIZE: ", len(col.taskList))
         printBoardColumns(col)
 
 ##    for user in boardObj.userList:

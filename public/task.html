@@ -4,7 +4,7 @@
 	<title>Task Info</title>
 	<link rel="stylesheet" type="text/css" href="css/global.css">
 	<script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
-	<script type="text/javascript">
+	<script>
 		var config = {
 			apiKey: "AIzaSyA11FpqG-RKNpZ0loNU8HhunHUgk7EFCqY",
 			authDomain: "seniorsemgit.firebaseapp.com",
@@ -14,142 +14,22 @@
 			messagingSenderId: "348042953918"
 		};
 		firebase.initializeApp(config);
-		var db = firebase.database();
-		var BOARDS = 'Boards';
-		var USERS = 'Users';
-		var TASKS = "Tasks";
-		var NAME = "Name";
-		var DESCRIPTION = "Description";
-		var COMMITS = "Commits";
-		var OWNERS = "Owners";
-		var LASTACTION = "LatestAction";
-		var DUEDATE = "DueDate";
-		
-		function isLater(firstDate, secondDate){
-			if(firstDate > secondDate){
-				return 1;
-			}else if(firstDate < secondDate){
-				return -1;
-			}else{
-				return 0;
-			}
-		}
-		
-	
-		function getTaskInfo(board, section, task){
-            var boardRef = db.ref().child(BOARDS).child(board).child(TASKS).child(section).child(task);
-			boardRef.on('value', function(snapshot){
-                if(snapshot.exists()){
-					//task name
-					if(snapshot.child(NAME).exists()){
-						document.getElementById("name").innerHTML = "<h1>Task name: " + snapshot.child(NAME).val() + "</h1>";
-						document.getElementById("name").style.display = "inline";
-					}
-					
-					//description
-					if(snapshot.child(DESCRIPTION).exists()){
-						document.getElementById("description").innerHTML = "<p><strong>Description: </strong>" + snapshot.child(DESCRIPTION).val() + "</p>";
-						document.getElementById("description").style.display = "inline";
-					}
-					
-					//owners
-					if(snapshot.child(OWNERS).exists()){
-						var ownersMsg = "<p><strong>Owners: </strong>";
-						if(snapshot.child(OWNERS).hasChildren()){
-							ownersMsg += "<ul>";
-							snapshot.child(OWNERS).forEach(function(childSnapshot){
-								if(childSnapshot.val()){
-									var userID = childSnapshot.key;
-									ownersMsg += "<li>" + userID + "</li>";
-								}
-							});
-							ownersMsg += "</ul>";
-						}else{
-							ownersMsg += "None";
-						}
-						ownersMsg += "</p>";
-						document.getElementById("owners").innerHTML = ownersMsg;
-						document.getElementById("owners").style.display = "inline";
-					}
-					
-					//commits
-					if(snapshot.child(COMMITS).exists()){
-						var comMsg = "<p><strong>Commits: </strong>";
-						if(snapshot.child(COMMITS).hasChildren()){
-							comMsg += "<ul>";
-							snapshot.child(COMMITS).forEach(function(childSnapshot){
-								comMsg += "<li>" + childSnapshot.key;
-								if(childSnapshot.child("User").exists() || childSnapshot.child("Action").exists()){
-									comMsg += "<ul>";
-									if(childSnapshot.child("User").exists()){
-										comMsg += "<li>" + childSnapshot.child("User").val() + "</li>";
-									}
-									if(childSnapshot.child("Action").exists()){
-										comMsg += "<li>" + childSnapshot.child("Action").val() + "</li>";
-									}
-									comMsg += "</ul>";
-								}
-								comMsg += "</li>";
-							});
-							comMsg += "</ul>";
-						}else{
-							comMsg += "None";
-						}
-						comMsg += "</p>";
-						document.getElementById("commits").innerHTML = comMsg;
-						document.getElementById("commits").style.display = "inline";
-					}
-					
-					//date of last action
-					if(snapshot.child(LASTACTION).exists()){
-						document.getElementById("lastAction").innerHTML = "<h3>Last Update: " + snapshot.child(LASTACTION).val() + "</h3>";
-						document.getElementById("lastAction").style.display = "inline";
-					}
-					
-					//due date
-					if(snapshot.child(DUEDATE).exists()){
-						document.getElementById("dueDate").innerHTML = "<h2>Date Due: " + snapshot.child(DUEDATE).val() + "</h2>";
-						document.getElementById("dueDate").style.display = "inline";
-					}
-					
-					//highlight last update based on date
-					if(snapshot.child(LASTACTION).exists() && snapshot.child(DUEDATE).exists()){
-						var lastAction = snapshot.child(LASTACTION).val();
-						var dueDate = snapshot.child(DUEDATE).val();
-						var result = isLater(lastAction,dueDate);
-						//XXX colors aren't showing???
-						if(result == 1){
-							//highlight in red
-							document.getElementById("dueDate").style.backgroundColor = "red";
-							console.log("red");
-						}else if(result == 0){
-							//highlight in yellow
-							document.getElementById("dueDate").style.backgroundColor = 'yellow';
-							console.log("yellow");
-						}else{	//result == -1
-							//highlight in green
-							document.getElementById("dueDate").style.backgroundColor = 'green';
-							console.log("green");
-						}
-					}
-					
-				}else{
-					document.getElementById("name").innerHTML = "snapshot doesn't exist";
-				}
-			});
-		}
-
-        function fillTaskPage(){
-			var board = sessionStorage.getItem('board');
-			var column = sessionStorage.getItem('column');
-			var task = sessionStorage.getItem('task');
-            getTaskInfo(board,column,task);
-        }
 	</script>
+	<script src="../scripts/functions.js"></script>
 </head>
 
 <body onload="fillTaskPage()">
 	<div><a href = "kanban.html">Home</a></div>
+<!--	
+UNCOMMENT THE BUTTONS TO SEE HOW THESE FUNCTIONS WORK.
+SHOULD EVENTUALLY ONLY BE CALLED FROM ANOTHER FUNCTION TO LIMIT END-USER HACKABILITY.
+"addUserToBoard" and "removeUserFromBoard" works the same way, 
+except they are added and removed from the "Owners" section of the board.
+See "../scripts/functions.js" for more info
+
+	<button onclick="javascript:addUserToTask('mellita');">Add mellita to task!</button>
+	<button onclick="javascript:removeUserFromTask('mellita');">Remove mellita from task!</button>
+-->
 	<div id="name" style="display:none"></div>
 	<div id="dueDate" style="display:none; background-color:transparent"></div>
 	<div id="lastAction" style="display:none"></div><br>

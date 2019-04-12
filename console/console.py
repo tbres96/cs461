@@ -11,13 +11,16 @@ config = {
 
 print("Connecting to database...")
 
+
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
+board = db.child("Boards").get()
+users = db.child("Users").get()
+
+
 print("Fetching users and boards...")
 
-users = db.child("Users").get()
-board = db.child("Boards").get()
 
 #currentUserString = getpass.getuser()
 currentUserString = "Andrew Smith"
@@ -34,7 +37,7 @@ for s in currentUser.boardStringList:
     boardToAdd = getCertainBoard(board, s)
     if (boardToAdd):
         currentUser.boardObjectList.append(boardToAdd)
-        printBoard(boardToAdd)
+        #printBoard(boardToAdd)
 
 introBoardString = introBoardString[0:-2]
 print(introBoardString)
@@ -49,10 +52,16 @@ while(1):
         break
 
     if (inputString == "users"):
-        getAllUsers(users)
+        localusers = db.child("Users").get()
+        getAllUsers(localusers)
 
     if (inputString == "boards"):
-        getAllBoards(board)
+        localboard = db.child("Boards").get()
+        getAllBoards(localboard)
+
+    if (inputString == "view boards"):
+        for b in currentUser.boardObjectList:
+            printBoard(b)
 
     inputString = input("> ")
 

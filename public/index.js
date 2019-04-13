@@ -15,7 +15,7 @@ function saveUser() {
 	sessionStorage.setItem('User', document.getElementById('txtUsername').value); //Bring user name into Kanban page
 		var dbRef = firebase.database().ref("Users/");
 		var usersRef = dbRef.child(document.getElementById('txtUsername').value).set({
-			Email: document.getElementById('txtEmail').value
+			Board: ("Board00")
 		})
 	setTimeout(function(){redirect("kanban.html");}, 1000)
 	}

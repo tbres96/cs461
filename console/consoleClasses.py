@@ -72,6 +72,8 @@ class Board:
 ##        #print("TASKNAME: ", task.name, " TASKLIST SIZE: ", len(colObj.taskList))
 ##        findBoardTasks(task)
 
+
+
 def updateBoard(boardObj, userObj):
     for b in range(0, len(userObj.boardObjectList)):# in userObj.boardObjectList:
         #print("CHECKING IF ", userObj.boardObjectList[b].name, " IS EQUAL TO ", boardObj.name)
@@ -300,3 +302,44 @@ def addTask(boardObj, curUser):
     else:
         print("Please select a board to work on first with <select>")
             
+
+def findTask(boardObj, taskToEditName):
+    taskFound = False
+    for colIndex in range(0, len(boardObj.columnList)):
+        for taskIndex in range(0, len(boardObj.columnList[colIndex].taskList)):
+            if (boardObj.columnList[colIndex].taskList[taskIndex].name == taskToEditName):
+                print("FOUND TASK!")
+                taskFound = True
+                print("Please input a task name, or <enter> for no change.")
+                taskName = input("  > ")
+                if (taskName != ""):
+                    boardObj.columnList[colIndex].taskList[taskIndex].name = taskName
+                print("Please input a task description, or <enter> for no change.")
+                taskDesc = input("  > ")
+                if (taskDesc != ""):
+                    boardObj.columnList[colIndex].taskList[taskIndex].description = taskDesc
+                print("Please input a task due date, or <enter> for no change.")
+                taskDue = input("  > ")
+                if (taskDue != ""):
+                    boardObj.columnList[colIndex].taskList[taskIndex].dueDate = taskDue
+                return 1
+
+    return 0
+
+                
+                #return taskObj
+
+
+def editTask(boardObj, userObj):
+    if (boardObj != -1):
+        print("What is the name of the task you want to edit?")
+        taskToEditString = input("  > ")
+        returnVal = findTask(boardObj, taskToEditString)
+        if (returnVal == 1):
+            print("Task succesfully edited.")
+            updateBoard(boardObj, userObj)
+        else:
+            print("Could not edit task.")
+
+
+    

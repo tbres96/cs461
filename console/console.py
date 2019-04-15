@@ -76,6 +76,10 @@ while(1):
 
     if (inputString == "add task"):
         addTask(currentBoard, currentUser)
+
+
+    if (inputString == "edit task"):
+        editTask(currentBoard, currentUser)
         
 
     if (inputString == "users"):

@@ -67,7 +67,7 @@ while(1):
                 print("Found your board!")
                 boardFound = True
                 printBoard(currentBoard)
-                print('\n', '\n', "You are currently working on the ", currentBoard.name, " board. You can now <add task> and <edit task>.")
+                print('\n', '\n', "You are currently working on the ", currentBoard.name, " board. You can now <add task>, <edit task>, <add column> and <edit column>.")
                 break
 
         if (boardFound == False):
@@ -80,7 +80,12 @@ while(1):
 
     if (inputString == "edit task"):
         editTask(currentBoard, currentUser)
+
+    if (inputString == "add column"):
+        addColumn(currentBoard, currentUser)
         
+    if (inputString == "edit column"):
+        editColumn(currentBoard, currentUser)
 
     if (inputString == "users"):
         localusers = db.child("Users").get()
@@ -93,6 +98,11 @@ while(1):
     if (inputString == "view boards"):
         for b in currentUser.boardObjectList:
             printBoard(b)
+
+    if (inputString == "new board"):
+        print("After board creation, it will be your selected board.")
+        currentBoard = makeNewBoard(currentUser)
+        print("You are now free to add tasks to the board.")
 
     inputString = input("> ")
 

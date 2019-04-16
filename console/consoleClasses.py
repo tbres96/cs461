@@ -322,6 +322,11 @@ def findTask(boardObj, taskToEditName):
                 taskDue = input("  > ")
                 if (taskDue != ""):
                     boardObj.columnList[colIndex].taskList[taskIndex].dueDate = taskDue
+                print("Please input a task latest action, or <enter> for no change.")
+                taskLatest = input("  > ")
+                if (taskLatest != ""):
+                    boardObj.columnList[colIndex].taskList[taskIndex].latestAction = taskLatest
+                    
                 return 1
 
     return 0
@@ -334,12 +339,95 @@ def editTask(boardObj, userObj):
     if (boardObj != -1):
         print("What is the name of the task you want to edit?")
         taskToEditString = input("  > ")
+        while (taskToEditString == ""):
+            print("The name of the task to edit cannot be blank.")
+            print("What is the name of the task you want to edit?")
+            taskToEditString = input("  > ") 
         returnVal = findTask(boardObj, taskToEditString)
         if (returnVal == 1):
-            print("Task succesfully edited.")
+            print("Task successfully edited.")
             updateBoard(boardObj, userObj)
         else:
-            print("Could not edit task.")
+            print("Could not edit task. Maybe you typed the name wrong?")
+    else:
+        print("Please select a board to work on first with <select>")
 
+def findColumn(boardObj, columnToEditString):
+    for colIndex in range(0, len(boardObj.columnList)):
+        if (boardObj.columnList[colIndex].columnTitle == columnToEditString):
+            print("found column!")
+            #colFound = True
+            print("Please input a new column name, or <enter> for no change.")
+            newColName = input("  > ")
+            if (newColName != ""):
+                boardObj.columnList[colIndex].columnTitle = newColName
 
-    
+            return 1
+    return 0
+
+def editColumn(boardObj, userObj):
+    #colFound = False
+    if (boardObj != -1):
+        print("What is the name of the column you want to edit?")
+        columnToEditString = input("  > ")
+        while (columnToEditString == ""):
+            print("The name of the column to edit cannot be blank.")
+            print("What is the name of the column you want to edit?")
+            columnToEditString = input("  > ")
+        returnVal = findColumn(boardObj, columnToEditString)
+        if (returnVal == 1):
+            print("Column successfully edited.")
+            updateBoard(boardObj, userObj)
+        else:
+            print("Could not edit column. Maybe you typed the name wrong?")
+    else:
+        print("Please select a board to work on first with <select>")
+        return 0
+                
+
+def addColumn(boardObj, userObj):
+    if (boardObj != -1):
+        newColumn = KanColumn()
+        print("What would you like the column title to be?")
+        colTitle = input("  > ")
+        while (colTitle == ""):
+            print("Column title cannot be blank.")
+            print("What would you like the column title to be?")
+            colTitle = input("  > ")
+
+        newColumn.columnTitle = colTitle
+        boardObj.columnList.append(newColumn)
+        print("Column Added!")
+    else:
+        print("Please select a board to work on first with <select>")
+
+def makeNewBoard(currentUser):
+    createdBoard = Board()
+    print("What would you like the board name to be?")
+    createdBoardname = input("  > ")
+    while (createdBoardname == ""):
+        print("Board name cannot be blank.")
+        print("What would you like the board name to be?")
+        createdBoardname = input("  > ")
+
+#Found at: https://stackoverflow.com/questions/23326099/how-can-i-limit-the-user-input-to-only-integers-in-python
+    while True:
+        try:
+            print("How many columns would you like this board to have?")
+            columnTotal = int(input("  > "))
+            if (columnTotal <= 0):
+                print("Please enter an integer value above 0.")
+                continue
+            break
+        except:
+            print("Please enter an integer value above 0.")
+        
+
+    for colNum in range(0, columnTotal):
+        print("In Colnum for!")
+        addColumn(createdBoard, currentUser)
+
+    createdBoard.userList.append(currentUser)
+    currentUser.boardObjectList.append(createdBoard)
+    return createdBoard
+

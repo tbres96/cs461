@@ -1,4 +1,4 @@
-import json
+import json, re
 from collections import defaultdict
 
 def propKeys(cls):
@@ -42,6 +42,14 @@ class Task:
         retDict['DueDate'] = self.dueDate
         retDict['LatestAction'] = self.latestAction
         retDict['name'] = self.name
+        for ownerVal in self.ownerList:
+            retDict['Owners'].append(ownerVal)
+        for commitVal in self.commitList:
+            originalJson = json.dumps(commitVal.__dict__)
+            #print("ORIGINAL JSON COMMIT DICT VAL: ", originalJson)
+            #print("After SUB JSON COMMIT DICT VAL: ", re.sub('\\', '',originalJson))
+
+            retDict['Commits'].append(originalJson)
         return retDict
 
 class KanColumn:
@@ -56,7 +64,7 @@ class KanColumn:
         returnDict = defaultdict(list)
         #print("IN KANCOLUMNS TODICT")
         for task in self.taskList:
-            print("TASK: ", task.name)
+            #print("TASK: ", task.name)
             returnDict[task.name].append(task.to_dict(returnDict[task.name]))
 
         return returnDict
@@ -83,7 +91,7 @@ class Board:
         for key, val in self.__dict__.items():
             if (val is not None):
                 if (key == 'name'):
-                    _dict[key] = val
+                    _dict['Name'] = val
                 elif (key == 'userList'):
                     #_dict['Users'] = defaultdict(list)
                     for userVal in val:
@@ -95,7 +103,7 @@ class Board:
                     #print("AFTER PARSING USERS: ", _dict['Users'])
                 elif (key == 'columnList'):
                     for column in val:
-                        print("IN ELIF KEY: ", key, " VAL: ", column.columnTitle)
+                        #print("IN ELIF KEY: ", key, " VAL: ", column.columnTitle)
                         #will probably need to change to _dict.update(to_dict(column)) or something.
                         _dict[column.columnTitle].append(column.to_dict(_dict[column.columnTitle]))
                 else:
@@ -498,6 +506,25 @@ def viewOwners(boardObj, curUser):
 
 
 def boardToJson(boardObj):
-    boardJson = boardObj.__dict__
-    print("OUR BOARD JSON: ", json.dumps(boardObj.to_dict()))
-      
+    boardJson = json.dumps(boardObj.to_dict())
+    #print("OUR ORIGINAL BOARD JSON: ", boardJson)
+    newBoardJson = re.sub('\\\\|\[|\]', '', boardJson)
+    print("OUR NEWWWWWW BOARD JSON: ", newBoardJson)
+
+    return newBoardJson
+    
+
+
+
+def boardAlreadyExists(dbObj, boardToFind):
+    for boardval in dbObj.each():
+        for key, val in boardval.val().items():
+            if (key == "Name"):
+                if (val != boardToFind):
+                    continue
+                else:
+                    #print("WE FOUND THE BOARD BAYBEEEEEE")
+                    return True
+    return False
+
+

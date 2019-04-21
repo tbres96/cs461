@@ -68,6 +68,7 @@ while(1):
                 boardFound = True
                 printBoard(currentBoard)
                 print('\n', '\n', "You are currently working on the ", currentBoard.name, " board. You can now <add task>, <edit task>, <add column> and <edit column>.")
+                print("You can also use <board owners> to see owners.")
                 break
 
         if (boardFound == False):
@@ -77,6 +78,17 @@ while(1):
     if (inputString == "add task"):
         addTask(currentBoard, currentUser)
 
+    if (inputString == "board owners"):
+        viewOwners(currentBoard, currentUser)
+
+    if (inputString == "json"):
+        boardToJson(currentBoard)
+
+##    if (inputString == "save board"):
+##        if (boardAlreadyExists(currentBoard)):
+##            db.child("Boards").child(currentBoard.name).update(currentBoard)
+##        else:
+##            db.child("Boards").push(currentBoard)
 
     if (inputString == "edit task"):
         editTask(currentBoard, currentUser)

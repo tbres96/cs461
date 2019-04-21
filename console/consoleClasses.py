@@ -1,3 +1,6 @@
+import json
+from collections import defaultdict
+
 def propKeys(cls):
     return [i for i in cls.__dict__.keys() if i[:1] != '_']
 
@@ -33,6 +36,14 @@ class Task:
         self.name = "default task name"
         self.ownerList = []
 
+    def to_dict(self, dictionary):
+        retDict = defaultdict(list)
+        retDict['Description'] = self.description
+        retDict['DueDate'] = self.dueDate
+        retDict['LatestAction'] = self.latestAction
+        retDict['name'] = self.name
+        return retDict
+
 class KanColumn:
 ##    columnTitle = "default column title"
 ##    taskList = []
@@ -40,6 +51,16 @@ class KanColumn:
     def __init__(self):
         self.columnTitle = "default column title"
         self.taskList = []
+
+    def to_dict(self, dictionary):
+        returnDict = defaultdict(list)
+        #print("IN KANCOLUMNS TODICT")
+        for task in self.taskList:
+            print("TASK: ", task.name)
+            returnDict[task.name].append(task.to_dict(returnDict[task.name]))
+
+        return returnDict
+        
 
     #def printColumn(column):
      #   print(column.columnTitle
@@ -53,10 +74,35 @@ class Board:
 
     def __init__(self):      
         self.name = "default board name"
-        self.repository = "default repository"
+        #self.repository = "default repository"
         self.columnList = []
         self.userList = []
-        
+
+    def to_dict(self):
+        _dict = defaultdict(list)
+        for key, val in self.__dict__.items():
+            if (val is not None):
+                if (key == 'name'):
+                    _dict[key] = val
+                elif (key == 'userList'):
+                    #_dict['Users'] = defaultdict(list)
+                    for userVal in val:
+##                        try: 
+##                            _dict['Users'].append(userVal)
+##                        except KeyError:
+                        #print("APPENDING: ", userVal, " TO USERS")
+                        _dict['Users'].append(userVal)
+                    #print("AFTER PARSING USERS: ", _dict['Users'])
+                elif (key == 'columnList'):
+                    for column in val:
+                        print("IN ELIF KEY: ", key, " VAL: ", column.columnTitle)
+                        #will probably need to change to _dict.update(to_dict(column)) or something.
+                        _dict[column.columnTitle].append(column.to_dict(_dict[column.columnTitle]))
+                else:
+                    print("IN ELSE KEY: ", key, " VAL: ", val)
+                    #_dict[key] = val.to_dict(val)
+        return _dict
+                
 
   #  def __iter__(self):
   #      for attr, value
@@ -135,10 +181,16 @@ def parseCommits(task, key, value):
         task.commitList.append(newCommit)
         #print("ACTION ", newCommit.action, " DATE: ", newCommit.date)
 
-def parseOwners(task, key, value):
+def parseBoardOwners(obj, key, value):
     for ownerKey, ownerValue in value.items():
         if (ownerValue == 1):
-            task.ownerList.append(ownerKey)
+            obj.userList.append(ownerKey)
+            #print("OWNERKEY: ", ownerKey, " OWNERVAL: ", ownerValue)
+
+def parseOwners(obj, key, value):
+    for ownerKey, ownerValue in value.items():
+        if (ownerValue == 1):
+            obj.ownerList.append(ownerKey)
             #print("OWNERKEY: ", ownerKey, " OWNERVAL: ", ownerValue)
         
 def parseTasks(column, key, value):
@@ -147,7 +199,7 @@ def parseTasks(column, key, value):
         
         newTask = Task()
         newTask.name = taskKey
-        #print("THIS COLUMN NAME: ", column.columnTitle, " KEY: ", taskKey)#, " VAL: ", taskValue)
+        #print("THIS COLUMN NAME: ", column.columnTitle, " KEY: ", taskKey, " VAL: ", taskValue)
         for taskHeader, taskInfo in taskValue.items():
             if (taskHeader == "DueDate"):
                 newTask.dueDate = taskInfo
@@ -204,7 +256,8 @@ def getAllBoards(dbObj, toPrint):
             #Here we need to break down the Users dict
             if (key == "Users"):
                 #print("TIME TO PARSE USERS WOOOO")
-                newBoard.userList.append(val)
+                #newBoard.userList.append(val)
+                parseBoardOwners(newBoard, key, val)
             if (key == "Tasks"):
                 #print("TIME TO PARSE COLUMNS WOOOO")
                 parseColumns(newBoard, key, val)
@@ -265,7 +318,8 @@ def getCertainBoard(dbObj, boardToFind):
             #Here we need to break down the Users dict
             if (key == "Users"):
                 #print("TIME TO PARSE USERS WOOOO")
-                newBoard.userList.append(val)
+                #newBoard.userList.append(val)
+                parseBoardOwners(newBoard, key, val)
             if (key == "Tasks"):
                 #print("TIME TO PARSE COLUMNS WOOOO")
                 parseColumns(newBoard, key, val)
@@ -424,10 +478,26 @@ def makeNewBoard(currentUser):
         
 
     for colNum in range(0, columnTotal):
-        print("In Colnum for!")
+        #print("In Colnum for!")
         addColumn(createdBoard, currentUser)
 
     createdBoard.userList.append(currentUser)
     currentUser.boardObjectList.append(createdBoard)
     return createdBoard
 
+def viewOwners(boardObj, curUser):
+    if (boardObj != -1):
+        ownerString = "Owners of this board are: "
+        for u in boardObj.userList:
+            #print("USER: ", u)
+            ownerString += u + ", "
+        ownerString = ownerString[0:-2]
+        print(ownerString)
+    else:
+        print("Please select a board to work on first with <select>")
+
+
+def boardToJson(boardObj):
+    boardJson = boardObj.__dict__
+    print("OUR BOARD JSON: ", json.dumps(boardObj.to_dict()))
+      

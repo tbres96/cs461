@@ -84,11 +84,12 @@ while(1):
     if (inputString == "json"):
         boardToJson(currentBoard)
 
-##    if (inputString == "save board"):
-##        if (boardAlreadyExists(currentBoard)):
-##            db.child("Boards").child(currentBoard.name).update(currentBoard)
-##        else:
-##            db.child("Boards").push(currentBoard)
+    if (inputString == "save board"):
+        localboard = db.child("Boards").get()
+        if (boardAlreadyExists(localboard, currentBoard.name)):
+            db.child("Boards").child(currentBoard.name).update(boardToJson(currentBoard))
+        else:
+            db.child("Boards").push(boardToJson(currentBoard))
 
     if (inputString == "edit task"):
         editTask(currentBoard, currentUser)

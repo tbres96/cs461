@@ -84,7 +84,15 @@ while(1):
     if (inputString == "json"):
         boardToJson(currentBoard)
 
+    if (inputString == "update"):
+        localboard = db.child("Boards")
+        updateDbBoard(localboard, currentBoard)
+
     if (inputString == "save board"):
+        if (currentBoard == -1):
+            print("Please select a board first.")
+            inputString = input("> ")
+            continue
         localboard = db.child("Boards").get()
         if (boardAlreadyExists(localboard, currentBoard.name)):
             db.child("Boards").child(currentBoard.name).update(boardToJson(currentBoard))

@@ -603,29 +603,81 @@ function fillTaskPage(){
 }
 
 function addUserToBoard(user){
-	var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(USERS);
-	dbRef.update({
-		[user]: true
+	var userRef = db.ref(USERS);
+	userRef.once('value',function(snap){
+		if(snap.child(user).exists()){
+			var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(USERS);
+			dbRef.update({
+				[user]: true
+			});
+			userRef.child(user).update({
+				[sessionStorage.getItem('board')]: true
+			});
+		}else{
+			alert(user + " doesn't exist in the database!");
+		}
 	});
 }
 
 function removeUserFromBoard(user){
-	var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(USERS);
-	dbRef.update({
-		[user]: false
+	var userRef = db.ref(USERS);
+	userRef.once('value',function(snap){
+		if(snap.child(user).exists()){
+			var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(USERS);
+			dbRef.update({
+				[user]: false
+			});
+			userRef.child(user).update({
+				[sessionStorage.getItem('board')]: false
+			});
+		}else{
+			alert(user + " doesn't exist in the database!");
+		}
 	});
 }
 
 function addUserToTask(user){
-	var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(TASKS).child(sessionStorage.getItem('column')).child(sessionStorage.getItem('task')).child(OWNERS);
-	dbRef.update({
-		[user]: true
+	var userRef = db.ref(USERS);
+	userRef.once('value',function(snap){
+		if(snap.child(user).exists()){
+			var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(TASKS).child(sessionStorage.getItem('column')).child(sessionStorage.getItem('task'));
+			dbRef.once('value',function(subSnap){
+				if(subSnap.exists()){
+					dbRef.child(OWNERS).update({
+						[user]: true
+					});
+					userRef.child(user).update({
+						[sessionStorage.getItem('board')]: true
+					});
+				}else{
+					alert("The task called '" + sessionStorage.getItem('task') + "' from the column '" + sessionStorage.getItem('column') + "' of the board '" + sessionStorage.getItem('board') + "' does not exist. Unable to proceed.");
+				}
+			});
+		}else{
+			alert(user + " doesn't exist in the database!");
+		}
 	});
 }
 
 function removeUserFromTask(user){
-	var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(TASKS).child(sessionStorage.getItem('column')).child(sessionStorage.getItem('task')).child(OWNERS);
-	dbRef.update({
-		[user]: false
+	var userRef = db.ref(USERS);
+	userRef.once('value',function(snap){
+		if(snap.child(user).exists()){
+			var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(TASKS).child(sessionStorage.getItem('column')).child(sessionStorage.getItem('task'));
+			dbRef.once('value',function(subSnap){
+				if(subSnap.exists()){
+					dbRef.child(OWNERS).update({
+						[user]: false
+					});
+					userRef.child(user).update({
+						[sessionStorage.getItem('board')]: false
+					});
+				}else{
+					alert("The task called '" + sessionStorage.getItem('task') + "' from the column '" + sessionStorage.getItem('column') + "' of the board '" + sessionStorage.getItem('board') + "' does not exist. Unable to proceed.");
+				}
+			});
+		}else{
+			alert(user + " doesn't exist in the database!");
+		}
 	});
 }

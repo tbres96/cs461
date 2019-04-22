@@ -606,6 +606,9 @@ function addUserToBoard(user){
 	var userRef = db.ref(USERS);
 	userRef.once('value',function(snap){
 		if(snap.child(user).exists()){
+			if(snap.child(user).child('Board').exists() && snap.child(user).child("Board").val() == "Board00"){
+				userRef.child(user).child("Board").remove();
+			}
 			var dbRef = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(USERS);
 			dbRef.update({
 				[user]: true

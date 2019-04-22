@@ -528,3 +528,8 @@ def boardAlreadyExists(dbObj, boardToFind):
     return False
 
 
+def updateDbBoard(dbObj, boardObj):
+    if (boardObj == -1):
+        print("Please select a board first")
+        return
+    dbObj.child(boardObj.name).update({"Name": "BOARD1"})

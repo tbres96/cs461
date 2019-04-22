@@ -108,6 +108,9 @@ while(1):
     if (inputString == "edit column"):
         editColumn(currentBoard, currentUser)
 
+    if (inputString == "move task"):
+        moveTask(currentBoard, currentUser)
+
     if (inputString == "users"):
         localusers = db.child("Users").get()
         getAllUsers(localusers)

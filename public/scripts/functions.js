@@ -300,6 +300,8 @@ function getListOfKanbans(){
 															getListToRemoveOwners += "<option value''>--Owners--</option>";
 															var taskName = taskSnapshot.key;
 															if(taskName.includes("Task") || taskName.includes("task")){
+																sessionStorage.setItem('column', columnName);
+																sessionStorage.setItem('task', taskSnapshot.child(NAME).val());
 																taskDisplay += "<div class='box'><li>";
 																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
 																taskDisplay += taskSnapshot.child(NAME).val();
@@ -368,6 +370,8 @@ function getListOfKanbans(){
 															getListToRemoveOwners += "<option value''>--Owners--</option>";
 															var taskName = taskSnapshot.key;
 															if(taskName.includes("Task") || taskName.includes("task")){
+																sessionStorage.setItem('column', columnName);
+																sessionStorage.setItem('task', taskSnapshot.child(NAME).val());
 																taskDisplay += "<div class='box'><li>";
 																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
 																taskDisplay += taskSnapshot.child(NAME).val();

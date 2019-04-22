@@ -1,10 +1,10 @@
 	#header{
- 		margin-left: 160px; 
+ 		margin-left: 11%;
 		top: 0;
 		text-align: center; 
 	}
 	#miniHeader{
-		margin-left: 160px;
+		margin-left: 11%;
 		top: 0;
 		text-align: center;
 		font size: 1;
@@ -12,7 +12,9 @@
 	#wrapper{
 		width: 84%;
 		margin: 0 auto;
-		margin-left: 160px;
+		/*margin-left: 160px;*/
+		margin-left: 10%;
+		height: 100%;
 	}
 	#sidebar{
   		height: 100%; 
@@ -24,7 +26,8 @@
 		float: left;
 		width: 11%;
 		background-color: purple;
-		padding: 10px;		
+		padding: 0.60%;
+		/*padding: 10px;*/		
 	}
 	#sidebar a{
 		padding: 6px 8px 6px 16px;
@@ -36,10 +39,10 @@
   		color: #f1f1f1;
 	}
 	#col{
-		margin: 15px;
+		margin: right;
 		float: right;
-		width: 28%;
-		padding: 10px;
+		width: 29%;
+		padding: 0.60%;
 	}
 	a{
 		padding: 6px 8px 6px 16px;
@@ -53,18 +56,18 @@
 	.vl{
 		float: right;
 		border-right: 6px solid grey;
-		height: 600px;
+		height: 100%;
 	}
 	.hr1{
 		border: 3px solid;
         	width: 100%;
 	}
 	.box{
-  		width: 250px;
+		width: 90%;
   		border: 1px solid black;
 	}
 	.boardAddUsers{
-		margin-left: 230px;
+		margin-left: 13%;
 		border: 2px solid #4CAF50;
 		background-color: #4CAF50;
 		color: white;
@@ -120,10 +123,28 @@
 		color: white;
 
 	}
-	#txtAddUser{
-		margin-left:10px;
+	#displayAddUserList{
+		margin-left: 13%;
 	}
-	#txtRemoveUser{
-		margin-left: 500px;
-		width: 180px;
+	#displayRemoveUserList{
+		float: right;
+	}
+	#displayAddOwnerList{
+
+	}
+	#displayRemoveOwnerList{
+		float: right;
+	}
+	.taskLink{
+		border: none;
+		padding: none;
+		background-color: transparent;
+		padding: 6px 8px 6px 16px;
+  		text-decoration: none;
+ 		color: black;
+  		display: block;
+	}
+	.taskLink:hover{
+		color: green;
+
 	}

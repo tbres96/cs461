@@ -14,14 +14,38 @@ var DUEDATE = "DueDate";
 function switchKanbanView(id, name){	
 	sessionStorage.setItem('boardName',name);
 	sessionStorage.setItem('boardID',id);
+	sessionStorage.setItem('board',name);
 }
 
-/*
-Variable Used for testing purposes
-var n = 0;
-*/
-
 function getListOfKanbans(){
+	var getListToAddUsers = "<select id='displayAddUserList'>";
+	getListToAddUsers += "<option value=''>-- Please select a user --</option>";
+	var getListToRemoveUsers = "<select id='displayRemoveUserList'>";
+	getListToRemoveUsers += "<option value=''>-- Please select a user --</option>";
+
+	var obj = {};
+	var firstArray = [];
+	var getListToAddOwners = "<select id='displayAddOwnerList'>";
+	getListToAddOwners += "<option value=''>--Owner--</option>";
+
+	var i = 0;
+	var userRef = db.ref().child(USERS);
+	userRef.on('value', function(snapshot){
+		if(snapshot.exists()){
+			if(snapshot.hasChildren()){
+				//add every user thats ever logged in using the sign-in page
+				snapshot.forEach(function(childSnapshot){
+					obj['key'+i] = childSnapshot.key;
+					firstArray[i] = childSnapshot.key;
+					getListToAddUsers += "<option value='" + childSnapshot.key + "'>" + childSnapshot.key + "</option>";
+					i++;
+				});
+			}
+		}
+	});
+
+
+
 	var boardRef = db.ref().child(BOARDS);
 	boardRef.on('value', function(snapshot){
 		//if BOARDS exist
@@ -31,6 +55,38 @@ function getListOfKanbans(){
 				//for every board that exist
 				var kanbanList = "<hr class='hr1'>";
 				snapshot.forEach(function(childSnapshot){
+					//check if any users exist
+					if(childSnapshot.child(USERS).exists()){
+						//look through every non currently logged in user
+						//store every username in each board to the list
+						childSnapshot.child(USERS).forEach(function(userSnapshot){
+							if(userSnapshot.key != sessionStorage.getItem('User')){
+								//obj['key'+i] = userSnapshot.key;
+								//firstArray[i] = userSnapshot.key;
+								//i++;
+								getListToAddUsers += "<option value='" + userSnapshot.key + "'>" + userSnapshot.key + "</option>";
+							}
+							obj['key'+i] = userSnapshot.key;
+							firstArray[i] = userSnapshot.key;
+							i++;
+
+						});
+					}
+				});
+				getListToAddUsers += "</select>";
+				document.getElementById("listOfUsers").innerHTML = getListToAddUsers;
+				var list = document.getElementById("displayAddUserList");
+
+				for(var key in obj){
+					if (obj.hasOwnProperty(key)) {
+						getListToAddOwners += "<option value'" + obj[key] + "'>" + obj[key] + "</option>";
+					}
+				}
+				/*for(var i = 0; i < firstArray.length; i++){
+					getListToAddOwners += "<option value'" + firstArray[i] + "'>" + firstArray[i] + "</option>";
+				}*/
+
+				snapshot.forEach(function(childSnapshot){
 					//set the name and ID of the board to a variable
 					var boardName = childSnapshot.child(NAME).val();
 					var boardID = childSnapshot.key;
@@ -38,22 +94,56 @@ function getListOfKanbans(){
 					if(childSnapshot.child(USERS).exists()){
 						//look through every non currently logged in user
 						var getUsers = "";
-						var getOtherUsers = "";
+						var getListToRemoveUsersAA = "";
+						var getListRUsers = "";
+						var count = 0;
+						var count1 = 0;
 						childSnapshot.child(USERS).forEach(function(userSnapshot){
-							//if their values are true
-							if(userSnapshot.val()){
-								//n++; used for testing purposes
-								if(userSnapshot.key != 'mellita'){ //sessionStorage.getItem('User') //'mellita') <<-- used for testing locally
-									//n++; used for testing purposes
-									getOtherUsers += userSnapshot.key + " ";
+							count = 0;
+							count1 = 0;
+							if(userSnapshot.key != sessionStorage.getItem('User')){ //'mellita') <<-- used for testing locally
+								//if their values are true
+								if(userSnapshot.val()){
+									getUsers += userSnapshot.key + " ";
+									getListToRemoveUsersAA += "<option value='" + userSnapshot.key + "'>" + userSnapshot.key + "</option>";
+								}
+
+								for (var i = 0; i < document.getElementById("displayAddUserList").length; ++i){
+									if(list.options[i].value == userSnapshot.key){
+										count++;
+										if(count >= 2){
+											list.remove(i);
+										}
+									}
 								}
 							}
+							/*for (var i = 0; i < firstArray.length; i++){
+									if(firstArray[i] == userSnapshot.key){
+										count1++;
+										if(count1 == 2){
+											firstArray.splice(firstArray[i], 1);
+										}
+									}
+								}*/
+							for(var key in obj){
+								if (obj.hasOwnProperty(key)) {
+									if(obj[key] == userSnapshot.key){
+										count1++;
+										if(count1 == 2){
+											delete obj[key];
+										}
+									}
+								}
+							}
+
 						});
+						//var trueOwnerList = ownerList;
 						childSnapshot.child(USERS).forEach(function(userSnapshot){
 							if(userSnapshot.val()){
 								//if values match current user logged in
-								if(userSnapshot.key == 'mellita'){ //sessionStorage.getItem('User') //'mellita') <<-- used for testing locally
+								if(userSnapshot.key == sessionStorage.getItem('User')){ //'mellita') <<-- used for testing locally
 									getUsers += userSnapshot.key + " ";
+									getListToRemoveUsersAA += "<option value='" + userSnapshot.key + "'>" + userSnapshot.key + "</option>";
 									//create list of kanbans that are links
 									kanbanList += "<a href='' onclick='switchKanbanView(this.id, this.title)' id='" + boardID + "' title='" + boardName + "'>" + boardName + "</a>";
 									kanbanList += "<hr class='hr1'>";
@@ -75,6 +165,7 @@ function getListOfKanbans(){
 									//display kanbanList
 									document.getElementById("kanbans").innerHTML = kanbanList;
 
+									var checkIsOwner = false;
 									//before moving forward make sure the tasks we are looking at are under the current board session storage
 									if(sessionStorage.getItem('boardName') == boardName){
 										//check if any task columns exist
@@ -82,6 +173,16 @@ function getListOfKanbans(){
 											//look through every task column
 											childSnapshot.child(TASKS).forEach(function(columnSnapshot){
 												if(columnSnapshot.key == 'Todo'){
+													checkIsOwner = false;
+													if(getListRUsers == "")
+													{
+														getListRUsers += getListToRemoveUsersAA;
+													}
+													for (var i = 0; i < document.getElementById("displayAddUserList").length; ++i){
+														if(list.options[i].value == userSnapshot.key){
+															list.remove(i);
+														}
+													}
 													//display column name
 													var columnName = columnSnapshot.key;
 													var displayColumnName = "<p style='font-size:25px;text-align:center;'><u>" + columnName + "</u></p>";
@@ -91,36 +192,85 @@ function getListOfKanbans(){
 														//look through every task in this column and display their names
 														var taskDisplay = "<ul>";
 														columnSnapshot.forEach(function(taskSnapshot){
-															sessionStorage.setItem('column', columnName);
-															sessionStorage.setItem('task', taskSnapshot.child(NAME).val());
-															//taskDisplay += "<div class='box'><li><a href=''>TaskName: " + taskSnapshot.child(NAME).val();
-								taskDisplay += "<div class='box'><li><a href='javascript:setTask('Board1','Todo','Task1');'>TaskName: " + taskSnapshot.child(NAME).val();
-															//taskDisplay += "<div class='box'><li><a href='javascript:setTask(sessionStorage.getItem('boardName'), columnName, taskSnapshot.child(NAME).val());'>TaskName: " + taskSnapshot.child(NAME).val();
-															//taskDisplay += "<div class='box'><li><a href='setTask(sessionStorage.getItem('boardName'), columnName, taskSnapshot.child(NAME).val());'>TaskName: " + taskSnapshot.child(NAME).val();
-															//if owners has existing users
-															if(taskSnapshot.child(OWNERS).hasChildren()){
-																var ownerStart = "<br>Owners:";
-																var ownerName = " ";	
-																//Look at every user who owns task
-																taskSnapshot.child(OWNERS).forEach(function(ownerSnapshot){
-																	if(ownerSnapshot.val()){
-																		ownerName += ownerSnapshot.key + " ";
-																	}
-																});
-																//if every user is not an owner
-																if(!ownerName.replace(/\s/g, '').length){
-																	ownerStart = "";
-																}
-																taskDisplay += ownerStart + ownerName + "<br>Users: " + getUsers + " " + getOtherUsers + "</a>";
-																taskDisplay += "<button class='taskAddUsers' onclick='location.href=''; addUserToTask('mellita');'>Add an owner</button>";
-																taskDisplay += "<button class='taskRemoveUsers' onclick='location.href=''; removeUserFromTask('mellita');'>Remove an owner</button>";
-																taskDisplay += "</li></div><br>";
+															//var object = {};
+															//var array = [];
+															var previous = "";
+															var count = 0;
+															var i = 0;
+															//getListToAddOwners = "<select id=displayAddOwnerList>";
+															//getListToAddOwners += "<option value=''>--Owners--</option>";
+															var getListToRemoveOwners = "<select id=displayRemoveOwnerList>";
+															getListToRemoveOwners += "<option value=''>--Owners--</option>";
+															var taskName = taskSnapshot.key;
+															if(taskName.includes("Task") || taskName.includes("tasK")){
+																sessionStorage.setItem('column', columnName);
+																sessionStorage.setItem('task', taskSnapshot.child(NAME).val());
+																taskDisplay += "<div class='box'><li>";
+																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
+																taskDisplay += taskSnapshot.child(NAME).val();
+																//if owners has existing users
+																if(taskSnapshot.child(OWNERS).hasChildren()){
+																	var ownerStart = "<br>Owners:";
+																	var ownerName = " ";	
+																	//Look at every user who owns task
+																	taskSnapshot.child(OWNERS).forEach(function(ownerSnapshot){
+																		if(ownerSnapshot.val()){
+																			if(ownerSnapshot.key == sessionStorage.getItem('User')){
+																				checkIsOwner = true;
+																			}
+																			ownerName += ownerSnapshot.key + " ";
+																			getListToRemoveOwners += "<option value='" + ownerSnapshot.key + "'>" + ownerSnapshot.key + "</option>";
+																			//object[key] = ownerSnapshot.key;
+																			//array[i] = ownerSnapshot.key;
+																			i++;
+																		}
+																	});
+																	/*for (var i=0; i < array.length; i++){ 
+																		if (obj.hasOwnProperty(array[i])){
+																			delete obj[key];
+																		}
+
+																	}*/
+																	//for (var key in obj){
+																	//getListToAddOwners += "<option value='" + obj[key] + "'>" + obj[key] + "</option>";
+																	//}
+																	/*for(var key1 in obj){
+																		for(var key in object){
+																			if(object.hasOwnProperty(key)){
+																				if(object[key] == obj[key1]){
+																					getListToAddOwners += "option value='" + obj[key] + "'>" + obj[key] + "</option>";
+															//delete obj[key1];
+															//break;
+																				}
+																				else{
+																				}
+																			}
+																		}
+																	}*/
+
+															/*for(var key in obj){
+																		if(object.hasOwnProperty(key)){
+
+
+																		}
+																	}*/
+															//if every user on board is not an owner of said task
+															if(!ownerName.replace(/\s/g, '').length){
+																ownerStart = "";
 															}
-															else{
-																taskDisplay += "<br>Users: " + getUsers + " " + getOtherUsers + "</a>";
-																taskDisplay += "<button class='taskAddUsers' onclick='location.href=''; addUserToTask('mellita');'>Add an owner</button>";
-																taskDisplay += "<button class='taskRemoveUsers' onclick='location.href=''; removeUserFromTask('mellita');'>Remove an owner</button>"; 
-																taskDisplay += "</li></div><br>";
+																	taskDisplay += ownerStart + ownerName + "<br>Users: " + getUsers + "</a>";
+																	if(checkIsOwner){
+																		taskDisplay += "<button class='taskAddUsers' onclick=\"javascript:addUserToTask('fleetisa');\">Add an owner</button>";
+																		taskDisplay += "<button class='taskRemoveUsers' onclick=\"javascript:removeUserFromTask('mellita');\">Remove an owner</button>";
+																		taskDisplay += getListToAddOwners + "</select>";
+																		taskDisplay += getListToRemoveOwners + "</select><br>";
+																	}
+																	taskDisplay += "</li></div><br>";
+																}
+																else{
+																	taskDisplay += "<br>Users: " + getUsers + "</a>";
+																	taskDisplay += "</li></div><br>";
+																}
 															}
 														});
 														taskDisplay += "</ul>";
@@ -129,37 +279,67 @@ function getListOfKanbans(){
 												}
 												//repeat steps above for columns Doing and Done
 												if(columnSnapshot.key == 'Doing'){
+													checkIsOwner = false;
+													if(getListRUsers == ""){
+														getListRUsers += getListToRemoveUsersAA;
+													}
+													for (var i = 0; i < document.getElementById("displayAddUserList").length; ++i){
+														if(list.options[i].value == userSnapshot.key){
+															list.remove(i);
+														}
+													}
 													var columnName = columnSnapshot.key;
 													var displayColumnName = "<p style='font-size:25px;text-align:center;'><u>" + columnName + "</u></p>";
 													document.getElementById("nameOfColumn2").innerHTML = displayColumnName;
 													if(columnSnapshot.hasChildren()){
 														var taskDisplay = "<ul>";
 														columnSnapshot.forEach(function(taskSnapshot){
+															getListToAddOwners = "<select id=displayAddOwnerList>";
+															getListToAddOwners += "<option value=''>--Owners--</option>";
+															var getListToRemoveOwners = "<select id=displayRemoveOwnerList>";
+															getListToRemoveOwners += "<option value''>--Owners--</option>";
+															var taskName = taskSnapshot.key;
+															if(taskName.includes("Task") || taskName.includes("task")){
+																taskDisplay += "<div class='box'><li>";
+																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
+																taskDisplay += taskSnapshot.child(NAME).val();
+																if(taskSnapshot.child(OWNERS).hasChildren()){
+																	var ownerStart = "<br>Owners:";
+																	var ownerName = " ";
+																	taskSnapshot.child(OWNERS).forEach(function(ownerSnapshot){
+																		if(ownerSnapshot.val()){
+																			if(ownerSnapshot.key == sessionStorage.getItem('User')){
+																				checkIsOwner = true;
+																			}
+																			ownerName += ownerSnapshot.key + " ";
+																			getListToRemoveOwners += "<option value='" + ownerSnapshot.key + "'>" + ownerSnapshot.key + "</option>";
+																			for(var key in obj){
+																				if (obj.hasOwnProperty(key)) {
+																					if(obj[key] != ownerSnapshot.key){
+																						//ERROR-CHECK: if adding in values from the list of objects, the drop down list is listed upwards??
+																						getListToAddOwners += "<option value'" + obj[key] + "'>" + obj[key] + "</option>";
+																					}
+																				}
+																			}
 
-															sessionStorage.setItem('column', columnName);
-															sessionStorage.setItem('task', taskSnapshot.child(NAME).val());
-															taskDisplay += "<div class='box'><li><a href='' onclick='setTask(sessionStorage.getItem('boardName');, columnName, TaskSnapshot.child(NAME).val());'>TaskName: " + taskSnapshot.child(NAME).val();
-															if(taskSnapshot.child(OWNERS).hasChildren()){
-																var ownerStart = "<br>Owners:";
-																var ownerName = " ";
-																taskSnapshot.child(OWNERS).forEach(function(ownerSnapshot){
-																	if(ownerSnapshot.val()){
-																		ownerName += ownerSnapshot.key + " ";
+																		}
+																	});
+																	if(!ownerName.replace(/\s/g, '').length){
+																		ownerStart = "";
 																	}
-																});
-																if(!ownerName.replace(/\s/g, '').length){
-																	ownerStart = "";
+																	taskDisplay += ownerStart + ownerName + "<br>Users: " + getUsers + "</a>";
+																	if(checkIsOwner){
+																		taskDisplay += "<button class='taskAddUsers' onclick=\"javascript:addUserToTask('fleetisa');\">Add an owner</button>";
+																		taskDisplay += "<button class='taskRemoveUsers' onclick=\"javascript:removeUserFromTask('mellita');\">Remove an owner</button>";
+																		taskDisplay += getListToAddOwners + "</select>";
+																		taskDisplay += getListToRemoveOwners + "</select><br>";
+																	}
+																	taskDisplay += "</li></div><br>";
 																}
-																taskDisplay += ownerStart + ownerName + "<br>Users: " + getUsers + " " + getOtherUsers + "</a>";
-										taskDisplay += "<button class='taskAddUsers' onclick='location.href=''; addUserToTask('mellita');'>Add an owner</button>";
-									taskDisplay += "<button class='taskRemoveUsers' onclick='location.href=''; removeUserFromTask('mellita');'>Remove an owner</button>";
-																taskDisplay += "</li></div><br>";
-															}
-															else{
-																taskDisplay += "<br>Users: " + getUsers + " " + getOtherUsers + "</a>";
-																taskDisplay += "<button class='taskAddUsers' onclick='location.href=''; addUserToTask('mellita');'>Add an owner</button>";
-																taskDisplay += "<button class='taskRemoveUsers' onclick='location.href=''; removeUserFromTask('mellita');'>Remove an owner</button>";
-																taskDisplay += "</li></div><br>";
+																else{
+																	taskDisplay += "<br>Users: " + getUsers + "</a>";
+																	taskDisplay += "</li></div><br>";
+																}
 															}
 														});
 														taskDisplay += "</ul>";
@@ -167,35 +347,67 @@ function getListOfKanbans(){
 													}
 												}
 												if(columnSnapshot.key == 'Done'){
+													checkIsOwner = false;
+													if(getListRUsers == ""){
+														getListRUsers += getListToRemoveUsersAA;
+													}
+													for (var i = 0; i < document.getElementById("displayAddUserList").length; ++i){
+														if(list.options[i].value == userSnapshot.key){
+															list.remove(i);
+														}
+													}
 													var columnName = columnSnapshot.key;
 													var displayColumnName = "<p style='font-size:25px;text-align:center;'><u>" + columnName + "</u></p>";
 													document.getElementById("nameOfColumn3").innerHTML = displayColumnName;
 													if(columnSnapshot.hasChildren()){
 														var taskDisplay = "<ul>";
 														columnSnapshot.forEach(function(taskSnapshot){
-															taskDisplay += "<div class='box'><li><a href='' onclick='setTask(sessionStorage.getItem('boardName');, columnName, TaskSnapshot.child(NAME).val());'>TaskName: " + taskSnapshot.child(NAME).val();
-															if(taskSnapshot.child(OWNERS).hasChildren()){
-																var ownerStart = "<br>Owners:";
-																var ownerName = " ";
-																taskSnapshot.child(OWNERS).forEach(function(ownerSnapshot){
-																	if(ownerSnapshot.val()){
-																		ownerName += ownerSnapshot.key + " ";
+															getListToAddOwners = "<select id=displayAddOwnerList>";
+															getListToAddOwners += "<option value=''>--Owners--</option>";
+															var getListToRemoveOwners = "<select id=displayRemoveOwnerList>";
+															getListToRemoveOwners += "<option value''>--Owners--</option>";
+															var taskName = taskSnapshot.key;
+															if(taskName.includes("Task") || taskName.includes("task")){
+																taskDisplay += "<div class='box'><li>";
+																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
+																taskDisplay += taskSnapshot.child(NAME).val();
+																if(taskSnapshot.child(OWNERS).hasChildren()){
+																	var ownerStart = "<br>Owners:";
+																	var ownerName = " ";
+																	taskSnapshot.child(OWNERS).forEach(function(ownerSnapshot){
+																		if(ownerSnapshot.val()){
+																			if(ownerSnapshot.key == sessionStorage.getItem('User')){
+																				checkIsOwner = true;
+																			}
+																			ownerName += ownerSnapshot.key + " ";
+																			getListToRemoveOwners += "<option value='" + ownerSnapshot.key + "'>" + ownerSnapshot.key + "</option>";
+																			for(var key in obj){
+																				if (obj.hasOwnProperty(key)) {
+																					if(obj[key] != ownerSnapshot.key){
+																						//ERROR-CHECK: if adding in values from the list of objects, the drop down list is listed upwards??
+																						getListToAddOwners += "<option value'" + obj[key] + "'>" + obj[key] + "</option>";
+																					}
+																				}
+																			}
+																		}
+																	});
+																	if(!ownerName.replace(/\s/g, '').length){
+																		ownerStart = "";
 																	}
-																});
-																if(!ownerName.replace(/\s/g, '').length){
-																	ownerStart = "";
+																	taskDisplay += ownerStart + ownerName + "<br>Users: " + getUsers + "</a>";
+																	if(checkIsOwner = true){
+																		taskDisplay += "<button class='taskAddUsers' onclick=\"javascript:addUserToTask('fleetisa');\">Add an owner</button>";
+																		taskDisplay += "<button class='taskRemoveUsers' onclick=\"javascript:removeUserFromTask('mellita');\">Remove an owner</button>";
+																		taskDisplay += getListToAddOwners + "</select>";
+																		taskDisplay += getListToRemoveOwners + "</select><br>";
+																	}
+																	taskDisplay += "</li></div><br>";
 																}
-																taskDisplay += ownerStart + ownerName + "<br>Users: " + getUsers + " " + getOtherUsers + "</a>"; 																
-																taskDisplay += "<button class='taskAddUsers' onclick='location.href=''; addUserToTask('mellita');'>Add an owner</button>";
-																taskDisplay += "<button class='taskRemoveUsers' onclick='location.href=''; removeUserFromTask('mellita');'>Remove an owner</button>";
-																taskDisplay += "</li></div><br>";
-															}
-															else{
-																taskDisplay += "<br>Users: " + getUsers + " " + getOtherUsers + "</a>";
-																taskDisplay += "<button class='taskAddUsers' onclick='location.href=''; addUserToTask('mellita');'>Add an owner</button>";
-																taskDisplay += "<button class='taskRemoveUsers' onclick='location.href=''; removeUserFromTask('mellita');'>Remove an owner</button>";
-																taskDisplay += "</li></div><br>";
+																else{
+																	taskDisplay += "<br>Users: " + getUsers + "</a>";
+																	taskDisplay += "</li></div><br>";
 
+																}
 															}
 														});
 														taskDisplay += "</ul>";
@@ -204,18 +416,54 @@ function getListOfKanbans(){
 												}
 
 											});
+											getListToRemoveUsers += getListRUsers;
 
 										}
 
 
 									}
 								}
-							} 
-						}); 
+								else{
+									//before moving forward make sure the tasks we are looking at are under the current board session storage
+									if(sessionStorage.getItem('boardName') == boardName){
+										//check if any task columns exist
+										if(childSnapshot.child(TASKS).exists()){
+											//look through every task column
+											childSnapshot.child(TASKS).forEach(function(columnSnapshot){
+												//remove users from list that are already in users on tasks
+												if(columnSnapshot.key == 'Todo'){
+													for (var i = 0; i < document.getElementById("displayAddUserList").length; ++i){
+														if(list.options[i].value == userSnapshot.key){
+															list.remove(i);
+														}
+													}
+												}
+												if(columnSnapshot.key == 'Doing'){
+													for (var i = 0; i < document.getElementById("displayAddUserList").length; ++i){
+														if(list.options[i].value == userSnapshot.key){
+															list.remove(i);
+														}
+													}
+												}
+												if(columnSnapshot.key == 'Done'){
+													for (var i = 0; i < document.getElementById("displayAddUserList").length; ++i){
+														if(list.options[i].value == userSnapshot.key){
+															list.remove(i);
+														}
+													}
+												}
+											});
+										}
+									}
 
+								}
+							} 
+						});  
 					}
 				}); 
 			}
+			getListToRemoveUsers += "</select>";
+			document.getElementById("listOfUsers").innerHTML += getListToRemoveUsers;
 		}
 	});
 }

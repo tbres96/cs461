@@ -34,6 +34,7 @@ class Task:
         self.dueDate = "default due date"
         self.latestAction = "default latest action"
         self.name = "default task name"
+        self.key = "default task key"
         self.ownerList = []
 
     def to_dict(self, dictionary):
@@ -206,7 +207,9 @@ def parseTasks(column, key, value):
     for taskKey, taskValue in value.items():
         
         newTask = Task()
-        newTask.name = taskKey
+        #newTask.name = taskKey
+        if (taskKey != "Commits"):
+            newTask.key = taskKey
         #print("THIS COLUMN NAME: ", column.columnTitle, " KEY: ", taskKey, " VAL: ", taskValue)
         for taskHeader, taskInfo in taskValue.items():
             if (taskHeader == "DueDate"):
@@ -342,9 +345,18 @@ def getCertainBoard(dbObj, boardToFind):
 def addTask(boardObj, curUser):
     if (boardObj != -1):
         taskToAdd = Task()
+        print("Please input a task key.")
+        taskKey = input("  > ")
+        if (taskKey == ""):
+            taskToAdd.key = "default task key"
+        else:
+            taskToAdd.key = taskKey
         print("Please input a task name.")
         taskName = input("  > ")
-        taskToAdd.name = taskName
+        if (taskName == ""):
+            taskToAdd.name = taskName
+        else:
+            taskToAdd.name = "default task name"
         print("Please input a task description, or <enter> for blank.")
         taskDesc = input("  > ")
         taskToAdd.description = taskDesc
@@ -393,8 +405,58 @@ def findTask(boardObj, taskToEditName):
 
     return 0
 
-                
-                #return taskObj
+
+def findColumnMoveTask(boardObj, columnToEditString, newTask):
+    for colIndex in range(0, len(boardObj.columnList)):
+        if (boardObj.columnList[colIndex].columnTitle == columnToEditString):
+            print("found column!")
+            #colFound = True
+            boardObj.columnList[colIndex].taskList.append(newTask)
+##            print("Please input a new column name, or <enter> for no change.")
+##            newColName = input("  > ")
+##            if (newColName != ""):
+##                boardObj.columnList[colIndex].columnTitle = newColName
+
+            return 1
+    return 0
+
+def moveTask(boardObj, userObj):
+    if (boardObj != -1):
+        taskToMove = Task()
+        print("What is the name of the task you want to move?")
+        taskToEditName = input("  > ")
+        while (taskToEditName == ""):
+            print("The name of the task to edit cannot be blank.")
+            print("What is the name of the task you want to move?")
+            taskToEditName = input("  > ") 
+        for colIndex in range(0, len(boardObj.columnList)):
+            for taskIndex in range(0, len(boardObj.columnList[colIndex].taskList)):
+                if (boardObj.columnList[colIndex].taskList[taskIndex].name == taskToEditName):
+                    print("FOUND TASK!")
+                    taskFound = True
+                    taskToMove = boardObj.columnList[colIndex].taskList[taskIndex]
+                    #boardObj.columnList[colIndex].taskList[taskIndex].remove(taskToMove)
+                    #del boardObj.columnList[colIndex].taskList[taskIndex]
+                    print("What is the name of the column you want to move to?")
+                    columnToEditString = input("  > ")
+                    while (columnToEditString == ""):
+                        print("The name of the column to edit cannot be blank.")
+                        print("What is the name of the column you want to move to?")
+                        columnToEditString = input("  > ")
+                    returnVal = findColumnMoveTask(boardObj, columnToEditString, taskToMove)
+                    if (returnVal == 1):
+                        print("Column successfully edited.")
+                        print("BEFORE DELETION")
+                        popped = boardObj.columnList[colIndex].taskList[taskIndex].pop(boardObj.columnList[colIndex].taskList[taskIndex])
+                        print("AFTER DELETION POPPED: ", popped)
+                        updateBoard(boardObj, userObj)
+                        return 1
+                    else:
+                        print("Could not edit column. Maybe you typed the name wrong?")
+    else:
+        print("Please select a board to work on first with <select>")
+        return 0
+
 
 
 def editTask(boardObj, userObj):
@@ -459,7 +521,9 @@ def addColumn(boardObj, userObj):
 
         newColumn.columnTitle = colTitle
         boardObj.columnList.append(newColumn)
+        updateBoard(boardObj, userObj)
         print("Column Added!")
+        print("Please note, you must add a task to your new column before pushing to database, or it will not appear.")
     else:
         print("Please select a board to work on first with <select>")
 
@@ -532,4 +596,45 @@ def updateDbBoard(dbObj, boardObj):
     if (boardObj == -1):
         print("Please select a board first")
         return
-    dbObj.child(boardObj.name).update({"Name": "BOARD1"})
+    #dbObj.child(boardObj.name).update({"Name": "BOARD1"})
+
+    for col in boardObj.columnList:
+        for task in col.taskList:
+            print("COLUMN: ", col.columnTitle, " TASKKEY: ", task.key)
+            dbObj.child("Boards").child(boardObj.name).child("Tasks").child(col.columnTitle).child(task.key).update({"Name" : task.name,
+                                                                                                                     "DueDate" : task.dueDate,
+                                                                                                                     "LatestAction" : task.latestAction,
+                                                                                                                     "Description" : task.description})
+
+            for owners in task.ownerList:
+                print("OWNER: ", owners)
+                dbObj.child("Boards").child(boardObj.name).child("Tasks").child(col.columnTitle).child(task.key).child("Owners").update({owners : True})
+            
+            
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

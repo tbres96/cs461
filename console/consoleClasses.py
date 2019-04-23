@@ -614,27 +614,55 @@ def updateDbBoard(dbObj, boardObj):
     
 
 
+def assignTask(boardObj, userObj):
+    if (boardObj != -1):
+        userFound = False
+        print("What is the name of the task you want to assign?")
+        taskToEditString = input("  > ")
+        while (taskToEditString == ""):
+            print("The name of the task to assign cannot be blank.")
+            print("What is the name of the task you want to assign?")
+            taskToEditString = input("  > ") 
+        for colIndex in range(0, len(boardObj.columnList)):
+            for taskIndex in range(0, len(boardObj.columnList[colIndex].taskList)):
+                if (boardObj.columnList[colIndex].taskList[taskIndex].name == taskToEditString):
+                    print("What is the name of the user you want to assign? Type your own username to remove yourself.")
+                    taskToAssignUser = input("  > ")
+                    while (taskToAssignUser == ""):
+                        print("The name of the user to assign cannot be blank.")
+                        print("What is the name of the user you want to assign? Type your own username to remove yourself.")
+                        taskToAssignUser = input("  > ")
+                    #need to also remove here
+                    for userIndex in range(0, len(boardObj.columnList[colIndex].taskList[taskIndex].ownerList)):
+                        if (taskToAssignUser == boardObj.columnList[colIndex].taskList[taskIndex].ownerList[userIndex]):
+                            userFound = True
+                            boardObj.columnList[colIndex].taskList[taskIndex].ownerList.remove(taskToAssignUser)
+                    if (userFound == False):
+                        boardObj.columnList[colIndex].taskList[taskIndex].ownerList.append(taskToAssignUser)
+                        print("Added user ", taskToAssignUser, " to ", boardObj.columnList[colIndex].taskList[taskIndex].name)
+                        return 1
+
+    else:
+        print("Please select a board to work on first with <select>")
 
 
 
+def assignBoard(boardObj, userObj):
+    if (boardObj != -1):
+        userFound = False
+        print("What is the name of the user you want to assign? Type your own username to remove yourself.")
+        userAssignString = input("  > ")
+        while (userAssignString == ""):
+            print("The name of the user to assign cannot be blank.")
+            print("What is the name of the user you want to assign?")
+            userAssignString = input("  > ")
+        for userIndex in range (0, len(boardObj.userList)):
+            if (boardObj.userList[userIndex] == userAssignString):
+                userFound = True
+                #Delete user if found
+                boardObj.userList.remove(userAssignString)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+        if (userFound == False):
+            #Add the user
+            boardObj.userList.append(userAssignString)
+            

@@ -111,6 +111,12 @@ while(1):
     if (inputString == "move task"):
         moveTask(currentBoard, currentUser)
 
+    if(inputString == "assign task"):
+        assignTask(currentBoard, currentUser)
+
+    if (inputString == "assign board"):
+        assignBoard(currentboard, currentUser)
+
     if (inputString == "users"):
         localusers = db.child("Users").get()
         getAllUsers(localusers)

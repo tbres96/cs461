@@ -27,9 +27,9 @@
 
 <body onload="getListOfKanbans()"> 
 	<div id="header"><div id="nameOfBoard"></div></div>
-	<div id="miniHeader"><div id= "idOfBoard"></div></div>
-	<button class="boardAddUsers" onclick="location.href='https://seniorsemgit.firebaseapp.com/kanban.html'; addUserToBoard(document.getElementById('displayAddUserList').value);">Add user to the board</button>
-	<button class="boardRemoveUsers" onclick="location.href='https://seniorsemgit.firebaseapp.com/kanban.html'; removeUserFromBoard(document.getElementById('displayRemoveUserList').value);">Remove user from the board</button>
+	<div id="miniHeader"><div id="idOfBoard"></div><div id="usersOfBoard"></div></div>
+	<button class="boardAddUsers" onclick="window.location.reload(); addUserToBoard(document.getElementById('displayAddUserList').value)">Add user to the board</button>
+	<button class="boardRemoveUsers" onclick="window.location.reload(); removeUserFromBoard(document.getElementById('displayRemoveUserList').value)">Remove user from the board</button>
 	<br><br>
 	<div id="listOfUsers"></div>
 	<!--
@@ -60,15 +60,15 @@
 		<div id="nameOfColumn1"></div>
 		<div id="namesOfTodo"></div>
 
-	 <!--testing code to add and remove owners from task not woring? 
+	<!--	
 	 <script>
-			sessionStorage.setItem('board', 'board1');
-			sessionStorage.setItem('column', 'todo');
-			sessionStorage.setItem('task', 'checking');
+			sessionStorage.setItem('board', 'Board1');
+			sessionStorage.setItem('column', 'Todo');
+			sessionStorage.setItem('task', 'yadatwo');
 	</script>
-		<button onclick="javascript:addUserToTask('mellita');">Add mellita to task!</button>
-		<button onclick="javascript:removeUserFromTask('mellita');">Remove mellita from task!</button>-->
-
+		<button onclick="javascript:addUserToTask('fleetisa')">Add fleetisa to task!</button>
+		<button onclick="javascript:removeUserFromTask('fleetisa')">Remove fleetisa from task!</button>
+		-->
 
 		<!--<script>
 		var taskDisplay = "<ul><li><a href=\"javascript:setTask('Board1','Todo','Task1');\">TaskName: </a></li><ul>";

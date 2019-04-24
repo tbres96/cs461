@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create New Board</title>
+	<link rel="stylesheet" type="text/css" href="css/global.css">
+	<script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
+	<script>
+		var config = {
+			apiKey: "AIzaSyA11FpqG-RKNpZ0loNU8HhunHUgk7EFCqY",
+			authDomain: "seniorsemgit.firebaseapp.com",
+			databaseURL: "https://seniorsemgit.firebaseio.com",
+			projectId: "seniorsemgit",
+			storageBucket: "seniorsemgit.appspot.com",
+			messagingSenderId: "348042953918"
+		};
+		firebase.initializeApp(config);
+	</script>
+	<script src="scripts/newBoard.js"></script>
+</head>
+<center>
+	<h1>Create New Board</h1>
+	<form id="form" action="addNewBoard(this)">
+		Board Name: <input type="text" name="boardName" placeholder="Board name" required><br>
+		<br>
+		<button type="button" onclick="addNewBoard(this.parentElement)">Add new board</button>
+	</form>
+</center>
+</body>
+</html>

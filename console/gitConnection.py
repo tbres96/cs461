@@ -53,6 +53,9 @@ def isBoardIdValid(id):
     if(id == ''):
         print("Empty")
         return False
+    # Check if line-ending-character is in it
+    if('\n' in id):
+        return False
     # Check if board id exists
     boardRef = db.child(boards).child(id).get()
     if(boardRef.val()):
@@ -125,7 +128,7 @@ def updateGitLog():
         boardId = f.read()
         f.close()
         # Check if the board id is empty
-        if(boardId != ""):
+        if(isBoardIdValid(boardId)):
             # Run git log comand
             cmd = ['git', 'log']
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -197,7 +200,7 @@ def updateGitLog():
                     # Update database with new commits
                     updateDatabase(boardId, commits)
         else:
-            print("The text file containing your board id. Please register your board again.")
+            print("The text file containing your board id is empty or it contains an invalid board id. Please register your board again.")
     else:
         print("There is no text file containing your board id. Please register your board.")
 

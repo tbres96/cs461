@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create New Task</title>
+	<link rel="stylesheet" type="text/css" href="css/global.css">
+	<script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
+	<script>
+		var config = {
+			apiKey: "AIzaSyA11FpqG-RKNpZ0loNU8HhunHUgk7EFCqY",
+			authDomain: "seniorsemgit.firebaseapp.com",
+			databaseURL: "https://seniorsemgit.firebaseio.com",
+			projectId: "seniorsemgit",
+			storageBucket: "seniorsemgit.appspot.com",
+			messagingSenderId: "348042953918"
+		};
+		firebase.initializeApp(config);
+	</script>
+	<script src="scripts/newTask.js"></script>
+</head>
+
+<body onload="getCols()">
+	<h1>Create New Task</h1>
+	<form id="form" action="addNewTask(this)">
+		Task Name: <input type="text" name="taskName" placeholder="Task name" required><br>
+		Description: <input type="textarea" rows="10" cols="30" name="description" placeholder="Description" required><br>
+		Due Date: <input type="date" name="dueDate"><br>
+		Place task in: <select name="col" id="col" required></select>
+		<br>
+		<button type="button" onclick="addNewTask(this.parentElement)">Add new task!</button>
+	</form>
+</body>
+</html>

@@ -21,11 +21,20 @@
 
 
 	</script>
-	<script src="index.js"></script>
+	<script src="scripts/index.js"></script>
+	<script src="scripts/functions.js"></script>
 </head>
 
-<body>    
-	<div id="header"><h1>Viewing Kanban - "Kanban1"</h1></div>
+<body onload="getListOfKanbans()"> 
+	<div id="header"><div id="nameOfBoard"></div></div>
+	<div id="miniHeader"><div id="idOfBoard"></div><div id="usersOfBoard"></div></div>
+	<button class="boardAddUsers" onclick="window.location.reload(); addUserToBoard(document.getElementById('displayAddUserList').value)">Add user to the board</button>
+	<button class="boardRemoveUsers" onclick="window.location.reload(); removeUserFromBoard(document.getElementById('displayRemoveUserList').value)">Remove user from the board</button>
+	<br><br>
+	<div id="listOfUsers"></div>
+	<!--
+	<input id="addUserList" type="text" placeholder="Type a user name to add">
+	<input id="removeUserList" type="text" placeholder="Type a user name to remove"> -->
 	<hr class="hr1">
 <div id="sidebar">
 	<p id="Username" style="color:white"></p>
@@ -34,33 +43,42 @@
 	</script>
 	<a href="https://seniorsemgit.firebaseapp.com/">Sign out</a>
 	<br>
-	<hr class="hr1">
-	<a href="">Kanban1</a>
-	<hr class="hr1">
-	<a href="">Kanban2</a>
+	<div id="kanbans"></div>
 </div>
 <div id="wrapper">
-	<div id="col">
-		<p style="font-size:25px;text-align:center;"><u> Finished Tasks </u></p>
-		<ul>
-		<li><a href="http://seniorsemgit.firebaseapp.com/task.html">Task -1</a></li>
-		</ul>
-		</div>
+	<div id="col"> <!--3rd column-->
+		<div id="nameOfColumn3"></div>
+		<div id="namesOfDone"></div>
+	</div>
 	<div class="vl"></div>
-	<div id="col">
-		<p style="font-size:25px;text-align:center;"><u> Tasks In-Progress </u></p>
-		<ul>
-		<li><a href="javascript:setTask('Board1','Doing','Task2');">Task 0</a></li>
-		</ul>
-		</div>
+	<div id="col"> <!--2nd column-->
+		<div id="nameOfColumn2"></div>
+		<div id="namesOfDoing"></div>
+	</div>
 	<div class="vl"></div>
-	<div id="col">
-		<p style="font-size:25px;text-align:center;"><u> Tasks To Do </u></p>
+	<div id="col"> <!--1st column-->
+		<div id="nameOfColumn1"></div>
+		<div id="namesOfTodo"></div>
+
+	<!--	
+	 <script>
+			sessionStorage.setItem('board', 'Board1');
+			sessionStorage.setItem('column', 'Todo');
+			sessionStorage.setItem('task', 'yadatwo');
+	</script>
+		<button onclick="javascript:addUserToTask('fleetisa')">Add fleetisa to task!</button>
+		<button onclick="javascript:removeUserFromTask('fleetisa')">Remove fleetisa from task!</button>
+		-->
+
+		<!--<script>
+		var taskDisplay = "<ul><li><a href=\"javascript:setTask('Board1','Todo','Task1');\">TaskName: </a></li><ul>";
+		document.getElementById("namesOfTodo").innerHTML = taskDisplay;
+		</script>
 		<ul>
 		<li><a href="javascript:setTask('Board1','Todo','Task1');">Task 1</a></li>
 		<li><a href="javascript:setTask('Board1','Todo','Task2');">Task 2</a></li>
-		</ul>
-		</div>
+		</ul>-->
+	</div>
+</div>
 </body>
-
 </html>

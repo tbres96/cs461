@@ -15,24 +15,15 @@
 		};
 		firebase.initializeApp(config);
 	</script>
-	<script src="../scripts/functions.js"></script>
+	<script src="scripts/functions.js"></script>
 </head>
 
 <body onload="fillTaskPage()">
 	<div><a href = "kanban.html">Home</a></div>
-<!--	
-UNCOMMENT THE BUTTONS TO SEE HOW THESE FUNCTIONS WORK.
-SHOULD EVENTUALLY ONLY BE CALLED FROM ANOTHER FUNCTION TO LIMIT END-USER HACKABILITY.
-"addUserToBoard" and "removeUserFromBoard" works the same way, 
-except they are added and removed from the "Owners" section of the board.
-See "../scripts/functions.js" for more info
-
-	<button onclick="javascript:addUserToTask('mellita');">Add mellita to task!</button>
-	<button onclick="javascript:removeUserFromTask('mellita');">Remove mellita from task!</button>
--->
 	<div id="name" style="display:none"></div>
 	<div id="dueDate" style="display:none; background-color:transparent"></div>
 	<div id="lastAction" style="display:none"></div><br>
+	<div id="actionhistory" style="display:none"></div><br>
 	<div id="description" style="display:none"></div>
 	<div id="owners" style="display:none"></div>
 	<div id="commits" style="display:none"></div>

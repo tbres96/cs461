@@ -1,12 +1,20 @@
 	#header{
- 		margin-left: 160px; 
+ 		margin-left: 11%;
 		top: 0;
 		text-align: center; 
+	}
+	#miniHeader{
+		margin-left: 11%;
+		top: 0;
+		text-align: center;
+		font size: 1;
 	}
 	#wrapper{
 		width: 84%;
 		margin: 0 auto;
-		margin-left: 160px;
+		/*margin-left: 160px;*/
+		margin-left: 10%;
+		height: 100%;
 	}
 	#sidebar{
   		height: 100%; 
@@ -18,7 +26,8 @@
 		float: left;
 		width: 11%;
 		background-color: purple;
-		padding: 10px;		
+		padding: 0.60%;
+		/*padding: 10px;*/		
 	}
 	#sidebar a{
 		padding: 6px 8px 6px 16px;
@@ -30,17 +39,11 @@
   		color: #f1f1f1;
 	}
 	#col{
-		margin: 15px;
+		margin: right;
 		float: right;
-		width: 28%;
-		padding: 10px;
+		width: 29%;
+		padding: 0.60%;
 	}
-	/*#col-inprogress{
-		margin: 15px;
-		float: right;	
-		width: 28%;
-		padding: 10px;
-	}*/
 	a{
 		padding: 6px 8px 6px 16px;
   		text-decoration: none;
@@ -50,19 +53,98 @@
 	a:hover{
 		color: green;
 	}
-	/*#col-done{
-		margin: 15px;
-		float: right;	
-		width: 28%;
-		padding: 10px;
-	}*/
 	.vl{
 		float: right;
 		border-right: 6px solid grey;
-		height: 600px;
+		height: 100%;
 	}
 	.hr1{
 		border: 3px solid;
         	width: 100%;
 	}
+	.box{
+		width: 90%;
+  		border: 1px solid black;
+	}
+	.boardAddUsers{
+		margin-left: 13%;
+		border: 2px solid #4CAF50;
+		background-color: #4CAF50;
+		color: white;
+		cursor: pointer;
+		transition-duration: 0.4s;
+		display: inline-block;
+		font-size: 16px;
+		padding: 16px 20px;
+	}
+	.boardAddUsers:hover{
+		background-color: #3e8e41;
+	}
+	.boardRemoveUsers{
+		float: right;
+		border: 2px solid red;
+		background-color: red;
+		color: white;
+		cursor: pointer;
+		transition-duration: 0.4s;
+		display: inline-block;
+		font-size: 16px;
+		padding: 16px 20px;
+	}
+	.boardRemoveUsers:hover{
+		background-color: #A00000;
+	}
+	.taskAddUsers{
+		border: 2px solid #4CAF50;
+		background-color: #4CAF50;
+		color: white;
+		cursor: pointer;
+		transition-duration: 0.4s;
+		display: inline-block;
+		font-size: 12px;
 
+	}
+	.taskAddUsers:hover{
+		background-color: #3e8e41;
+
+	}
+	.taskRemoveUsers{
+		float: right;
+		border: 2px solid red;
+		background-color: red;
+		color: white;
+		cursor: pointer;
+		transition-duration: 0.4s;
+		display: inline-block;
+		font-size: 12px;
+	}
+	.taskRemoveUsers:hover{
+		background-color: #A00000;
+		color: white;
+
+	}
+	#displayAddUserList{
+		margin-left: 13%;
+	}
+	#displayRemoveUserList{
+		float: right;
+	}
+	#displayAddOwnerList{
+		background-color: default;
+	}
+	#displayRemoveOwnerList{
+		float: right;
+	}
+	.taskLink{
+		border: none;
+		padding: none;
+		background-color: transparent;
+		padding: 6px 8px 6px 16px;
+  		text-decoration: none;
+ 		color: black;
+  		display: block;
+	}
+	.taskLink:hover{
+		color: green;
+
+	}

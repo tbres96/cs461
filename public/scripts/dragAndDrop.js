@@ -5,11 +5,22 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
-function moveTask(oldRef,newRef){
+function moveTask(oldRef,newRef, msg){
 	oldRef.once('value', function(snapshot){
 	  newRef.update(snapshot.val(), function(error){
-		  if( !error ) { oldRef.remove(); }
-		  else if( typeof(console) !== 'undefined' && console.error ) {console.error(error); }
+		if( !error ) { 
+			oldRef.remove(); 
+			var todaysDate = new Date(Date.now());
+			var today = (todaysDate.getMonth() + 1) + "-" + todaysDate.getDate() + "-" + todaysDate.getFullYear() + ", ";
+			today += todaysDate.getHours() + ":" + todaysDate.getMinutes() + ":" + todaysDate.getSeconds();
+			newRef.child("ActionHistory").update({
+				[today]: msg
+			});
+			today += ", " + msg;
+			newRef.update({
+				LatestAction: today
+			});
+		}else if( typeof(console) !== 'undefined' && console.error ) {console.error(error); }
 	  });
   });
 }
@@ -30,15 +41,16 @@ function drag(ev, column, taskID) {
 function drop(ev, el, column) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
-  var boardID = "Board1"
-  //var boardID = sessionStorage.getItem('boardID');
+  //var boardID = "Board1"
+  var boardID = sessionStorage.getItem('boardID');
   
   //firebase stuff
   var taskID = ev.dataTransfer.getData("task");
   var col = ev.dataTransfer.getData("col");
   var oldRef = firebase.database().ref().child(BOARDS).child(boardID).child(TASKS).child(col).child(taskID);
   var newRef = firebase.database().ref().child(BOARDS).child(boardID).child(TASKS).child(column).child(taskID);
-  moveTask(oldRef,newRef);
+  var message = "moved task from " + col + " to " + column;
+  moveTask(oldRef,newRef, message);
   //end firebase stuff
   
   el.appendChild(document.getElementById(data));

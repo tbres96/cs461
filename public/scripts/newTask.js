@@ -2,6 +2,7 @@ var db = firebase.database();
 var BOARDS = 'Boards';
 var TASKS = "Tasks";
 var NAME = "Name";
+var OWNERS = "Owners";
 var DESCRIPTION = "Description";
 var LASTACTION = "LatestAction";
 var DUEDATE = "DueDate";
@@ -36,6 +37,7 @@ function addNewTask(f){
 		var task = {
 			[NAME]: name,
 			[DESCRIPTION]: desc,
+			[OWNERS]:{[sessionStorage.getItem('User')]:true},
 			[LASTACTION]: msg,
 			ActionHistory: {[now]:"Task created"}
 		};

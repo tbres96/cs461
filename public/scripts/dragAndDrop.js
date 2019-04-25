@@ -50,7 +50,7 @@ function drop(ev, el, column) {
   var col = ev.dataTransfer.getData("col");
   var oldRef = firebase.database().ref().child(BOARDS).child(boardID).child(TASKS).child(col).child(taskID);
   var newRef = firebase.database().ref().child(BOARDS).child(boardID).child(TASKS).child(column).child(taskID);
-  var message = "moved task from " + col + " to " + column;
+  var message = sessionStorage.getItem('User') + " moved task from " + col + " to " + column;
   moveTask(oldRef,newRef, message);
   //end firebase stuff
   

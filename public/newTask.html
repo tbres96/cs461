@@ -23,10 +23,10 @@
 	<form id="form" action="addNewTask(this)">
 		Task Name: <input type="text" name="taskName" placeholder="Task name" required><br>
 		Description: <input type="textarea" rows="10" cols="30" name="description" placeholder="Description" required><br>
-		Due Date: <input type="date" name="dueDate"><br>
+		Due Date: <input type="date" name="dueDate" required><br>
 		Place task in: <select name="col" id="col" required></select>
 		<br>
-		<button type="button" onclick="addNewTask(this.parentElement)">Add new task!</button>
+		<button type="submit">Add new task!</button>
 	</form>
 </body>
 </html>

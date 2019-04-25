@@ -30,15 +30,16 @@ function addNewTask(f){
 	now += todaysDate.getHours() + ":" + todaysDate.getMinutes() + ":" + todaysDate.getSeconds();
 	var msg = now + ", Task created";
 	
-	var task = {
-		[NAME]: name,
-		[DESCRIPTION]: desc,
-		[LASTACTION]: msg,
-		ActionHistory: {[now]:"Task created"}
-	};
 	if(col){
 		var ref = db.ref(BOARDS).child(sessionStorage.getItem('board')).child(TASKS).child(col);
-		ref.child(name).update(task);
+		now = "(0) " + now;
+		var task = {
+			[NAME]: name,
+			[DESCRIPTION]: desc,
+			[LASTACTION]: msg,
+			ActionHistory: {[now]:"Task created"}
+		};
+	ref.child(name).update(task);
 		if(dueDate != null && dueDate != ""){
 			ref.child(name).update({[DUEDATE]: dueDate})
 		}

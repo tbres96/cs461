@@ -9,9 +9,10 @@ function moveTask(oldRef,newRef, msg){
 	oldRef.once('value', function(snapshot){
 	  newRef.update(snapshot.val(), function(error){
 		if( !error ) { 
+			var numActions = snapshot.child('ActionHistory').numChildren();
 			oldRef.remove(); 
 			var todaysDate = new Date(Date.now());
-			var today = (todaysDate.getMonth() + 1) + "-" + todaysDate.getDate() + "-" + todaysDate.getFullYear() + ", ";
+			var today = "(" + numActions.toString() + ") " + (todaysDate.getMonth() + 1) + "-" + todaysDate.getDate() + "-" + todaysDate.getFullYear() + ", ";
 			today += todaysDate.getHours() + ":" + todaysDate.getMinutes() + ":" + todaysDate.getSeconds();
 			newRef.child("ActionHistory").update({
 				[today]: msg

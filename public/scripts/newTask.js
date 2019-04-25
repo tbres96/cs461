@@ -41,7 +41,8 @@ function addNewTask(f){
 			[LASTACTION]: msg,
 			ActionHistory: {[now]:"Task created"}
 		};
-	ref.child(name).update(task);
+	ref = ref.push();
+	ref.set(task);
 		if(dueDate != null && dueDate != ""){
 			ref.child(name).update({[DUEDATE]: dueDate})
 		}

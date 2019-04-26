@@ -44,7 +44,7 @@ function addNewTask(f){
 	ref = ref.push();
 	ref.set(task);
 		if(dueDate != null && dueDate != ""){
-			ref.child(name).update({[DUEDATE]: dueDate})
+			ref.child(name).update({[DUEDATE]: dueDate});
 		}
 	}
 	redirect("kanban.html");

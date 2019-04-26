@@ -28,13 +28,6 @@ function moveTask(oldRef,newRef, msg){
 
 function drag(ev, column, taskID) {
   ev.dataTransfer.setData("text", ev.target.id);
-  /*
-  //THIS LINE IS FOR LOCAL DEVELOPMENT
-  var boardID = "Board1"
-  */
-  //USE THIS LINE
-  var boardID = sessionStorage.getItem('boardID');
-  
   ev.dataTransfer.setData("col", column);
   ev.dataTransfer.setData("task", taskID);
 }
@@ -42,7 +35,6 @@ function drag(ev, column, taskID) {
 function drop(ev, el, column) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
-  //var boardID = "Board1"
   var boardID = sessionStorage.getItem('boardID');
   
   //firebase stuff
@@ -51,7 +43,9 @@ function drop(ev, el, column) {
   var oldRef = firebase.database().ref().child(BOARDS).child(boardID).child(TASKS).child(col).child(taskID);
   var newRef = firebase.database().ref().child(BOARDS).child(boardID).child(TASKS).child(column).child(taskID);
   var message = sessionStorage.getItem('User') + " moved task from " + col + " to " + column;
-  moveTask(oldRef,newRef, message);
+  if(!newRef.isEqual(oldRef)){
+	moveTask(oldRef,newRef, message);
+  }
   //end firebase stuff
   
   el.appendChild(document.getElementById(data));

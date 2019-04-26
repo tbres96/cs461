@@ -40,7 +40,7 @@ A1 - How To Run
 In order to begin using the project management system, you must first follow these steps:
 	1) Use the 'cd' command to change into the cs461/ directory (cd cs461/)
 	2) Once there, use cd again to enter the "console/" directory (cd console/)
-	3) Type python console.py
+	3) Type python3 console.py
 	4) Hit ENTER
 
 

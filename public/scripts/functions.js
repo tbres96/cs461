@@ -589,13 +589,28 @@ function fillTaskPage(){
 	/*
 	//UNCOMMENT THIS SECTION WHEN TESTING LOCALLY AND NOT COMING FROM THE KANBAN PAGE
 	sessionStorage.setItem('board',"Board1");
-	sessionStorage.setItem('task',"Task1");
+	sessionStorage.setItem('task',"Task2");
 	sessionStorage.setItem('column',"Todo");
 	//END LOCAL DEV SECTION
 	*/
 	var board = sessionStorage.getItem('board');
 	var column = sessionStorage.getItem('column');
 	var task = sessionStorage.getItem('task');
+	var owners = new Set;
+	
+	var ref = db.ref(BOARDS).child(board);
+	ref.once('value',function(snap){
+		snap.child(TASKS).child(column).child(task).child(OWNERS).forEach(function(subSnap){
+			if(subSnap.val()){
+				owners.add(subSnap.key);
+				document.getElementById("remOwners").innerHTML += "<option value='" + subSnap.key + "'>" + subSnap.key + "</option>";
+			}
+		});
+		snap.child(USERS).forEach(function(subSnap){
+			if(subSnap.val() && !owners.has(subSnap.key))
+				document.getElementById("addOwners").innerHTML += "<option value='" + subSnap.key + "'>" + subSnap.key + "</option>";
+		});
+	});
 
     getTaskInfo(board,column,task);
 }

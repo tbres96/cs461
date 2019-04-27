@@ -3,6 +3,7 @@
 <head>
 	<title>Task Info</title>
 	<link rel="stylesheet" type="text/css" href="css/global.css">
+	<link rel="stylesheet" type="text/css" href="css/kanban.css">
 	<script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
 	<script>
 		var config = {
@@ -20,6 +21,10 @@
 
 <body onload="fillTaskPage()">
 	<div><a href = "kanban.html">Home</a></div>
+	<div>
+		<div><button class="taskAddUsers" onclick="addUserToTask(document.getElemementById(addOwners).value")>Add owners</button> <select id="addOwners"></select></div>
+		<div><button class="taskRemoveUsers" onclick="removeUserFromTask(document.getElemementById(remOwners).value)">Remove owners</button> <select id="remOwners"></select></div>
+	</div>
 	<div id="name" style="display:none"></div>
 	<div id="dueDate" style="display:none; background-color:transparent"></div>
 	<div id="lastAction" style="display:none"></div><br>

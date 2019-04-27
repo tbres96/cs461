@@ -1,9 +1,4 @@
 //-------------------------------------------------------------------------------------
-/*
-function redirect() {
-	window.location.replace("https://seniorsemgit.firebaseapp.com/kanban.html")
-}
-*/
 function redirect(extension){
 	window.location.replace("https://seniorsemgit.firebaseapp.com/" + extension);
 }

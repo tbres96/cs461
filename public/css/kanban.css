@@ -1,4 +1,4 @@
-	#header{
+#header{
  		margin-left: 11%;
 		top: 0;
 		text-align: center; 
@@ -9,12 +9,12 @@
 		text-align: center;
 		font size: 1;
 	}
-	#wrapper{
-		width: 84%;
-		margin: 0 auto;
-		/*margin-left: 160px;*/
-		margin-left: 10%;
-		height: 100%;
+	#newTask{
+		margin-left: 47%;
+	}
+	#newColumn{
+	}
+	#listOfUsers{
 	}
 	#sidebar{
   		height: 100%; 
@@ -38,11 +38,47 @@
 	#sidebar a:hover{
   		color: #f1f1f1;
 	}
-	#col{
+	#wrapper{
+		/*width: auto;
+		/*margin: 0 auto;*/
+		/*margin-left: 160px;*/
+		display: flex;
+		flex-direction: row;
+		margin-left: 12%;
+		height: 100%;
+		overflow-x: scroll; /*horizontal scroll*/
+		overflow-y: scroll; /*vertical scroll*/
+		white-space: nowrap;
+		position: relative;
+		/*width: 87.4%;*/
+	}
+
+	#test{
 		margin: right;
-		float: right;
-		width: 29%;
 		padding: 0.60%;
+		flex: 0 0 32%; 
+		height: 1em;
+	}
+	#Done{
+		margin: right;
+		padding: 0.60%;
+		flex: 0 0 32%; 
+		height: 1em;
+
+	}
+	#Doing{
+		margin: right;
+		padding: 0.60%;
+		flex: 0 0 32%; 
+		height: 1em;
+
+	}
+	#Todo{
+		margin: right;
+		padding: 0.60%;
+		flex: 0 0 32%; 
+		height: 1em;
+
 	}
 	a{
 		padding: 6px 8px 6px 16px;
@@ -65,6 +101,7 @@
 	.box{
 		width: 90%;
   		border: 1px solid black;
+		white-space: pre-wrap; 
 	}
 	.boardAddUsers{
 		margin-left: 13%;
@@ -94,6 +131,12 @@
 	.boardRemoveUsers:hover{
 		background-color: #A00000;
 	}
+	.addOwnerText{
+
+	}
+	.removeOwnerText{
+	        float: right;
+	}
 	.taskAddUsers{
 		border: 2px solid #4CAF50;
 		background-color: #4CAF50;
@@ -109,7 +152,6 @@
 
 	}
 	.taskRemoveUsers{
-		float: right;
 		border: 2px solid red;
 		background-color: red;
 		color: white;
@@ -121,18 +163,22 @@
 	.taskRemoveUsers:hover{
 		background-color: #A00000;
 		color: white;
-
 	}
 	#displayAddUserList{
 		margin-left: 13%;
+		white-space: nowrap:
 	}
 	#displayRemoveUserList{
 		float: right;
 	}
-	#displayAddOwnerList{
+	.optionDisplay{
+		display: none;
+
+	}
+	[class^="displayAddOwnerList"]{     /*Checks for any class names that start with this prefix*/
 		background-color: default;
 	}
-	#displayRemoveOwnerList{
+	[class^="displayRemoveOwnerList"]{
 		float: right;
 	}
 	.taskLink{
@@ -148,4 +194,3 @@
 		color: green;
 
 	}
-

@@ -20,9 +20,13 @@
  	firebase.initializeApp(config);
 
 
-	</script>
+	</script>	
 	<script src="scripts/index.js"></script>
+	<script src="scripts/newColumn.js"></script>
+	<script src="scripts/newBoard.js"></script>
+	<script src="scripts/newTask.js"></script>
 	<script src="scripts/functions.js"></script>
+	<script src="scripts/dragAndDrop.js"></script>
 </head>
 
 <body onload="getListOfKanbans()"> 
@@ -32,6 +36,8 @@
 	<button class="boardRemoveUsers" onclick="window.location.reload(); removeUserFromBoard(document.getElementById('displayRemoveUserList').value)">Remove user from the board</button>
 	<br><br>
 	<div id="listOfUsers"></div>
+	<button id="newTask" onclick="redirect('newTask.html')">Create a new task</button>
+	<button id="newColumn" onclick="redirect('newColumn.html')">Create a new column</button>
 	<hr class="hr1">
 <div id="sidebar">
 	<p id="Username" style="color:white"></p>
@@ -42,44 +48,9 @@
 	<br>
 	<!-- LOOK HERE FOR BOARD CREATION -->
 	<input id="txtBoardName" type="text" placeholder="New Board Name">
-	<button class="createBoard onclick="">Create Board</button> 
-
+	<button class="createBoard" onclick="validate()">Create Board</button> 
 	<div id="kanbans"></div>
 </div>
-<div id="wrapper">
-	<div id="col"> <!--3rd column-->
-		<div id="nameOfColumn3"></div>
-		<div id="namesOfDone"></div>
-	</div>
-	<div class="vl"></div>
-	<div id="col"> <!--2nd column-->
-		<div id="nameOfColumn2"></div>
-		<div id="namesOfDoing"></div>
-	</div>
-	<div class="vl"></div>
-	<div id="col"> <!--1st column-->
-		<div id="nameOfColumn1"></div>
-		<div id="namesOfTodo"></div>
-
-		<!--
-	 <script>
-			sessionStorage.setItem("board", "Board1");
-			sessionStorage.setItem("column", "Todo");
-			sessionStorage.setItem("task", "yadatwo");
-	</script>
-		<button onclick="window.location.reload(); javascript:addUserToTask('fleetisa')">Add fleetisa to task!</button>
-		<button onclick="window.location.reload(); javascript:removeUserFromTask('fleetisa')">Remove fleetisa from task!</button>
-		-->	
-
-		<!--<script>
-		var taskDisplay = "<ul><li><a href=\"javascript:setTask('Board1','Todo','Task1');\">TaskName: </a></li><ul>";
-		document.getElementById("namesOfTodo").innerHTML = taskDisplay;
-		</script>
-		<ul>
-		<li><a href="javascript:setTask('Board1','Todo','Task1');">Task 1</a></li>
-		<li><a href="javascript:setTask('Board1','Todo','Task2');">Task 2</a></li>
-		</ul>-->
-	</div>
-</div>
+<div id="wrapper"></div>
 </body>
 </html>

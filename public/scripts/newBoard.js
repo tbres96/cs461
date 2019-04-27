@@ -4,8 +4,14 @@ function redirect(extension){
 	window.location.replace("https://seniorsemgit.firebaseapp.com/" + extension);
 }
 
+function validate(){
+	if(document.getElementById("txtBoardName") != null && document.getElementById("txtBoardName") != ""){
+		addNewBoard();
+	}
+}
+
 function addNewBoard(){
-	var boardName = f.col.value;
+	var boardName = document.getElementById("txtBoardName").value;
 	var board = {
 		Tasks:{
 			Name: boardName,

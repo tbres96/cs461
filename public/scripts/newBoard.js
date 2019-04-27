@@ -1,8 +1,24 @@
-//Create new board and reload page / redirect to same page
-
 var db = firebase.database();
 
-function addNewBoard() {
+function redirect(extension){
+	window.location.replace("https://seniorsemgit.firebaseapp.com/" + extension);
+}
 
+function addNewBoard(){
+	var boardName = f.col.value;
+	var board = {
+		Tasks:{
+			Name: boardName,
+			Todo:{Dummy: "DumDum"},
+			Doing:{Dummy: "DumDum"},
+			Done:{Dummy: "DumDum"}
+		}
+		Users:{
+			sessionStorage.getItem('User':true);
+		}
+	};
+	var ref = db.ref(BOARDS);
+	ref = ref.push();
+	ref.set(board);
 	redirect("kanban.html");
 }

@@ -67,8 +67,7 @@ while(1):
                print("Found your board!") 
                boardFound = True 
                printBoard(currentBoard) 
-               print('\n', '\n', "You are currently working on the ", currentBoard.name, " board. You can now <add task>, <edit tas
-k>, <add column> and <edit column>.") 
+               print('\n', '\n', "You are currently working on the ", currentBoard.name, " board. You can now <add task>, <edit task>, <add column> and <edit column>.") 
                print("You can also use <board owners> to see owners.") 
                break 
 
@@ -76,8 +75,12 @@ k>, <add column> and <edit column>.")
            print("Could not find your board. Are you sure you're a part of it?") 
 
 
+   if (inputString == "help"):
+        printHelp() 
+
    if (inputString == "add task"): 
-       addTask(currentBoard, currentUser) 
+        db = firebase.database()
+        addTask(currentBoard, currentUser, db) 
 
    if (inputString == "board owners"): 
        viewOwners(currentBoard, currentUser) 
@@ -116,13 +119,15 @@ k>, <add column> and <edit column>.")
        assignTask(currentBoard, currentUser) 
 
    if (inputString == "assign board"): 
+       db = firebase.database() 
        assignBoard(currentBoard, currentUser, db) 
 
    if (inputString == "remove column"): 
        removeColumn(currentBoard, currentUser) 
 
    if (inputString == "remove task"): 
-       removeTask(currentBoard, currentUser) 
+       db = firebase.database() 
+       removeTask(currentBoard, currentUser, db) 
 
    if (inputString == "users"): 
        localusers = db.child("Users").get() 

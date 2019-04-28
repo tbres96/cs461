@@ -31,7 +31,7 @@ currentUser = getCertainUser(users, currentUserString)
 #if (currentUser != False): 
 #    nameString = currentUser.name 
 
-print('\n', '\n', "Welcome %s to Super Seven KanBan! Enter 'quit' to exit." % currentUser.name) 
+print('\n', '\n', "Welcome %s to Super Seven KanBan! Enter 'quit' to exit, or 'help' for a list of commands." % currentUser.name) 
 introBoardString = "You are currently a member of: " 
 
 for s in currentUser.boardStringList: 
@@ -53,6 +53,10 @@ while(1):
    if (inputString == "quit"): 
        print("Goodbye!") 
        break 
+
+   if (inputString == "print"): 
+       printBoard(currentBoard)
+        
 
    if (inputString == "select"): 
        print("Which board would you like to select?") 
@@ -104,7 +108,8 @@ while(1):
            db.child("Boards").push(boardToJson(currentBoard)) 
 
    if (inputString == "edit task"): 
-       editTask(currentBoard, currentUser) 
+       db = firebase.database()
+       editTask(currentBoard, currentUser, db) 
 
    if (inputString == "add column"): 
        addColumn(currentBoard, currentUser) 
@@ -113,17 +118,20 @@ while(1):
        editColumn(currentBoard, currentUser) 
 
    if (inputString == "move task"): 
-       moveTask(currentBoard, currentUser) 
+       db = firebase.database()
+       moveTask(currentBoard, currentUser, db) 
 
    if (inputString == "assign task"): 
-       assignTask(currentBoard, currentUser) 
+       db = firebase.database()
+       assignTask(currentBoard, currentUser, db) 
 
    if (inputString == "assign board"): 
        db = firebase.database() 
        assignBoard(currentBoard, currentUser, db) 
 
    if (inputString == "remove column"): 
-       removeColumn(currentBoard, currentUser) 
+       db = firebase.database() 
+       removeColumn(currentBoard, currentUser, db) 
 
    if (inputString == "remove task"): 
        db = firebase.database() 
@@ -143,7 +151,8 @@ while(1):
 
    if (inputString == "new board"): 
        print("After board creation, it will be your selected board.") 
-       currentBoard = makeNewBoard(currentUser) 
+       db = firebase.database()
+       currentBoard = makeNewBoard(currentUser, db) 
        print("You are now free to add tasks to the board.") 
 
    inputString = input("> ") 
@@ -151,3 +160,4 @@ while(1):
 
 
 print("END PROGRAM") 
+

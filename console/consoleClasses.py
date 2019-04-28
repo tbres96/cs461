@@ -1,4 +1,5 @@
 import json, re
+import datetime
 from collections import defaultdict
 
 def propKeys(cls):
@@ -30,6 +31,8 @@ class Task:
 
     def __init__(self):
         self.commitList = []
+        self.actionHistoryDict = {}
+        self.actionHistoryList = []
         self.description = "default task description"
         self.dueDate = "default due date"
         self.latestAction = "default latest action"
@@ -143,17 +146,24 @@ def updateBoard(boardObj, userObj):
     print("Could not update board for some reason")
     return 0
 
-def addTaskToBoard(boardObj, columnName, taskObj, dbObj):
+def addTaskToBoard(boardObj, columnName, taskObj, dbObj, curUser, actionString):
     #print('\n', '\n', '\n', "BOARD NAME: ", boardObj.name)
 
     for col in boardObj.columnList:
         if (col.columnTitle == columnName):
             #print("FOUND COLUMN.")
             col.taskList.append(taskObj)
-            dbObj.child("Boards").child(boardObj.key).child("Tasks").child(col.columnTitle).push({"Name" : taskObj.name,
+            newKey = dbObj.child("Boards").child(boardObj.key).child("Tasks").child(col.columnTitle).push({"Name" : taskObj.name,
                                                                                                                      "DueDate" : taskObj.dueDate,
                                                                                                                      "LatestAction" : taskObj.latestAction,
                                                                                                                      "Description" : taskObj.description})
+            taskObj.key = newKey['name']
+            dbObj.child("Boards").child(boardObj.key).child("Tasks").child(col.columnTitle).child(taskObj.key).child("Owners").update({ curUser.name : True})
+            time = datetime.datetime.now()
+            #From https://www.saltycrane.com/blog/2008/06/how-to-get-current-date-and-time-in/
+            formatTime = "(0) " + time.strftime("%Y-%m-%d %H:%M")
+            dbObj.child("Boards").child(boardObj.key).child("Tasks").child(col.columnTitle).child(taskObj.key).child("ActionHistory").update({ formatTime : actionString})
+            
             return 1
 
     return 0
@@ -163,7 +173,14 @@ def addTaskToBoard(boardObj, columnName, taskObj, dbObj):
 def printBoardTasks(taskObj):
     #for taskKey, taskValue in taskObj:
     print('\t', "Task Name: ", taskObj.name, '\n', '\t', "Task Key: ", taskObj.key, '\n\t\t', "Description: ", taskObj.description, '\n', '\t\t', "Due Date: ", taskObj.dueDate)
-    print('\t\t', "Latest Action: ", taskObj.latestAction, '\n\n')
+    print('\t\t', "Latest Action: ", taskObj.latestAction)
+    print("\t\t Owners: ")
+    for owner in taskObj.ownerList:
+        print('\t\t\t', owner)
+    for hist in taskObj.actionHistoryList:
+        print('\t\t\t\t\t', hist)
+    print("\n\n")
+
 
 def printBoardColumns(colObj):
     print("Column Name: ", colObj.columnTitle, '\n')
@@ -180,6 +197,9 @@ def printHelp():
     return
 
 def printBoard(boardObj):
+    if (boardObj == -1):
+        print("Please select a board first with <select>")
+        return
     print('\n', '\n', '\n', "Board Name: ", boardObj.name)
     print('\n', "Board Key: ", boardObj.key)
 
@@ -223,6 +243,12 @@ def parseOwners(obj, key, value):
             obj.ownerList.append(ownerKey)
             #print("OWNERKEY: ", ownerKey, " OWNERVAL: ", ownerValue)
 
+def parseActions(obj, key, value):
+    for actionKey, actionValue in value.items():
+    #    print("ACTION KEY: ", actionKey, " VAL: ", actionValue)
+        obj.actionHistoryDict[actionKey] = actionValue
+        obj.actionHistoryList.append(actionValue)
+
 def parseTasks(column, key, value):
     #print("THIS COLUMN NAME: ", key," TASKSIZE: ", len(column.taskList))
     for taskKey, taskValue in value.items():
@@ -247,6 +273,8 @@ def parseTasks(column, key, value):
                 parseCommits(newTask, taskHeader, taskInfo)
             if (taskHeader == "Owners"):
                 parseOwners(newTask, taskHeader, taskInfo)
+            if (taskHeader == "ActionHistory"):
+                parseActions(newTask, taskHeader, taskInfo)
 
 
 
@@ -323,14 +351,14 @@ def getAllUsers(dbObj):
         for user in dbObj.each():
             newUser = User()
             newUser.boardStringList = []
-            print("USER: ", user.key())
+ #           print("USER: ", user.key())
             newUser.name = user.key()
             for key, value in user.val().items():
             #for key, value in user.val().:
                 #newUser.change_attribute(key, value)
                 if (value == 1):
                     newUser.boardStringList.append(key)
-                print("key: ", key," Value: ", value)
+#                print("key: ", key," Value: ", value)
 
 
 def getCertainUser(dbObj, userToFind):
@@ -409,9 +437,18 @@ def addTask(boardObj, curUser, dbObj):
         taskToAdd.dueDate = taskDue
         print("Which column would you like this task to be in?")
         taskColumn = input("  > ")
-        taskToAdd.ownerList.append(curUser)
+        taskToAdd.ownerList.append(curUser.name)
+        actionString = curUser.name + " created this task."
+        taskToAdd.actionHistoryList.append(actionString)
 
-        while (addTaskToBoard(boardObj, taskColumn, taskToAdd, dbObj) != 1):
+        time = datetime.datetime.now()
+        #From https://www.saltycrane.com/blog/2008/06/how-to-get-current-date-and-time-in/
+        formatTime = time.strftime("%Y-%m-%d %H:%M")
+        taskToAdd.latestAction = formatTime
+        
+        formatTime = "(0) " + time.strftime("%Y-%m-%d %H:%M")
+    
+        while (addTaskToBoard(boardObj, taskColumn, taskToAdd, dbObj, curUser, actionString) != 1):
             print("Could not find column. Please enter valid column name.")
             taskColumn = input("  > ")
 
@@ -421,41 +458,79 @@ def addTask(boardObj, curUser, dbObj):
         print("Please select a board to work on first with <select>")
 
 
-def findTask(boardObj, taskToEditName):
+def findTask(boardObj, taskToEditName, userObj, dbObj):
     taskFound = False
     for colIndex in range(0, len(boardObj.columnList)):
         for taskIndex in range(0, len(boardObj.columnList[colIndex].taskList)):
             if (boardObj.columnList[colIndex].taskList[taskIndex].name == taskToEditName):
-                print("FOUND TASK!")
+  #              print("FOUND TASK!")
                 taskFound = True
                 print("Please input a task name, or <enter> for no change.")
                 taskName = input("  > ")
                 if (taskName != ""):
+                    dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(boardObj.columnList[colIndex].taskList[taskIndex].key).update({ 'Name' : taskName})
                     boardObj.columnList[colIndex].taskList[taskIndex].name = taskName
                 print("Please input a task description, or <enter> for no change.")
                 taskDesc = input("  > ")
                 if (taskDesc != ""):
+                    dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(boardObj.columnList[colIndex].taskList[taskIndex].key).update({ 'Description' : taskDesc})
                     boardObj.columnList[colIndex].taskList[taskIndex].description = taskDesc
                 print("Please input a task due date, or <enter> for no change.")
                 taskDue = input("  > ")
                 if (taskDue != ""):
+                    dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(boardObj.columnList[colIndex].taskList[taskIndex].key).update({ 'DueDate' : taskDue})
                     boardObj.columnList[colIndex].taskList[taskIndex].dueDate = taskDue
-                print("Please input a task latest action, or <enter> for no change.")
-                taskLatest = input("  > ")
-                if (taskLatest != ""):
-                    boardObj.columnList[colIndex].taskList[taskIndex].latestAction = taskLatest
+                #print("Please input a task latest action, or <enter> for no change.")
+                #taskLatest = input("  > ")
+                #if (taskLatest != ""):
+                #    boardObj.columnList[colIndex].taskList[taskIndex].latestAction = taskLatest
 
+                actionNum = len(boardObj.columnList[colIndex].taskList[taskIndex].actionHistoryList) + 1
+                actionString = userObj.name + " editted this task."
+                boardObj.columnList[colIndex].taskList[taskIndex].actionHistoryList.append(actionString)
+
+                time = datetime.datetime.now()
+                #From https://www.saltycrane.com/blog/2008/06/how-to-get-current-date-and-time-in/
+                formatTime = "(" + str(actionNum) + ")" + time.strftime("%Y-%m-%d %H:%M")
+                dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(boardObj.columnList[colIndex].taskList[taskIndex].key).child("ActionHistory").update({ formatTime : actionString})
+                boardObj.columnList[colIndex].taskList[taskIndex].latestAction = formatTime 
+                boardObj.columnList[colIndex].taskList[taskIndex].actionHistoryDict[formatTime] = actionString
+                updateBoard(boardObj, userObj)
                 return 1
 
     return 0
 
 
-def findColumnMoveTask(boardObj, columnToEditString, newTask):
+def findColumnMoveTask(boardObj, columnToEditString, newTask, dbObj, userObj, oldColumn):
     for colIndex in range(0, len(boardObj.columnList)):
         if (boardObj.columnList[colIndex].columnTitle == columnToEditString):
-            print("found column!")
+   #         print("found column!")
             #colFound = True
             boardObj.columnList[colIndex].taskList.append(newTask)
+            dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(newTask.key).update({"Name" : newTask.name,
+                                                                                                                     "DueDate" : newTask.dueDate,
+                                                                                                                     "LatestAction" : newTask.latestAction,
+                                                                                                                     "Description" : newTask.description})
+
+            actionNum = len(newTask.actionHistoryList) + 1
+            actionString = userObj.name + " moved this task."
+            newTask.actionHistoryList.append(actionString)
+
+            time = datetime.datetime.now()
+            #From https://www.saltycrane.com/blog/2008/06/how-to-get-current-date-and-time-in/
+            formatTime = "(" + str(actionNum) + ")" + time.strftime("%Y-%m-%d %H:%M")
+            oldActions = dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(newTask.key).child("ActionHistory").get()
+            newTask.actionHistoryDict[formatTime] = actionString
+            
+            #for action in oldActions:#.each():
+    #        print("ACTION: ", oldActions.key(), " VAL: ", oldActions.val())
+            for key, action in newTask.actionHistoryDict.items():
+                dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(newTask.key).child("ActionHistory").update({ key : action})
+            newTask.latestAction = formatTime 
+
+            for owners in newTask.ownerList:
+            #    print("OWNER: ", owners)
+                dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(newTask.key).child("Owners").update({owners : True})
 ##            print("Please input a new column name, or <enter> for no change.")
 ##            newColName = input("  > ")
 ##            if (newColName != ""):
@@ -464,7 +539,7 @@ def findColumnMoveTask(boardObj, columnToEditString, newTask):
             return 1
     return 0
 
-def moveTask(boardObj, userObj):
+def moveTask(boardObj, userObj, dbObj):
     if (boardObj != -1):
         taskToMove = Task()
         print("What is the name of the task you want to move?")
@@ -479,7 +554,8 @@ def moveTask(boardObj, userObj):
                     print("FOUND TASK!")
                     taskFound = True
                     taskToMove = boardObj.columnList[colIndex].taskList[taskIndex]
-                    boardObj.columnList[colIndex].taskList.remove(taskToMove)
+
+     #               print("ACTION HISTORY SIZE: ", len(taskToMove.actionHistoryList))
                     #del boardObj.columnList[colIndex].taskList[taskIndex]
                     print("What is the name of the column you want to move to?")
                     columnToEditString = input("  > ")
@@ -487,12 +563,14 @@ def moveTask(boardObj, userObj):
                         print("The name of the column to edit cannot be blank.")
                         print("What is the name of the column you want to move to?")
                         columnToEditString = input("  > ")
-                    returnVal = findColumnMoveTask(boardObj, columnToEditString, taskToMove)
+                    dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(taskToMove.key).remove()
+                    returnVal = findColumnMoveTask(boardObj, columnToEditString, taskToMove, dbObj, userObj, boardObj.columnList[colIndex].columnTitle)
                     if (returnVal == 1):
                         print("Column successfully edited.")
-                        print("BEFORE DELETION")
+      #                  print("BEFORE DELETION")
                         #popped = boardObj.columnList[colIndex].taskList[taskIndex].pop(boardObj.columnList[colIndex].taskList[taskIndex])
                         #print("AFTER DELETION POPPED: ", popped)
+                        boardObj.columnList[colIndex].taskList.remove(taskToMove)
                         updateBoard(boardObj, userObj)
                         return 1
                     else:
@@ -503,7 +581,7 @@ def moveTask(boardObj, userObj):
 
 
 
-def editTask(boardObj, userObj):
+def editTask(boardObj, userObj, dbObj):
     if (boardObj != -1):
         print("What is the name of the task you want to edit?")
         taskToEditString = input("  > ")
@@ -511,7 +589,7 @@ def editTask(boardObj, userObj):
             print("The name of the task to edit cannot be blank.")
             print("What is the name of the task you want to edit?")
             taskToEditString = input("  > ")
-        returnVal = findTask(boardObj, taskToEditString)
+        returnVal = findTask(boardObj, taskToEditString, userObj, dbObj)
         if (returnVal == 1):
             print("Task successfully edited.")
             updateBoard(boardObj, userObj)
@@ -523,7 +601,7 @@ def editTask(boardObj, userObj):
 def findColumn(boardObj, columnToEditString):
     for colIndex in range(0, len(boardObj.columnList)):
         if (boardObj.columnList[colIndex].columnTitle == columnToEditString):
-            print("found column!")
+       #     print("found column!")
             #colFound = True
             print("Please input a new column name, or <enter> for no change.")
             newColName = input("  > ")
@@ -571,36 +649,6 @@ def addColumn(boardObj, userObj):
     else:
         print("Please select a board to work on first with <select>")
 
-def makeNewBoard(currentUser):
-    createdBoard = Board()
-    print("What would you like the board name to be?")
-    createdBoardname = input("  > ")
-    while (createdBoardname == ""):
-        print("Board name cannot be blank.")
-        print("What would you like the board name to be?")
-        createdBoardname = input("  > ")
-
-#Found at: https://stackoverflow.com/questions/23326099/how-can-i-limit-the-user-input-to-only-integers-in-python
-    while True:
-        try:
-            print("How many columns would you like this board to have?")
-            columnTotal = int(input("  > "))
-            if (columnTotal <= 0):
-                print("Please enter an integer value above 0.")
-                continue
-            break
-        except:
-            print("Please enter an integer value above 0.")
-
-
-    for colNum in range(0, columnTotal):
-        #print("In Colnum for!")
-        addColumn(createdBoard, currentUser)
-
-    createdBoard.name = createdBoardname
-    createdBoard.userList.append(currentUser.name)
-    currentUser.boardObjectList.append(createdBoard)
-    return createdBoard
 
 def viewOwners(boardObj, curUser):
     if (boardObj != -1):
@@ -647,22 +695,22 @@ def updateDbBoard(dbObj, boardObj):
     #for col in boardObj.columnList:
     #    for toRemove in boardObj.colKeysToRemove:
 
-    usersDbObj = dbObj.child(boardObj.key).child("Users").get()
+    #usersDbObj = dbObj.child(boardObj.key).child("Users").get()
     #for owner in boardObj.userList:
-    for key in usersDbObj.each():
-        print("USER KEY: ", key.key())#, " USER VAL: ", val)
-        if (key.key() not in boardObj.userList):
-            print("USER NOT IN USERLIST!")
-            dbObj.child("Boards").child(boardObj.key).child("Users").child(key.key()).remove()# : "false"})
+    #for key in usersDbObj.each():
+    #    print("USER KEY: ", key.key())#, " USER VAL: ", val)
+    #    if (key.key() not in boardObj.userList):
+    #        print("USER NOT IN USERLIST!")
+    #        dbObj.child("Boards").child(boardObj.key).child("Users").child(key.key()).remove()# : "false"})
 
-    colKeyList = []
-    colDBs = dbObj.child("Boards").child(boardObj.key).child("Tasks").get()
-    print("COLDB: ", colDBs.key())
-    for colKey in colDBs.each():
-        print("COLKEY: ", colKey.key())
-        if (colKey.key() in boardObj.colKeysToRemove):
-            print("COLUMN TO REMOVE: ", colKey.key())
-            dbObj.child("Boards").child(boardObj.key).child("Tasks").child(colKey.key()).remove()
+    #colKeyList = []
+    #colDBs = dbObj.child("Boards").child(boardObj.key).child("Tasks").get()
+    #print("COLDB: ", colDBs.key())
+    #for colKey in colDBs.each():
+    #    print("COLKEY: ", colKey.key())
+    #    if (colKey.key() in boardObj.colKeysToRemove):
+    #        print("COLUMN TO REMOVE: ", colKey.key())
+    #        dbObj.child("Boards").child(boardObj.key).child("Tasks").child(colKey.key()).remove()
 
     #for colKey in boardObj.colKeysToRemove:
     #    print("COLUMN TO REMOVE: ", colKey)
@@ -687,10 +735,51 @@ def updateDbBoard(dbObj, boardObj):
 
 
 
+def makeNewBoard(currentUser, dbObj):
+    createdBoard = Board()
+    print("What would you like the board name to be?")
+    createdBoardname = input("  > ")
+    while (createdBoardname == ""):
+        print("Board name cannot be blank.")
+        print("What would you like the board name to be?")
+        createdBoardname = input("  > ")
 
-def assignTask(boardObj, userObj):
+#Found at: https://stackoverflow.com/questions/23326099/how-can-i-limit-the-user-input-to-only-integers-in-python
+    while True:
+        try:
+            print("How many columns would you like this board to have?")
+            columnTotal = int(input("  > "))
+            if (columnTotal <= 0):
+                print("Please enter an integer value above 0.")
+                continue
+            break
+        except:
+            print("Please enter an integer value above 0.")
+
+
+    for colNum in range(0, columnTotal):
+        #print("In Colnum for!")
+        addColumn(createdBoard, currentUser)
+
+
+    createdBoard.name = createdBoardname
+    createdBoard.userList.append(currentUser.name)
+    currentUser.boardObjectList.append(createdBoard)
+    newKey = dbObj.child("Boards").push({"Name" : createdBoard.name})
+    createdBoard.key = newKey['name']
+    dbObj.child("Boards").child(createdBoard.key).child("Users").update({currentUser.name : True})
+   
+    addTask(createdBoard, currentUser, dbObj)
+
+
+
+    #updateDbBoard(dbObj, createdBoard)
+    return createdBoard
+
+def assignTask(boardObj, userObj, dbObj):
     if (boardObj != -1):
         userFound = False
+        taskFound = False
         print("What is the name of the task you want to assign?")
         taskToEditString = input("  > ")
         while (taskToEditString == ""):
@@ -700,6 +789,7 @@ def assignTask(boardObj, userObj):
         for colIndex in range(0, len(boardObj.columnList)):
             for taskIndex in range(0, len(boardObj.columnList[colIndex].taskList)):
                 if (boardObj.columnList[colIndex].taskList[taskIndex].name == taskToEditString):
+                    taskFound = True
                     print("What is the name of the user you want to assign? Type your own username to remove yourself.")
                     taskToAssignUser = input("  > ")
                     while (taskToAssignUser == ""):
@@ -711,8 +801,10 @@ def assignTask(boardObj, userObj):
                         if (taskToAssignUser == boardObj.columnList[colIndex].taskList[taskIndex].ownerList[userIndex]):
                             userFound = True
                             boardObj.columnList[colIndex].taskList[taskIndex].ownerList.remove(taskToAssignUser)
+                            dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(boardObj.columnList[colIndex].taskList[taskIndex].key).child("Owners").update({ taskToAssignUser : False})
                     if (userFound == False):
                         boardObj.columnList[colIndex].taskList[taskIndex].ownerList.append(taskToAssignUser)
+                        dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(boardObj.columnList[colIndex].taskList[taskIndex].key).child("Owners").update({ taskToAssignUser : True})
                         print("Added user ", taskToAssignUser, " to ", boardObj.columnList[colIndex].taskList[taskIndex].name)
                         return 1
 
@@ -755,11 +847,12 @@ def assignBoard(boardObj, userObj, DbObj):
             else:
                 DbObj.child("Boards").child(boardObj.key).child("Users").child(userAssignString).remove()
                 DbObj.child("Users").child(userAssignString).set({boardObj.key : False})
-            print("THE USER WAS FOUND IN THE DB.")
+        
+            #    print("THE USER WAS FOUND IN THE DB.")
         else:
             DbObj.child("Users").child(userAssignString).set({boardObj.key : "true"})
             DbObj.child("Boards").child(boardObj.key).child("Users").update({userAssignString : True})
-            print("USER NOT FOUND IN DB.")
+            #print("USER NOT FOUND IN DB.")
 
     else:
         print("Please select a board to work on first with <select>")
@@ -793,7 +886,7 @@ def removeTask(boardObj, userObj, dbObj):
     else:
         print("Please select a board to work on first")
 
-def removeColumn(boardObj, userObj):
+def removeColumn(boardObj, userObj, dbObj):
     if boardObj != -1:
         colFound = False
         print("Be aware that any tasks contained in the deleted column will also be removed.")
@@ -810,6 +903,7 @@ def removeColumn(boardObj, userObj):
                 boardObj.columnList.remove(colToRemove)
                 print("Column removed!")
                 boardObj.colKeysToRemove.append(colToRemove.columnTitle)
+                dbObj.child("Boards").child(boardObj.key).child("Tasks").child(colRemoveString).remove()
                 updateBoard(boardObj, userObj)
                 return 1
         if (colFound == False):
@@ -817,3 +911,4 @@ def removeColumn(boardObj, userObj):
             return -1
     else:
          print("Please select a board to work on first")
+

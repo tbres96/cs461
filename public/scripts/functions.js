@@ -584,7 +584,7 @@ function fillTaskPage(){
 		if(snap.child(TASKS).child(column).child(task).child(OWNERS).child(sessionStorage.getItem("User")).exists() && snap.child(TASKS).child(column).child(task).child(OWNERS).child(sessionStorage.getItem("User")).val()){
 			var add = `<div><button class="taskAddUsers" onclick="addUserToTask(document.getElementById('addOwners').value)">Add owners</button> <select id="addOwners">`;
 			var owners = new Set;
-			var rem = `<div><button class="taskRemoveUsers" onclick="removeUserFromTask(document.getElementById('remOwners').value)">Remove owners</button> <select id="addOwners">`;
+			var rem = `<div><button class="taskRemoveUsers" onclick="removeUserFromTask(document.getElementById('remOwners').value)">Remove owners</button> <select id="remOwners">`;
 			snap.child(TASKS).child(column).child(task).child(OWNERS).forEach(function(subSnap){
 				owners.add(sessionStorage.getItem("User"));
 				if(subSnap.val() && subSnap.key != sessionStorage.getItem("User")){

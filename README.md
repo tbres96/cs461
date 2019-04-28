@@ -48,3 +48,13 @@ In order to begin using the project management system, you must first follow the
 A2 - Commands
 
 
+   WEBSITE
+--------------
+B1 - How to Access
+
+To get to the website simply enter this link in a google chrome or microsoft edge broswer
+	1) https://seniorsemgit.firebaseapp.com/
+
+B2 - User Account Creations
+
+	1) To create an account or to sign in as a user you have already signed in as

@@ -20,12 +20,12 @@ function getCols(){
 	});
 }
 
-function addNewTask(f){
-	console.log(f.id);
-	var name = f.taskName.value;
-	var desc = f.description.value;
-	var dueDate = f.dueDate.value;
-	var col = f.col.value;
+function addNewTask(){
+	console.log(document.forms[0].id);
+	var name = document.forms[0].taskName.value;
+	var desc = document.forms[0].description.value;
+	var dueDate = document.forms[0].dueDate.value;
+	var col = document.forms[0].col.value;
 	var todaysDate = new Date(Date.now());
 	var now = (todaysDate.getMonth() + 1) + "-" + todaysDate.getDate() + "-" + todaysDate.getFullYear() + ", ";
 	now += todaysDate.getHours() + ":" + todaysDate.getMinutes() + ":" + todaysDate.getSeconds();
@@ -44,7 +44,7 @@ function addNewTask(f){
 	ref = ref.push();
 	ref.set(task);
 		if(dueDate != null && dueDate != ""){
-			ref.child(name).update({[DUEDATE]: dueDate});
+			ref.update({[DUEDATE]: dueDate});
 		}
 	}
 	redirect("kanban.html");

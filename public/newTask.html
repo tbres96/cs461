@@ -19,8 +19,9 @@
 </head>
 
 <body onload="getCols()">
+	<div> <a href="kanban.html">Home</a></div>
 	<h1>Create New Task</h1>
-	<form id="form" action="addNewTask(this)">
+	<form id="form" action="javascript:addNewTask()">
 		Task Name: <input type="text" name="taskName" placeholder="Task name" required><br>
 		Description: <input type="textarea" rows="10" cols="30" name="description" placeholder="Description" required><br>
 		Due Date: <input type="date" name="dueDate" required><br>

@@ -85,7 +85,7 @@ function getListOfKanbans(){
 						var count = 0;
 						childSnapshot.child(USERS).forEach(function(userSnapshot){
 							count = 0;
-							if(userSnapshot.key != sessionStorage.getItem('User')){ //'mellita') <<-- used for testing locally
+							if(userSnapshot.key != sessionStorage.getItem('User')){ 
 								//if their values are true
 								if(userSnapshot.val()){
 									if(getUsers == ""){
@@ -119,7 +119,7 @@ function getListOfKanbans(){
 						childSnapshot.child(USERS).forEach(function(userSnapshot){
 							if(userSnapshot.val()){
 								//if values match current user logged in
-								if(userSnapshot.key == sessionStorage.getItem('User')){ //'mellita') <<-- used for testing locally
+								if(userSnapshot.key == sessionStorage.getItem('User')){ 
 									if(getUsers == ""){
 										getUsers += userSnapshot.key;
 									}
@@ -191,7 +191,7 @@ function getListOfKanbans(){
 																var taskName = taskSnapshot.key;
 																taskDisplay += `<div id='` + taskName + `' draggable="true" ondragstart="drag(event, this.parentElement.parentElement.parentElement.id, this.id)" class='box'><li>`;
 
-																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
+																taskDisplay += "<a href=\"javascript:setTask('" + boardID + "','" + columnName + "','" + taskName + "');\">TaskName: ";
 																taskDisplay += taskSnapshot.child(NAME).val();
 																//if owners has existing users
 																if(taskSnapshot.child(OWNERS).hasChildren()){
@@ -249,7 +249,7 @@ function getListOfKanbans(){
 																var taskName = taskSnapshot.key;
 																taskDisplay += `<div id='` + taskName + `' draggable="true" ondragstart="drag(event, this.parentElement.parentElement.parentElement.id, this.id)" class='box'><li>`;
 
-																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
+																taskDisplay += "<a href=\"javascript:setTask('" + boardID + "','" + columnName + "','" + taskName + "');\">TaskName: ";
 																taskDisplay += taskSnapshot.child(NAME).val();
 																//if owners has existing users
 																if(taskSnapshot.child(OWNERS).hasChildren()){
@@ -307,7 +307,7 @@ function getListOfKanbans(){
 																var taskName = taskSnapshot.key;
 																taskDisplay += `<div id='` + taskName + `' draggable="true" ondragstart="drag(event, this.parentElement.parentElement.parentElement.id, this.id)" class='box'><li>`;
 
-																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
+																taskDisplay += "<a href=\"javascript:setTask('" + boardID + "','" + columnName + "','" + taskName + "');\">TaskName: ";
 																taskDisplay += taskSnapshot.child(NAME).val();
 																//if owners has existing users
 																if(taskSnapshot.child(OWNERS).hasChildren()){
@@ -366,7 +366,7 @@ function getListOfKanbans(){
 																var taskName = taskSnapshot.key;
 																taskDisplay += `<div id='` + taskName + `' draggable="true" ondragstart="drag(event, this.parentElement.parentElement.parentElement.id, this.id)" class='box'><li>`;
 
-																taskDisplay += "<a href=\"javascript:setTask('" + boardName + "','" + columnName + "','" + taskName + "');\">TaskName: ";
+																taskDisplay += "<a href=\"javascript:setTask('" + boardID + "','" + columnName + "','" + taskName + "');\">TaskName: ";
 																taskDisplay += taskSnapshot.child(NAME).val();
 																//if owners has existing users
 																if(taskSnapshot.child(OWNERS).hasChildren()){
@@ -575,30 +575,32 @@ function getTaskInfo(board, section, task){
 }
 
 function fillTaskPage(){
-	/*
-	//UNCOMMENT THIS SECTION WHEN TESTING LOCALLY AND NOT COMING FROM THE KANBAN PAGE
-	sessionStorage.setItem('board',"Board1");
-	sessionStorage.setItem('task',"Task2");
-	sessionStorage.setItem('column',"Todo");
-	//END LOCAL DEV SECTION
-	*/
 	var board = sessionStorage.getItem('board');
 	var column = sessionStorage.getItem('column');
 	var task = sessionStorage.getItem('task');
-	var owners = new Set;
 	
 	var ref = db.ref(BOARDS).child(board);
 	ref.on('value',function(snap){
-		snap.child(TASKS).child(column).child(task).child(OWNERS).forEach(function(subSnap){
-			if(subSnap.val()){
-				owners.add(subSnap.key);
-				document.getElementById("remOwners").innerHTML += "<option value='" + subSnap.key + "'>" + subSnap.key + "</option>";
-			}
-		});
-		snap.child(USERS).forEach(function(subSnap){
-			if(subSnap.val() && !owners.has(subSnap.key))
-				document.getElementById("addOwners").innerHTML += "<option value='" + subSnap.key + "'>" + subSnap.key + "</option>";
-		});
+		if(snap.child(TASKS).child(column).child(task).child(OWNERS).child(sessionStorage.getItem("User")).exists() && snap.child(TASKS).child(column).child(task).child(OWNERS).child(sessionStorage.getItem("User")).val()){
+			var add = `<div><button class="taskAddUsers" onclick="addUserToTask(document.getElementById('addOwners').value)">Add owners</button> <select id="addOwners">`;
+			var owners = new Set;
+			var rem = `<div><button class="taskRemoveUsers" onclick="removeUserFromTask(document.getElementById('remOwners').value)">Remove owners</button> <select id="addOwners">`;
+			snap.child(TASKS).child(column).child(task).child(OWNERS).forEach(function(subSnap){
+				owners.add(sessionStorage.getItem("User"));
+				if(subSnap.val() && subSnap.key != sessionStorage.getItem("User")){
+					owners.add(subSnap.key);
+					rem += "<option value='" + subSnap.key + "'>" + subSnap.key + "</option>";
+				}
+			});
+			snap.child(USERS).forEach(function(subSnap){
+				if(subSnap.val() && !owners.has(subSnap.key))
+					add += "<option value='" + subSnap.key + "'>" + subSnap.key + "</option>";
+			});
+			rem += "</select></div>";
+			add += "</select></div>";
+			document.getElementById("buttons").innerHTML = add + rem;
+			document.getElementById("buttons").style.display = "inline";
+		}
 	});
 
     getTaskInfo(board,column,task);

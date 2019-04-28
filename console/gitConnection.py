@@ -218,3 +218,5 @@ if(inputString == "1"):
 elif(inputString == "2"):
     updateGitLog()
 
+# Test message fot git connection 1
+

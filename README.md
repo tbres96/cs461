@@ -125,6 +125,8 @@ B10 - Add A New Column To The Project Board
 	     "Doing" column. Click on the "Create a new column" button. This will bring you to a new page 
 	     where you can enter in a name for said column. Then press the "Add new column!" button. At the
 	     top left corner of that page, if you change you mind and do not wish to create a new column, 
-	     click the "Home" link. This will bring you back to the main project page.
+	     click the "Home" link. This will bring you back to the main project page. To see the new column
+	     you just created scroll to the very bottom of the page, there you will see a horizontal scroll
+	     bar. Move that from left to right to see the new column you just created. 
 
 

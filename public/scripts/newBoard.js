@@ -20,7 +20,7 @@ function addNewBoard(){
 			Done:{Dummy: "DumDum"}
 		}
 		Users:{
-			sessionStorage.getItem('User':true);
+			[sessionStorage.getItem('User')]:true
 		}
 	};
 	var ref = db.ref(BOARDS);

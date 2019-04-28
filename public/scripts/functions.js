@@ -588,7 +588,7 @@ function fillTaskPage(){
 	var owners = new Set;
 	
 	var ref = db.ref(BOARDS).child(board);
-	ref.once('value',function(snap){
+	ref.on('value',function(snap){
 		snap.child(TASKS).child(column).child(task).child(OWNERS).forEach(function(subSnap){
 			if(subSnap.val()){
 				owners.add(subSnap.key);

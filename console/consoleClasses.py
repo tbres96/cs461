@@ -162,17 +162,26 @@ def addTaskToBoard(boardObj, columnName, taskObj, dbObj):
 
 def printBoardTasks(taskObj):
     #for taskKey, taskValue in taskObj:
-    print('\t', "Task Name: ", taskObj.name, '\n', '\t\t', "Description: ", taskObj.description, '\n', '\t\t', "Due Date: ", taskObj.dueDate)
-    print('\t\t', "Latest Action: ", taskObj.latestAction)
+    print('\t', "Task Name: ", taskObj.name, '\n', '\t', "Task Key: ", taskObj.key, '\n\t\t', "Description: ", taskObj.description, '\n', '\t\t', "Due Date: ", taskObj.dueDate)
+    print('\t\t', "Latest Action: ", taskObj.latestAction, '\n\n')
 
 def printBoardColumns(colObj):
-    print("COLNAME: ", colObj.columnTitle)
+    print("Column Name: ", colObj.columnTitle, '\n')
     for task in colObj.taskList:
         #print("TASKNAME: ", task.name, " TASKLIST SIZE: ", len(colObj.taskList))
         printBoardTasks(task)
 
+def printHelp():
+    print("Before you edit any boards, you must select one with the <select> command. If you are not a part of any, you may create a new one with <new board>.")
+    print("Once you have selected a board, you can <add column>, <add task>, <edit column>, <edit task>, <remove column>, and <remove task>.")
+    print("To move a task from one column to the other, use <move task>.")
+    print("To assign a task, use <assign task>. To assign a board, use <assign board>.")
+    print("To see all boards you are a part of, use <view boards>.")
+    return
+
 def printBoard(boardObj):
-    print('\n', '\n', '\n', "BOARD NAME: ", boardObj.name)
+    print('\n', '\n', '\n', "Board Name: ", boardObj.name)
+    print('\n', "Board Key: ", boardObj.key)
 
     print("Owners of this board:", '\n')
     for owner in boardObj.userList:
@@ -223,6 +232,8 @@ def parseTasks(column, key, value):
         if (taskKey != "Commits"):
             newTask.key = taskKey
         #print("THIS COLUMN NAME: ", column.columnTitle, " KEY: ", taskKey, " VAL: ", taskValue)
+        if (taskKey == "Dummy"):
+            continue
         for taskHeader, taskInfo in taskValue.items():
             if (taskHeader == "DueDate"):
                 newTask.dueDate = taskInfo
@@ -386,7 +397,7 @@ def addTask(boardObj, curUser, dbObj):
         #    taskToAdd.key = taskKey
         print("Please input a task name.")
         taskName = input("  > ")
-        if (taskName == ""):
+        if (taskName != ""):
             taskToAdd.name = taskName
         else:
             taskToAdd.name = "default task name"
@@ -738,21 +749,22 @@ def assignBoard(boardObj, userObj, DbObj):
         userDbObj = DbObj.child("Users").get()
         if (findIfUserExistInDB(userDbObj, userAssignString)):
             if (userAssignString in boardObj.userList):
-                DbObj.child("Users").child(userAssignString).set({boardObj.key : "true"})
-                DbObj.child("Boards").child(boardObj.key).child("Users").update({userAssignString : "true"})
+                DbObj.child("Users").child(userAssignString).set({boardObj.key : True})
+                DbObj.child("Boards").child(boardObj.key).child("Users").update({userAssignString : True})
             else:
                 DbObj.child("Boards").child(boardObj.key).child("Users").child(userAssignString).remove()
-                DbObj.child("Users").child(userAssignString).set({boardObj.key : "false"})
+                DbObj.child("Users").child(userAssignString).set({boardObj.key : False})
             print("THE USER WAS FOUND IN THE DB.")
         else:
             DbObj.child("Users").child(userAssignString).set({boardObj.key : "true"})
+            DbObj.child("Boards").child(boardObj.key).child("Users").update({userAssignString : True})
             print("USER NOT FOUND IN DB.")
 
     else:
         print("Please select a board to work on first with <select>")
 
 
-def removeTask(boardObj, userObj):
+def removeTask(boardObj, userObj, dbObj):
     if (boardObj != -1):
         taskFound = False
         print("What is the name of the task you want to remove?")
@@ -767,7 +779,8 @@ def removeTask(boardObj, userObj):
                     taskFound = True
                     taskToRemove = boardObj.columnList[colIndex].taskList[taskIndex]
                     boardObj.columnList[colIndex].taskList.remove(taskToRemove)
-                    boardObj.colKeysToRemove.append(taskToRemove.name)
+                    boardObj.taskKeysToRemove.append(taskToRemove.name)
+                    dbObj.child("Boards").child(boardObj.key).child("Tasks").child(boardObj.columnList[colIndex].columnTitle).child(taskToRemove.key).remove()
                     print("Task Removed!")
                     updateBoard(boardObj, userObj)
                     return 1

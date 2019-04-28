@@ -1,0 +1,1538 @@
+{
+  "id": "9826e65b-1678-428b-bd6c-9edd1e2924dc",
+  "version": "2.0",
+  "name": "SeniorSemWebTest",
+  "url": "https://seniorsemgit.firebaseapp.com/",
+  "tests": [{
+    "id": "3ab98caa-2bfd-41ba-a629-5ba33a4dbf77",
+    "name": "Login",
+    "commands": [{
+      "id": "6dd24867-d05f-43d9-9ad8-692dd830ea23",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "78007c7e-edc5-4917-914c-fce97b74a7ca",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4bc9fcd4-384a-458d-8ed2-5df800a68d6f",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd2a24ce-5c78-4ef7-b853-9140e724e5da",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Crawfst"
+    }, {
+      "id": "b93018ee-f045-4a07-91f3-711b1448c9d7",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "2c02c35b-c46b-4591-85a1-c361d950420b",
+    "name": "Login null",
+    "commands": [{
+      "id": "ced06c4e-b07f-4b9c-b66e-b7abbfa158c8",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "eceef23c-4dbd-43cf-98b6-f0ca7197d789",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "60b68577-8203-4722-a366-2949cf740b96",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "82e5a315-57cd-48ce-97c0-b162819e70a7",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "85e74d09-555d-4d00-b2d9-a42b4fb4cf5f",
+    "name": "Add user",
+    "commands": [{
+      "id": "891eee8f-793a-4aeb-b1d1-25847fe2b853",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "20b12c3d-8462-4927-82cb-18afe310ec86",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "110ff419-5902-4a66-8a2c-d02e7a68daa5",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fa72a771-29b9-4c72-b9fd-4d18438926ff",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "mellita"
+    }, {
+      "id": "9b38ec8d-d9ab-4109-88c4-9c9572f839aa",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "820c574c-67cf-4219-a15e-ec9aecd0f9aa",
+      "comment": "",
+      "command": "click",
+      "target": "id=displayAddUserList",
+      "targets": [
+        ["id=displayAddUserList", "id"],
+        ["css=#displayAddUserList", "css:finder"],
+        ["xpath=//select[@id='displayAddUserList']", "xpath:attributes"],
+        ["xpath=//div[@id='listOfUsers']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b314d3f5-f001-441c-b352-fffb7164bd3c",
+      "comment": "",
+      "command": "select",
+      "target": "id=displayAddUserList",
+      "targets": [],
+      "value": "label=Crawfst"
+    }, {
+      "id": "3b2fc3e4-0820-4915-a4fd-771eef26e155",
+      "comment": "",
+      "command": "click",
+      "target": "id=displayAddUserList",
+      "targets": [
+        ["id=displayAddUserList", "id"],
+        ["css=#displayAddUserList", "css:finder"],
+        ["xpath=//select[@id='displayAddUserList']", "xpath:attributes"],
+        ["xpath=//div[@id='listOfUsers']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5ac271e-2517-4692-b57a-adfe4cae181f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.boardAddUsers",
+      "targets": [
+        ["css=.boardAddUsers", "css:finder"],
+        ["xpath=//button[@onclick=\"window.location.reload(); addUserToBoard(document.getElementById('displayAddUserList').value)\"]", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add user to the board')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "9060545b-137d-402a-bd15-aa972c6d1f0c",
+    "name": "Remove user",
+    "commands": [{
+      "id": "dc2b7fc5-0d89-4ec9-8dd0-a4561d956747",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2bc35134-1779-49de-92ab-1a49e37782d8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "52c34181-ac75-4b59-a910-d8c46b5075a3",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff864c4a-c47f-46a1-a133-deb08b2f34a6",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "mellita"
+    }, {
+      "id": "cd7ed08e-6527-4e75-8326-a2ff0255d029",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2bdd3e8-345c-43fd-bbd9-2d23974534cd",
+      "comment": "",
+      "command": "click",
+      "target": "id=displayRemoveUserList",
+      "targets": [
+        ["id=displayRemoveUserList", "id"],
+        ["css=#displayRemoveUserList", "css:finder"],
+        ["xpath=//select[@id='displayRemoveUserList']", "xpath:attributes"],
+        ["xpath=//div[@id='listOfUsers']/select[2]", "xpath:idRelative"],
+        ["xpath=//select[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d817717-a748-45da-b67c-25cb6a3da5aa",
+      "comment": "",
+      "command": "select",
+      "target": "id=displayRemoveUserList",
+      "targets": [],
+      "value": "label=Crawfst"
+    }, {
+      "id": "18e4fed2-52b2-46b6-b64e-c6a51567577e",
+      "comment": "",
+      "command": "click",
+      "target": "id=displayRemoveUserList",
+      "targets": [
+        ["id=displayRemoveUserList", "id"],
+        ["css=#displayRemoveUserList", "css:finder"],
+        ["xpath=//select[@id='displayRemoveUserList']", "xpath:attributes"],
+        ["xpath=//div[@id='listOfUsers']/select[2]", "xpath:idRelative"],
+        ["xpath=//select[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e08b4d6c-17a5-424f-8722-2942820532ba",
+      "comment": "",
+      "command": "click",
+      "target": "css=.boardRemoveUsers",
+      "targets": [
+        ["css=.boardRemoveUsers", "css:finder"],
+        ["xpath=//button[@onclick=\"window.location.reload(); removeUserFromBoard(document.getElementById('displayRemoveUserList').value)\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Remove user from the board')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "291cc6d9-b185-4845-ad67-ab3b4804d270",
+    "name": "Switch boards",
+    "commands": [{
+      "id": "0e639ace-7d9e-4c3d-9246-55bb6a97720d",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "277826ae-e156-4073-aade-863cff897487",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cde73dd0-bac6-4f81-b8e8-656350c5e4ac",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "29361e27-a472-41d2-8eae-13a4a3c7e640",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "mellita"
+    }, {
+      "id": "007e4b9c-7d3f-4e69-801a-56bc03792fb1",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1586f89d-7b42-495b-a46b-12c13ef9762b",
+      "comment": "",
+      "command": "click",
+      "target": "id=Board1",
+      "targets": [
+        ["id=Board1", "id"],
+        ["linkText=Board1", "linkText"],
+        ["css=#Board1", "css:finder"],
+        ["xpath=//a[contains(text(),'Board1')]", "xpath:link"],
+        ["xpath=//a[@id='Board1']", "xpath:attributes"],
+        ["xpath=//div[@id='kanbans']/a[2]", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '')])[3]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Board1')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "094580df-1c30-4cb7-9953-7c13eeba3ba7",
+    "name": "Create Board",
+    "commands": [{
+      "id": "022c29a3-ba80-4b32-a6ad-3eb99dac0148",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b2263cd6-e09f-42dd-a791-ceb65a7b957f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3614ada5-cbc7-477e-b5cf-851570a8cf58",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1bd98a26-c401-44dd-b129-47a2446d9c2c",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "d85ce390-c977-4e38-b59c-5f74a440dd36",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f947621f-77c4-4fab-b877-f222c1c15aa3",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtBoardName",
+      "targets": [
+        ["id=txtBoardName", "id"],
+        ["css=#txtBoardName", "css:finder"],
+        ["xpath=//input[@id='txtBoardName']", "xpath:attributes"],
+        ["xpath=//div[@id='sidebar']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "91616000-e903-4b15-acda-9094c90f84d3",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtBoardName",
+      "targets": [
+        ["id=txtBoardName", "id"],
+        ["css=#txtBoardName", "css:finder"],
+        ["xpath=//input[@id='txtBoardName']", "xpath:attributes"],
+        ["xpath=//div[@id='sidebar']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Create Test"
+    }, {
+      "id": "e7fb95ec-2c15-4dde-8d19-14b430dcf5a2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.createBoard",
+      "targets": [
+        ["css=.createBoard", "css:finder"],
+        ["xpath=//button[@onclick='javascript:validate()']", "xpath:attributes"],
+        ["xpath=//div[@id='sidebar']/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Create Board')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "8b57859f-cf4a-4fde-8b24-e83ffe8d63ee",
+    "name": "Create Task",
+    "commands": [{
+      "id": "de2cd833-ed83-407f-a2cf-5f6c8530a70d",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "53a30b47-1233-44a3-bcf7-6df99b38bac6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2da66d5f-db78-4d32-a41f-7e3c538fa336",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9937e79-c0b8-4fed-ba5a-2d963e478329",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "1e326b0c-399d-48ae-90f3-0376b7910a83",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb0ff581-c538-4cae-b06e-63e74f38b54c",
+      "comment": "",
+      "command": "click",
+      "target": "id=-Ld_2V1lz-lDxayS3HoI",
+      "targets": [
+        ["id=-Ld_2V1lz-lDxayS3HoI", "id"],
+        ["linkText=Create Test", "linkText"],
+        ["css=#-Ld_2V1lz-lDxayS3HoI", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Test')]", "xpath:link"],
+        ["xpath=//a[@id='-Ld_2V1lz-lDxayS3HoI']", "xpath:attributes"],
+        ["xpath=//div[@id='kanbans']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '')])[2]", "xpath:href"],
+        ["xpath=//div[4]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a17a502-2f38-4097-a4a2-b4d2b9418aa2",
+      "comment": "",
+      "command": "click",
+      "target": "id=newTask",
+      "targets": [
+        ["id=newTask", "id"],
+        ["css=#newTask", "css:finder"],
+        ["xpath=//button[@id='newTask']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Create a new task')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "cf239083-5db9-4f66-99c2-9ac124402255",
+      "comment": "",
+      "command": "click",
+      "target": "name=taskName",
+      "targets": [
+        ["name=taskName", "name"],
+        ["css=input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='taskName']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cdecd90b-8481-4cd3-a159-fdd4a94216c4",
+      "comment": "",
+      "command": "type",
+      "target": "name=taskName",
+      "targets": [
+        ["name=taskName", "name"],
+        ["css=input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='taskName']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "89e1f0be-9520-4ede-b648-f9cae5b13d5e",
+      "comment": "",
+      "command": "click",
+      "target": "name=description",
+      "targets": [
+        ["name=description", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='description']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e61bcbd4-9e7d-4183-bfda-1605c9beb0e4",
+      "comment": "",
+      "command": "type",
+      "target": "name=description",
+      "targets": [
+        ["name=description", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='description']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "333899d9-d6a9-4e07-8f55-2c44a2cf7b66",
+      "comment": "",
+      "command": "click",
+      "target": "name=dueDate",
+      "targets": [
+        ["name=dueDate", "name"],
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@name='dueDate']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ebea721c-057d-41f6-81e6-e0bc35d6f47e",
+      "comment": "",
+      "command": "click",
+      "target": "name=dueDate",
+      "targets": [
+        ["name=dueDate", "name"],
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@name='dueDate']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7b394251-5bb3-45a0-a603-3a3bb51635a6",
+      "comment": "",
+      "command": "type",
+      "target": "name=dueDate",
+      "targets": [
+        ["name=dueDate", "name"],
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@name='dueDate']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "2019-04-29"
+    }, {
+      "id": "217a5737-1061-4cd8-9536-5db7e6e1e70c",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add new task!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7e9eafb3-d263-44e2-b51d-329554277cd7",
+    "name": "Move Task Drag",
+    "commands": [{
+      "id": "a5076293-e229-442a-8ee9-161012c9310d",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2fac827f-bd05-4bfd-a57b-b681c20722da",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a59c7054-cf35-48b9-b21a-0dd4aa2f96ca",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8b9ec0e3-7df3-42ef-835b-cdeccd0342e7",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "4f4537d5-c3a1-48bb-8411-2ccbdeeaa1cc",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bbd16545-2400-4336-a459-b322264e6f4f",
+      "comment": "",
+      "command": "click",
+      "target": "id=-Ld_2V1lz-lDxayS3HoI",
+      "targets": [
+        ["id=-Ld_2V1lz-lDxayS3HoI", "id"],
+        ["linkText=Create Test", "linkText"],
+        ["css=#-Ld_2V1lz-lDxayS3HoI", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Test')]", "xpath:link"],
+        ["xpath=//a[@id='-Ld_2V1lz-lDxayS3HoI']", "xpath:attributes"],
+        ["xpath=//div[@id='kanbans']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '')])[2]", "xpath:href"],
+        ["xpath=//div[4]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc61459f-2d13-4b02-a687-593bc8da2512",
+      "comment": "",
+      "command": "dragAndDropToObject",
+      "target": "css=a:nth-child(1)",
+      "targets": [],
+      "value": "id=tasksOf'Todo'"
+    }]
+  }, {
+    "id": "08c3666c-b8e5-42b4-b882-0b40ad94c5fe",
+    "name": "Create Column",
+    "commands": [{
+      "id": "8e420f4f-1834-4cf2-9ef7-d924a160543a",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d1841851-8e48-4585-81da-4b4e3a657c26",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8e7192cb-8bc5-44e0-877a-39279407d843",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cb98d5e3-0c57-4fd1-8e38-84fd81051530",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "426b8db9-51f7-4a2d-bfa6-3ca4e599634d",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "00792b2d-e4cd-4d72-94fe-9a48ca615753",
+      "comment": "",
+      "command": "click",
+      "target": "id=-Ld_2V1lz-lDxayS3HoI",
+      "targets": [
+        ["id=-Ld_2V1lz-lDxayS3HoI", "id"],
+        ["linkText=Create Test", "linkText"],
+        ["css=#-Ld_2V1lz-lDxayS3HoI", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Test')]", "xpath:link"],
+        ["xpath=//a[@id='-Ld_2V1lz-lDxayS3HoI']", "xpath:attributes"],
+        ["xpath=//div[@id='kanbans']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '')])[2]", "xpath:href"],
+        ["xpath=//div[4]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2265571a-af20-4109-95cf-9137d3b35f5b",
+      "comment": "",
+      "command": "click",
+      "target": "id=newColumn",
+      "targets": [
+        ["id=newColumn", "id"],
+        ["css=#newColumn", "css:finder"],
+        ["xpath=//button[@id='newColumn']", "xpath:attributes"],
+        ["xpath=//button[4]", "xpath:position"],
+        ["xpath=//button[contains(.,'Create a new column')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9eb29246-b475-41f4-b28f-886b304f9000",
+      "comment": "",
+      "command": "click",
+      "target": "name=col",
+      "targets": [
+        ["name=col", "name"],
+        ["css=input", "css:finder"],
+        ["xpath=//input[@name='col']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f36f2e7-51f3-47e5-b792-de1c8827ffd2",
+      "comment": "",
+      "command": "type",
+      "target": "name=col",
+      "targets": [
+        ["name=col", "name"],
+        ["css=input", "css:finder"],
+        ["xpath=//input[@name='col']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Create Test"
+    }, {
+      "id": "0fb31bea-1778-424c-99d2-0b84016b2c69",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add new column!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "349eee94-f5d7-43af-91ec-651c8483cf5b",
+    "name": "Create Task NULL",
+    "commands": [{
+      "id": "47849a69-1a12-41c4-b82d-19fb30f8b1a5",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cf87372b-c6e7-46f2-b011-fc3ebfcd9c6d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "65bfb7e3-659f-4533-89a6-45ee48ad6046",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb009cd4-5f1f-42d4-95d8-612ebc8a8de8",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "6ff6dc7e-355e-4d0d-9a68-90e426e0f587",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4513a39-69a3-4b84-b49b-dacadba10879",
+      "comment": "",
+      "command": "click",
+      "target": "id=-Ld_2V1lz-lDxayS3HoI",
+      "targets": [
+        ["id=-Ld_2V1lz-lDxayS3HoI", "id"],
+        ["linkText=Create Test", "linkText"],
+        ["css=#-Ld_2V1lz-lDxayS3HoI", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Test')]", "xpath:link"],
+        ["xpath=//a[@id='-Ld_2V1lz-lDxayS3HoI']", "xpath:attributes"],
+        ["xpath=//div[@id='kanbans']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '')])[2]", "xpath:href"],
+        ["xpath=//div[4]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "567eb5d6-14d2-4a97-a38c-6e923d52d870",
+      "comment": "",
+      "command": "click",
+      "target": "id=newTask",
+      "targets": [
+        ["id=newTask", "id"],
+        ["css=#newTask", "css:finder"],
+        ["xpath=//button[@id='newTask']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Create a new task')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a0cf7258-897b-43db-b9c8-7d0150f49500",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add new task!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "6d92c90f-7ece-45c8-9c39-943b7c1eb5f6",
+    "name": "Create Task NAME NULL",
+    "commands": [{
+      "id": "c67065a9-d617-4e4d-91ea-01e7fd7c801c",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "35ee4aba-dd9a-4ba9-947a-4eef3c6775f2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "726d9024-f763-48fa-9951-461379469f31",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4808ac80-d884-4e4e-9379-81074ff319a6",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "dae59000-8264-4c92-9e00-106ce620057e",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7bfa6201-fba7-4a06-9fa6-5105a68665f1",
+      "comment": "",
+      "command": "click",
+      "target": "id=-Ld_2V1lz-lDxayS3HoI",
+      "targets": [
+        ["id=-Ld_2V1lz-lDxayS3HoI", "id"],
+        ["linkText=Create Test", "linkText"],
+        ["css=#-Ld_2V1lz-lDxayS3HoI", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Test')]", "xpath:link"],
+        ["xpath=//a[@id='-Ld_2V1lz-lDxayS3HoI']", "xpath:attributes"],
+        ["xpath=//div[@id='kanbans']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '')])[2]", "xpath:href"],
+        ["xpath=//div[4]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ede79b0-c87f-4d99-a5b9-affc2933928e",
+      "comment": "",
+      "command": "click",
+      "target": "id=newTask",
+      "targets": [
+        ["id=newTask", "id"],
+        ["css=#newTask", "css:finder"],
+        ["xpath=//button[@id='newTask']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Create a new task')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ffc9ace-2dd0-414e-8912-30aa16e17f8d",
+      "comment": "",
+      "command": "click",
+      "target": "name=description",
+      "targets": [
+        ["name=description", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='description']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c803021-3a11-4e7d-babb-39f69111e1f1",
+      "comment": "",
+      "command": "type",
+      "target": "name=description",
+      "targets": [
+        ["name=description", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='description']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "25629da2-36b3-4d69-ab2e-e8748d0cdee4",
+      "comment": "",
+      "command": "click",
+      "target": "name=dueDate",
+      "targets": [
+        ["name=dueDate", "name"],
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@name='dueDate']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "42cbed67-c2ff-499f-8043-699038bcac1b",
+      "comment": "",
+      "command": "type",
+      "target": "name=dueDate",
+      "targets": [
+        ["name=dueDate", "name"],
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@name='dueDate']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "2019-04-29"
+    }, {
+      "id": "28f2c120-24ef-44a1-806b-a0d62c40517f",
+      "comment": "",
+      "command": "click",
+      "target": "id=col",
+      "targets": [
+        ["id=col", "id"],
+        ["name=col", "name"],
+        ["css=#col", "css:finder"],
+        ["xpath=//select[@id='col']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "65684a17-5e4a-4a1e-a963-5f352e3aee5b",
+      "comment": "",
+      "command": "select",
+      "target": "id=col",
+      "targets": [],
+      "value": "label=Doing"
+    }, {
+      "id": "3d24e865-23d4-4f15-bd25-acfe7169daa5",
+      "comment": "",
+      "command": "click",
+      "target": "id=col",
+      "targets": [
+        ["id=col", "id"],
+        ["name=col", "name"],
+        ["css=#col", "css:finder"],
+        ["xpath=//select[@id='col']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "24329538-9c4b-4c21-8e46-3922b3aa5e0f",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add new task!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ad621dc1-d98b-4af3-b2b2-ac47906767e2",
+    "name": "Create Task Des NULL",
+    "commands": [{
+      "id": "89472cd8-39e5-4a0e-a005-9ce939781fe2",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "18fb4884-2356-4d36-bc36-dddef2583a71",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x806",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0a320f16-9411-47c2-bfc8-27f4ce4c845e",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7a7ba7b7-a7a6-462f-97c3-e3881642cfe9",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "268c4daf-8349-4a9a-89c3-a76c4657743c",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "66f7a57f-6854-409a-85a9-a1192176e5de",
+      "comment": "",
+      "command": "click",
+      "target": "id=-Ld_2V1lz-lDxayS3HoI",
+      "targets": [
+        ["id=-Ld_2V1lz-lDxayS3HoI", "id"],
+        ["linkText=Create Test", "linkText"],
+        ["css=#-Ld_2V1lz-lDxayS3HoI", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Test')]", "xpath:link"],
+        ["xpath=//a[@id='-Ld_2V1lz-lDxayS3HoI']", "xpath:attributes"],
+        ["xpath=//div[@id='kanbans']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '')])[2]", "xpath:href"],
+        ["xpath=//div[4]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc824bd0-e984-456d-8ca3-ff15814b1c11",
+      "comment": "",
+      "command": "click",
+      "target": "id=newTask",
+      "targets": [
+        ["id=newTask", "id"],
+        ["css=#newTask", "css:finder"],
+        ["xpath=//button[@id='newTask']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Create a new task')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9e69b66-99d8-4f65-9bfd-3aac52412391",
+      "comment": "",
+      "command": "click",
+      "target": "name=taskName",
+      "targets": [
+        ["name=taskName", "name"],
+        ["css=input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='taskName']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a7919ec8-8ac6-45f6-be0a-588c163a1d01",
+      "comment": "",
+      "command": "type",
+      "target": "name=taskName",
+      "targets": [
+        ["name=taskName", "name"],
+        ["css=input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='taskName']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "49e40350-6370-4f6c-90e2-b2331a74e5ed",
+      "comment": "",
+      "command": "click",
+      "target": "name=dueDate",
+      "targets": [
+        ["name=dueDate", "name"],
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@name='dueDate']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "602b9ad3-8f30-47a5-a7ab-5ee5ed3d1c5e",
+      "comment": "",
+      "command": "type",
+      "target": "name=dueDate",
+      "targets": [
+        ["name=dueDate", "name"],
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@name='dueDate']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "2019-04-29"
+    }, {
+      "id": "11107981-8968-4756-8713-f3673dc64266",
+      "comment": "",
+      "command": "click",
+      "target": "id=col",
+      "targets": [
+        ["id=col", "id"],
+        ["name=col", "name"],
+        ["css=#col", "css:finder"],
+        ["xpath=//select[@id='col']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7f4f830-3493-49c6-82a1-ef3753bf9fe6",
+      "comment": "",
+      "command": "select",
+      "target": "id=col",
+      "targets": [],
+      "value": "label=Doing"
+    }, {
+      "id": "811cc992-cf5e-4909-bb2c-36675d30e1ec",
+      "comment": "",
+      "command": "click",
+      "target": "id=col",
+      "targets": [
+        ["id=col", "id"],
+        ["name=col", "name"],
+        ["css=#col", "css:finder"],
+        ["xpath=//select[@id='col']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2606c4f-70dc-430e-8791-63a155c627d6",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add new task!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "902b4333-7260-41af-9bbf-f9d5f31e877d",
+    "name": "Create Task DUE NULL",
+    "commands": [{
+      "id": "1ec1d02b-4855-4cc0-8381-fc41a870bcb9",
+      "comment": "",
+      "command": "open",
+      "target": "https://seniorsemgit.firebaseapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8c51e6a6-8a40-461a-a591-b92919f37b89",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1053x807",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c48ab57d-fddf-4d94-a40e-4156a3c6a848",
+      "comment": "",
+      "command": "click",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a041ec8b-1328-497e-9e6d-17733b7c734f",
+      "comment": "",
+      "command": "type",
+      "target": "id=txtUsername",
+      "targets": [
+        ["id=txtUsername", "id"],
+        ["css=#txtUsername", "css:finder"],
+        ["xpath=//input[@id='txtUsername']", "xpath:attributes"],
+        ["xpath=//div[@id='Warning']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "5c23a71f-7084-4b0d-b1e2-ec1eb53010f5",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//button[@id='btnLogin']/b", "xpath:idRelative"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "855c0f02-522a-4037-81a3-d202e2e3db80",
+      "comment": "",
+      "command": "click",
+      "target": "id=-Ld_2V1lz-lDxayS3HoI",
+      "targets": [
+        ["id=-Ld_2V1lz-lDxayS3HoI", "id"],
+        ["linkText=Create Test", "linkText"],
+        ["css=#-Ld_2V1lz-lDxayS3HoI", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Test')]", "xpath:link"],
+        ["xpath=//a[@id='-Ld_2V1lz-lDxayS3HoI']", "xpath:attributes"],
+        ["xpath=//div[@id='kanbans']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '')])[2]", "xpath:href"],
+        ["xpath=//div[4]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f77ef4a6-4d76-46d6-91c8-34a231c16572",
+      "comment": "",
+      "command": "click",
+      "target": "id=newTask",
+      "targets": [
+        ["id=newTask", "id"],
+        ["css=#newTask", "css:finder"],
+        ["xpath=//button[@id='newTask']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Create a new task')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "09a137bc-31d3-4ae8-b107-0f75e9c3d39a",
+      "comment": "",
+      "command": "click",
+      "target": "name=taskName",
+      "targets": [
+        ["name=taskName", "name"],
+        ["css=input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='taskName']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "94d27c2e-fa9b-48a2-9358-7b1787410527",
+      "comment": "",
+      "command": "type",
+      "target": "name=taskName",
+      "targets": [
+        ["name=taskName", "name"],
+        ["css=input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='taskName']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "9fbbcbb4-9326-4f22-8182-882d83b5d2df",
+      "comment": "",
+      "command": "click",
+      "target": "name=description",
+      "targets": [
+        ["name=description", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='description']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb5f885a-cb60-4728-96b0-a750b4c1336f",
+      "comment": "",
+      "command": "type",
+      "target": "name=description",
+      "targets": [
+        ["name=description", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='description']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Test"
+    }, {
+      "id": "06b1bbdb-7ed2-4970-a11d-a4786f29a464",
+      "comment": "",
+      "command": "click",
+      "target": "id=col",
+      "targets": [
+        ["id=col", "id"],
+        ["name=col", "name"],
+        ["css=#col", "css:finder"],
+        ["xpath=//select[@id='col']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b87c12e-fdfc-401b-85c6-2fb50c2d4f8d",
+      "comment": "",
+      "command": "select",
+      "target": "id=col",
+      "targets": [],
+      "value": "label=Doing"
+    }, {
+      "id": "13ce82e8-bbd2-49ea-8b56-6bf8b62e57e4",
+      "comment": "",
+      "command": "click",
+      "target": "id=col",
+      "targets": [
+        ["id=col", "id"],
+        ["name=col", "name"],
+        ["css=#col", "css:finder"],
+        ["xpath=//select[@id='col']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "97d52680-f1f3-454c-a9b6-bb1f76aaf03d",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add new task!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "de310986-967b-4dc6-a700-c2e2ebd784c1",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["3ab98caa-2bfd-41ba-a629-5ba33a4dbf77"]
+  }],
+  "urls": ["https://seniorsemgit.firebaseapp.com/"],
+  "plugins": []
+}

@@ -50,7 +50,20 @@ In order to begin using the project management system, you must first follow the
 
 A2 - Commands
 
+To begin manipulating boards, you must first select a board with the <select> command. If you are not a part of any boards, you can use the <add board> command. 
 
+To see a list of all available commands, use <help>.
+To quit, use <quit>. To view all of the boards you are a part of, use <view boards>
+	
+	
+	Once you have selected a board, a plethora of commands become available:
+	Task commands: <add task> <edit task> <move task> <remove task> - Move task is for moving tasks between columns.
+	Column commands: <edit column> <add column> <remove column> - Editting a column changes the name of it.
+	Ownership Commands: <assign task> <assign board> - Type the username of a user you want to add, or your own username to remove 		yourself.
+	
+	Use <new board> to create a new Kanban board from scratch.
+	To see the board you currently have selected, use <print>.
+	To see the owners of your current board, use <board owners>.
    WEBSITE
 --------------
 B1 - How to Access

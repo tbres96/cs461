@@ -597,7 +597,8 @@ def makeNewBoard(currentUser):
         #print("In Colnum for!")
         addColumn(createdBoard, currentUser)
 
-    createdBoard.userList.append(currentUser)
+    createdBoard.name = createdBoardname
+    createdBoard.userList.append(currentUser.name)
     currentUser.boardObjectList.append(createdBoard)
     return createdBoard
 

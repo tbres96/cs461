@@ -199,6 +199,7 @@ def updateGitLog():
                     gitLogFile.close()
                     # Update database with new commits
                     updateDatabase(boardId, commits)
+                    print("Commit history updated successfully")
         else:
             print("The text file containing your board id is empty or it contains an invalid board id. Please register your board again.")
     else:
@@ -219,4 +220,5 @@ elif(inputString == "2"):
     updateGitLog()
 
 # Test message fot git connection 1
+# Test message fot git connection 2
 

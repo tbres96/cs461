@@ -1,4 +1,4 @@
-#header{
+	#header{
  		margin-left: 11%;
 		top: 0;
 		text-align: center; 
@@ -36,7 +36,7 @@
   		display: block;
 	}
 	#sidebar a:hover{
-  		color: #f1f1f1;
+  		color: tan;
 	}
 	#wrapper{
 		/*width: auto;

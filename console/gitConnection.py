@@ -1,9 +1,5 @@
 from pyrebase import pyrebase
 import getpass
-from datetime import datetime
-from threading import Timer
-import schedule
-import time
 import os
 import subprocess
 from subprocess import check_output

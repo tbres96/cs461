@@ -64,8 +64,17 @@ To quit, use <quit>. To view all of the boards you are a part of, use <view boar
 	Use <new board> to create a new Kanban board from scratch.
 	To see the board you currently have selected, use <print>.
 	To see the owners of your current board, use <board owners>.
+
+
    WEBSITE
 --------------
+Bugs that were not fixed:
+- After dragging and dropping a task, unwanted space is created between the header and columns
+- If a user signs out and a new user signs back in using the same computer and broswer (without
+  closing the tab) the current viewed board is that of the previous users board. However this 
+  will go away once a board (left side of the page) is clicked on. 
+
+
 B1 - How to Access
 
 	B1) To get to the website simply enter this link in a Google chrome browser: 
@@ -149,5 +158,3 @@ B10 - Add A New Column To The Project Board
 	     click the "Home" link. This will bring you back to the main project page. To see the new column
 	     you just created scroll to the very bottom of the page, there you will see a horizontal scroll
 	     bar. Move that from left to right to see the new column you just created. 
-
-

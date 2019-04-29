@@ -199,7 +199,7 @@ def updateGitLog():
                     gitLogFile.close()
                     # Update database with new commits
                     updateDatabase(boardId, commits)
-                    print("Commit history updated successfully")
+                    print("Commit history has been updated successfully")
         else:
             print("The text file containing your board id is empty or it contains an invalid board id. Please register your board again.")
     else:

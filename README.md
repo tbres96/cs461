@@ -158,3 +158,24 @@ B10 - Add A New Column To The Project Board
 	     click the "Home" link. This will bring you back to the main project page. To see the new column
 	     you just created scroll to the very bottom of the page, there you will see a horizontal scroll
 	     bar. Move that from left to right to see the new column you just created. 
+
+
+
+   GIT CONNECTION
+--------------------
+
+NOTE: gitConnection.py must be in the repository folder
+NOTE: In order for the update git log function to work, the commit message must be in the format:
+			git commit -m "TASK: <task_name> ACTION: <action>"
+	All in one line.
+
+How to run:
+	python3 gitConnection.py
+
+	Options:
+	1) Connect board: This will connect your repository to a created board. You will need to provide the board id,
+		which you can access from the website or console program.
+		This will create a text file that contains your board id, which the program will use to access and update
+		the commit history. If this text file is deleted or modified, you will have to register the board again.
+	2) Update commit history: This will run the git log command, generate a text file with the information,
+		parse the information, and update the database accordingly.

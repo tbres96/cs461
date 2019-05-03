@@ -6,7 +6,7 @@ function redirect(extension){
 }
 
 function validate(){
-	if(document.getElementById("txtBoardName").value != null && document.getElementById("txtBoardName").value != ""){
+	if(!document.getElementById("txtBoardName").value.includes("javascript:") && document.getElementById("txtBoardName").value != null && document.getElementById("txtBoardName").value != ""){
 		var ref = db.ref(BOARDS);
 		var bool = false;
 		ref.once('value', function(snapshot){
@@ -22,7 +22,11 @@ function validate(){
 			alert("Board with name '" + document.getElementById("txtBoardName").value + "' already exists. Unable to proceed.");
 		}
 	}else{
-		alert("Cannot continue with an empty board name.");
+		if(document.getElementById("txtBoardName").value.includes("javascript:")){
+			alert("Board cannot be javascript!");
+		}else{
+			alert("Cannot continue with an empty board name!");
+		}
 	}
 }
 

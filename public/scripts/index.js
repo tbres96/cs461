@@ -4,18 +4,27 @@ function redirect(extension){
 }
 
 function saveUser() {
-	//firebase.database().ref("Users/").push({
-	//Get Elements
-	//Username: document.getElementById('txtUsername').value,
-	sessionStorage.setItem('User', document.getElementById('txtUsername').value); //Bring user name into Kanban page
-		var dbRef = firebase.database().ref("Users/");
-		var usersRef = dbRef.child(document.getElementById('txtUsername').value).set({
-			Board: ("Board00")
-		})
-	setTimeout(function(){redirect("kanban.html");}, 1000)
+	var val = document.getElementById('txtUsername').value.toLowerCase();
+	if(val == "null" || val == null){
+		alert("User cannot be 'null'");
+	}else{
+		sessionStorage.setItem('User', document.getElementById('txtUsername').value); //Bring user name into Kanban page
+		var dbRef = firebase.database().ref("Users/").child(document.getElementById('txtUsername').value);
+		dbRef.once('value',function(snap){
+			if(!snap.hasChildren()){
+				dbRef.set({
+					Board: ("Board00")
+				});
+			}
+		});
+		setTimeout(function(){redirect("kanban.html");}, 1000)
 	}
+}
 
 function setTask(board, column, task){
+	board = board.replace('javascript:','');
+	column = column.replace('javascript:','');
+	task = task.replace('javascript:','');
 	sessionStorage.setItem('board',board);
 	sessionStorage.setItem('column',column);
 	sessionStorage.setItem('task',task);
